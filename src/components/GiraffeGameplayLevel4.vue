@@ -4,7 +4,7 @@
     <div v-if="showStartTransition" class="start-transition-screen" :class="{ 'fade-out': isStartTransitionFading }">
       <div class="transition-content">
         <p class="objective-text" :class="{ 'move-up': showObjectiveAnimation }">
-          Order the giraffe towns based on their population
+          Order the giraffe towns based on their population!
         </p>
       </div>
     </div>
