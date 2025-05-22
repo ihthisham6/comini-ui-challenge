@@ -146,6 +146,3 @@ The application is optimized for:
 - Edge (latest)
 - Mobile browsers (iOS Safari, Android Chrome)
 
-## License
-
-This project is proprietary and not licensed for public use or redistribution without permission.
