@@ -1,7 +1,5 @@
-<script>
-export default {
-  name: 'App'
-}
+<script setup lang="ts">
+// Don't import Navbar here
 </script>
 
 <template>
