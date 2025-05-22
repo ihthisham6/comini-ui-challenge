@@ -9,11 +9,7 @@
           </button>
         </div>
         <div class="preview-container">
-          <RivePlayer
-            src="src/assets/rive/giraffes.riv"
-            :width="312"
-            :height="200"
-          />
+          <img src="../assets/icons/Giraffe3.png" alt="Giraffe Game Preview" class="preview-image" />
         </div>
         <button class="lets-go-button" @click="handleStartGame">
           Let's go!
@@ -129,6 +125,12 @@ export default defineComponent({
   border-radius: 8px;
   margin-bottom: 20px;
   overflow: hidden;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .lets-go-button {

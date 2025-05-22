@@ -11,11 +11,9 @@
 
       <!-- Rive animation container -->
       <div class="rive-container">
-        <RivePlayer
-          src="src/assets/rive/giraffes.riv"
-          :width="312"
-          :height="342"
-        />
+        <div class="fallback-image">
+          <img src="../assets/icons/Giraffe2.png" alt="Giraffe" class="fallback-giraffe" />
+        </div>
       </div>
 
       <!-- Action buttons -->
@@ -475,5 +473,22 @@ export default defineComponent({
     width: min(450px, 90%);
     margin-top: 24px;
   }
+}
+
+/* Fallback image styling */
+.fallback-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.fallback-giraffe {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
 }
 </style>
