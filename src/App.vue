@@ -1,16 +1,26 @@
-<script setup lang="ts">
-// Don't import Navbar here
+<script>
+export default {
+  name: 'App'
+}
 </script>
 
 <template>
-  <div id="app-container">
-    <main class="main-content"> 
-      <router-view />
-    </main>
+  <div class="app">
+    <h1>Comini UI</h1>
+    <p>Simple Vue App for Deployment Testing</p>
   </div>
 </template>
 
 <style>
+.app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
 /* Global styles to enable scrolling */
 html, body {
   margin: 0;
