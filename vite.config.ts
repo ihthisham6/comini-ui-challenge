@@ -21,8 +21,10 @@ export default defineConfig({
   optimizeDeps: {
     include: ['vue'] // Make sure Vue is pre-optimized
   },
+  publicDir: 'public',
   build: {
     assetsDir: 'assets',
+    outDir: 'dist',
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html')
