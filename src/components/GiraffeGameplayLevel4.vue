@@ -407,6 +407,7 @@ import { defineComponent, ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import OctopusIcon from './OctopusIcon.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { getImageUrl } from '../utils/imageUtils';
 
 interface GiraffeTown {
   townLabel: string;
@@ -608,7 +609,7 @@ export default defineComponent({
     };
     
     const getGiraffeImage = (position: number) => {
-      return `/assets/icons/giraffe${position}.png`;
+      return getImageUrl(`giraffe${position}.png`);
     };
     
     const handleDragStart = (event: DragEvent, option: string, index: number) => {

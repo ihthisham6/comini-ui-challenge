@@ -417,6 +417,7 @@ import { defineComponent, ref, onMounted, nextTick } from 'vue';
 import OctopusIcon from './OctopusIcon.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useRouter } from 'vue-router';
+import { getImageUrl } from '../utils/imageUtils';
 
 interface Giraffe {
   id: number;
@@ -956,7 +957,8 @@ export default defineComponent({
       showButtons,
       showLevel3Objective,
       handlePlayAgain,
-      showSilverBadgeUnlock
+      showSilverBadgeUnlock,
+      getImageUrl
     };
   }
 });
