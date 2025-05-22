@@ -22,8 +22,19 @@ export default defineConfig({
     include: ['vue'] // Make sure Vue is pre-optimized
   },
   build: {
+    assetsDir: 'assets',
     rollupOptions: {
-      external: []
+      input: {
+        main: resolve(__dirname, 'index.html')
+      },
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name.endsWith('.png')) {
+            return 'assets/icons/[name][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        }
+      }
     }
   }
 });

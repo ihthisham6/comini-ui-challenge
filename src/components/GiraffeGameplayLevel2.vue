@@ -57,7 +57,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/assets/icons/grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number buttons -->
         <div class="number-slots">

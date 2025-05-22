@@ -32,7 +32,7 @@
                'animation-delay': `${300 * index}ms`,
                height: `${giraffe.height}px`
              }">
-          <img :src="require('@/assets/icons/giraffe' + giraffe.id + '.png')" :alt="`Giraffe ${giraffe.id}`" />
+          <img :src="`/assets/icons/giraffe${giraffe.id}.png`" :alt="`Giraffe ${giraffe.id}`" />
           <div class="number-drop-zone" 
                @dragover.prevent
                @drop="handleDrop($event, index)">
@@ -43,7 +43,7 @@
 
       <!-- Grass background -->
       <div class="grass" :class="{ 'fade-in': showControls }">
-        <img src="@/assets/icons/grass.png" alt="Grass" class="grass-image" />
+        <img src="/assets/icons/grass.png" alt="Grass" class="grass-image" />
       </div>
 
       <!-- Answer options -->

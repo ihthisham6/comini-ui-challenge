@@ -608,7 +608,7 @@ export default defineComponent({
     };
     
     const getGiraffeImage = (position: number) => {
-      return `@/assets/icons/giraffe${position}.png`;
+      return `/assets/icons/giraffe${position}.png`;
     };
     
     const handleDragStart = (event: DragEvent, option: string, index: number) => {
