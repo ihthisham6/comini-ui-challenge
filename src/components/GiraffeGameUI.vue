@@ -32,7 +32,7 @@
                'animation-delay': `${300 * index}ms`,
                height: `${giraffe.height}px`
              }">
-          <img :src="`/src/assets/icons/giraffe${giraffe.id}.png`" :alt="`Giraffe ${giraffe.id}`" />
+          <img :src="`/src/assets/icons/Giraffe${giraffe.id}.png`" :alt="`Giraffe ${giraffe.id}`" />
           <div class="number-drop-zone" 
                @dragover.prevent
                @drop="handleDrop($event, index)">

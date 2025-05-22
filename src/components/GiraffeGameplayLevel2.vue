@@ -223,7 +223,7 @@
             {{ giraffe.height }}
           </div>
           <div class="giraffe-wrapper">
-            <img src="/src/assets/icons/giraffe2.png" 
+            <img src="/src/assets/icons/Giraffe2.png" 
                  :alt="`Giraffe ${giraffe.label}`"
                  class="giraffe-image" />
           </div>
@@ -456,9 +456,9 @@ export default defineComponent({
     // Secondary gameplay giraffes
     const secondaryGiraffes = ref([
       { height: 1, image: 'Giraffe1.png', speech: "I'm the shortest!", successSpeech: "I'm the shortest!" },
-      { height: 2, image: 'giraffe3.png', speech: "I'm number 2!", successSpeech: "I'm number 2!" },
-      { height: 3, image: 'giraffe3.png', speech: "What's my number?", successSpeech: "I'm number 3!" },
-      { height: 4, image: 'giraffe2.png', speech: "I'm the tallest!", successSpeech: "I'm the tallest!" }
+      { height: 2, image: 'Giraffe3.png', speech: "I'm number 2!", successSpeech: "I'm number 2!" },
+      { height: 3, image: 'Giraffe3.png', speech: "What's my number?", successSpeech: "I'm number 3!" },
+      { height: 4, image: 'Giraffe2.png', speech: "I'm the tallest!", successSpeech: "I'm the tallest!" }
     ]);
 
     const showSuccessSpeech = ref(false);
@@ -477,17 +477,17 @@ export default defineComponent({
 
     // Update tertiaryGiraffes data
     const tertiaryGiraffes = ref([
-      { height: 10, label: 'A', successText: "I'm the shortest!", scale: 0.7, image: 'giraffe1.png' },
-      { height: 25, label: 'B', successText: "I'm taller than A!", scale: 0.85, image: 'giraffe3.png' },
-      { height: 27, label: 'C', successText: "I'm almost the tallest!", scale: 0.9, image: '2HeightGiraffe.png' },
-      { height: 40, label: 'D', successText: "I'm the tallest!", scale: 1, image: 'giraffe2.png' }
+      { height: 10, label: 'A', successText: "I'm the shortest!", scale: 0.7, image: 'Giraffe1.png' },
+      { height: 25, label: 'B', successText: "I'm taller than A!", scale: 0.85, image: 'Giraffe3.png' },
+      { height: 27, label: 'C', successText: "I'm almost the tallest!", scale: 0.9, image: 'Giraffe3.png' },
+      { height: 40, label: 'D', successText: "I'm the tallest!", scale: 1, image: 'Giraffe2.png' }
     ]);
 
     const successGiraffes = [
-      { label: 'A', scale: 0.7, image: 'giraffe1.png' },
-      { label: 'B', scale: 0.85, image: 'giraffe3.png' },
-      { label: 'C', scale: 0.9, image: 'giraffe3.png' },
-      { label: 'D', scale: 1, image: 'giraffe2.png' }
+      { label: 'A', scale: 0.7, image: 'Giraffe1.png' },
+      { label: 'B', scale: 0.85, image: 'Giraffe3.png' },
+      { label: 'C', scale: 0.9, image: 'Giraffe3.png' },
+      { label: 'D', scale: 1, image: 'Giraffe2.png' }
     ];
 
     const showGreatWorkModal = ref(false);
@@ -569,19 +569,19 @@ export default defineComponent({
       if (!position.giraffe) return '';
       
       if (position.giraffe.id === 2) {
-        return '/src/assets/icons/giraffe2.png';
+        return '/src/assets/icons/Giraffe2.png';
       }
       
       if (showFeedback.value && !position.isCorrect) {
         if (position.giraffe.id === 1) {
-          return '/src/assets/icons/shortgiraffeconfused.png';
+          return '/src/assets/icons/ShortGiraffeConfused.png';
         }
         if (position.giraffe.id === 3) {
-          return '/src/assets/icons/midgiraffeconfused.png';
+          return '/src/assets/icons/MidGiraffeConfused.png';
         }
       }
       
-      return `/src/assets/icons/giraffe${position.giraffe.id}.png`;
+      return `/src/assets/icons/Giraffe${position.giraffe.id}.png`;
     };
 
     const checkAnswer = () => {

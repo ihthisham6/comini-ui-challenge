@@ -241,7 +241,7 @@
                giraffe.speech }}
           </div>
           <img :src="showTertiaryError && index === 0 ? 
-                     '/src/assets/icons/giraffe3.png' : 
+                     '/src/assets/icons/Giraffe3.png' : 
                      `/src/assets/icons/${giraffe.image}`"
                :alt="`Giraffe ${giraffe.label}`"
                :class="{ 
@@ -416,15 +416,15 @@ export default defineComponent({
     // Secondary gameplay giraffes
     const secondaryGiraffes = ref([
       { height: 300, image: 'Giraffe1.png', speech: '300', successSpeech: "I'm the shortest!" },
-      { height: 380, image: 'giraffe3.png', speech: '380', successSpeech: "I'm taller than 1" },
+      { height: 380, image: 'Giraffe3.png', speech: '380', successSpeech: "I'm taller than 1" },
       { height: '?', image: 'Giraffe3.png', speech: '?', successSpeech: "I'm between 2 & 4" },
-      { height: 410, image: 'giraffe2.png', speech: '410', successSpeech: "I'm the tallest!" }
+      { height: 410, image: 'Giraffe2.png', speech: '410', successSpeech: "I'm the tallest!" }
     ]);
 
     // Tertiary gameplay giraffes
     const tertiaryGiraffes = ref([
-      { label: 'A', height: 10, image: 'giraffe3.png', speech: '10' },
-      { label: 'B', height: 40, image: 'giraffe3.png', speech: '40' }
+      { label: 'A', height: 10, image: 'Giraffe3.png', speech: '10' },
+      { label: 'B', height: 40, image: 'Giraffe3.png', speech: '40' }
     ]);
 
     const router = useRouter();
@@ -497,21 +497,21 @@ export default defineComponent({
       
       // For the tallest giraffe (always happy)
       if (position.giraffe.id === 2) {
-        return '/src/assets/icons/giraffe2.png';
+        return '/src/assets/icons/Giraffe2.png';
       }
       
       // Show confused images when feedback is shown and sequence is wrong
       if (showFeedback.value && !position.isCorrect) {
         if (position.giraffe.id === 1) {
-          return '/src/assets/icons/shortgiraffeconfused.png';
+          return '/src/assets/icons/ShortGiraffeConfused.png';
         }
         if (position.giraffe.id === 3) {
-          return '/src/assets/icons/midgiraffeconfused.png';
+          return '/src/assets/icons/MidGiraffeConfused.png';
         }
       }
       
       // Default idle states
-      return `/src/assets/icons/giraffe${position.giraffe.id}.png`;
+      return `/src/assets/icons/Giraffe${position.giraffe.id}.png`;
     };
 
     const checkAnswer = () => {

@@ -320,9 +320,9 @@ export default defineComponent({
     // Define secondary giraffes
     const secondaryGiraffes = ref<SecondaryGiraffe[]>([
       { height: 1, image: 'Giraffe1.png', speech: "I'm the shortest!" },
-      { height: 2, image: 'giraffe3.png', speech: "I'm number 2!" },
-      { height: 3, image: 'giraffe3.png', speech: "What's my number?", isNew: true },
-      { height: 4, image: 'giraffe2.png', speech: "I'm the tallest!" }
+      { height: 2, image: 'Giraffe3.png', speech: "I'm number 2!" },
+      { height: 3, image: 'Giraffe3.png', speech: "What's my number?", isNew: true },
+      { height: 4, image: 'Giraffe2.png', speech: "I'm the tallest!" }
     ]);
 
     const handleDragStart = (event: DragEvent, index: number) => {
@@ -370,16 +370,16 @@ export default defineComponent({
       
       // For the tallest giraffe (always happy)
       if (position.giraffe.id === 2) {
-        return '/src/assets/icons/giraffe2.png';
+        return '/src/assets/icons/Giraffe2.png';
       }
       
       // Show confused images when feedback is shown and sequence is wrong
       if (showFeedback.value && !position.isCorrect) {
         if (position.giraffe.id === 1) {
-          return '/src/assets/icons/shortgiraffeconfused.png';
+          return '/src/assets/icons/ShortGiraffeConfused.png';
         }
         if (position.giraffe.id === 3) {
-          return '/src/assets/icons/midgiraffeconfused.png';
+          return '/src/assets/icons/MidGiraffeConfused.png';
         }
       }
       
@@ -388,10 +388,10 @@ export default defineComponent({
         return '/src/assets/icons/Giraffe1.png';
       }
       if (position.giraffe.id === 3) {
-        return '/src/assets/icons/giraffe3.png';
+        return '/src/assets/icons/Giraffe3.png';
       }
       
-      return `/src/assets/icons/giraffe${position.giraffe.id}.png`;
+      return `/src/assets/icons/Giraffe${position.giraffe.id}.png`;
     };
 
     const checkAnswer = () => {
