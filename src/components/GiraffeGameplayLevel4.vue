@@ -2411,4 +2411,54 @@ export default defineComponent({
   cursor: pointer;
   font-weight: 500;
 }
+
+/* Add this CSS at the end of the style section */
+@media (max-width: 480px) {
+  .question-modal {
+    width: 85%;
+    max-width: 300px;
+    padding: 16px;
+  }
+  
+  .options-container {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .option-button {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+  
+  .target-containers {
+    gap: 15px;
+  }
+  
+  .target-container {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .option-buttons {
+    gap: 10px;
+    padding: 0 10px;
+  }
+  
+  .number-groups {
+    gap: 15px;
+  }
+  
+  .giraffe-image {
+    width: 45px;
+    height: 130px;
+  }
+  
+  .speech-bubble {
+    max-width: 110px;
+    font-size: 14px;
+    padding: 8px;
+  }
+}
 </style> 

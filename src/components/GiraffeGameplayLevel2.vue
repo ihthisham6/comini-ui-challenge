@@ -2577,4 +2577,40 @@ export default defineComponent({
   height: 80px;
   margin-top: 20px;
 }
+
+/* Add this CSS at the end of the style section */
+@media (max-width: 480px) {
+  .tertiary-modal .options-container,
+  .question-modal .options-container {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .tertiary-giraffe {
+    width: 30%;
+    transform: scale(0.9);
+  }
+  
+  .tertiary-giraffes-container {
+    gap: 10px;
+    padding: 0 10px;
+  }
+  
+  .tertiary-bubble,
+  .speech-bubble {
+    font-size: 14px;
+    padding: 8px;
+    min-width: 80px;
+  }
+  
+  .secondary-giraffes-container {
+    gap: 30px;
+  }
+  
+  .secondary-giraffe .giraffe-image {
+    width: 40px;
+    height: 120px;
+  }
+}
 </style> 

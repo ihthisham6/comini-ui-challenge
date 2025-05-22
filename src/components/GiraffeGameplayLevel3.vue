@@ -2151,4 +2151,44 @@ export default defineComponent({
     opacity: 1;
   }
 }
+
+@media (max-width: 480px) {
+  .question-modal.tertiary-question {
+    width: 85%;
+    max-width: 300px;
+    padding: 16px;
+  }
+  
+  .tertiary-question .options-container {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .tertiary-question .option-button {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+  
+  .tertiary-giraffes-container {
+    gap: 20px;
+  }
+  
+  .tertiary-giraffe .giraffe-image {
+    width: 45px;
+    height: 130px;
+  }
+  
+  .speech-bubble {
+    font-size: 14px;
+    padding: 8px;
+    min-width: 80px;
+    max-width: 100px;
+  }
+  
+  .tertiary-giraffe .speech-bubble {
+    transform: translateY(-5px);
+  }
+}
 </style>
