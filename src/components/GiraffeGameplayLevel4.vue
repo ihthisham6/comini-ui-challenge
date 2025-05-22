@@ -108,8 +108,8 @@
       <div class="octopus-icon">
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
-      <h2 class="badge-unlock-text">You unlocked the Diamond Badge!</h2>
-      <img src="/src/assets/icons/Diamond League.png" alt="Diamond Badge" class="badge-icon-unlock" />
+      <h2 class="diamond-badge-unlock-text">You've unlocked the Diamond Badge!</h2>
+      <img src="/src/assets/icons/DiamondLeague.png" alt="Diamond Badge" class="badge-icon-unlock" />
     </div>
 
     <div v-if="showDiamondBadgeScreen" class="diamond-badge-screen fade-in">
@@ -119,8 +119,8 @@
       <div class="octopus-icon">
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
-      <h2 class="badge-title">Diamond Badge</h2>
-      <img src="/src/assets/icons/Diamond League.png" alt="Diamond Badge" class="badge-icon" />
+      <h2 class="diamond-badge-title">Diamond Badge</h2>
+      <img src="/src/assets/icons/DiamondLeague.png" alt="Diamond Badge" class="badge-icon" />
       <p class="progress-text">Congratulations on completing all levels!</p>
       <button class="play-again-button" @click="handlePlayAgain">Play again</button>
       <button class="continue-home-button" @click="handleContinueToHome">Continue to Home</button>
@@ -1487,7 +1487,7 @@ export default defineComponent({
   margin-bottom: 24px;
 }
 
-.badge-unlock-text {
+.diamond-badge-unlock-text {
   font-family: 'Gabarito', sans-serif;
   font-size: 24px;
   color: #333;
@@ -1537,7 +1537,7 @@ export default defineComponent({
   z-index: 2001;
 }
 
-.badge-title {
+.diamond-badge-title {
   font-family: 'Gabarito', sans-serif;
   font-size: 28px;
   color: #333;

@@ -325,7 +325,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="great-work-title">Gold Badge</h2>
-      <img src="/src/assets/icons/Gold League.png" alt="Gold Badge" class="badge-icon" />
+      <img src="/src/assets/icons/GoldLeague.png" alt="Gold Badge" class="badge-icon" />
       <p class="progress-text">Keep going to unlock the diamond badge!</p>
       <button class="play-again-button" @click="handlePlayAgain">Play again</button>
       <button class="continue-home-button" @click="handleContinueToHome">Continue to Home</button>
@@ -339,7 +339,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="gold-badge-unlock-text">You've unlocked the Gold Badge!</h2>
-      <img src="/src/assets/icons/Gold League.png" alt="Gold Badge" class="badge-icon" />
+      <img src="/src/assets/icons/GoldLeague.png" alt="Gold Badge" class="badge-icon" />
     </div>
   </div>
 </template>
