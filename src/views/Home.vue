@@ -3,11 +3,11 @@
     <Navbar />
     <div class="grid-wrapper">
       <div class="grid-container">
-        <GameCard title="Meerkat Picnic" image="../assets/icons/Giraffe1.png" />
-        <GameCard title="Fishy Business" image="../assets/icons/Giraffe2.png" />
-        <GameCard title="The Tall Giraffe" image="../assets/icons/Giraffe3.png" />
-        <GameCard title="Arctic Adventure" image="../assets/icons/Giraffe1.png" />
-        <GameCard title="Nuts & Nutkins" image="../assets/icons/Giraffe2.png" />
+        <GameCard title="Meerkat Picnic" image="../assets/icons/Giraffe1.png" background="#FFD688" />
+        <GameCard title="Fishy Business" image="../assets/icons/Giraffe2.png" background="#97D2FB" />
+        <GameCard title="The Tall Giraffe" image="../assets/icons/Giraffe3.png" background="#B5EAD7" />
+        <GameCard title="Arctic Adventure" image="../assets/icons/Giraffe1.png" background="#C7CEEA" />
+        <GameCard title="Nuts & Nutkins" image="../assets/icons/Giraffe2.png" background="#E2F0CB" />
       </div>
     </div>
   </div>
