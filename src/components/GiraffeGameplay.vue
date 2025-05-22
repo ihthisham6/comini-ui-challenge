@@ -52,10 +52,23 @@
           </div>
           
           <template v-if="position.giraffe">
-            <div class="giraffe-container">
+            <div class="giraffe-container giraffe-fixed-bottom"
+                 :class="{
+                   'tallest-giraffe': position.giraffe.id === 2,
+                   'medium-giraffe': position.giraffe.id === 3,
+                   'shortest-giraffe': position.giraffe.id === 1
+                 }">
               <img :src="getGiraffeHead(position)" 
                    :alt="`Giraffe ${position.giraffe.id}`"
-                   class="giraffe-image" />
+                   :class="[
+                     'giraffe-image',
+                     'giraffe-fixed-bottom',
+                     {
+                       'tallest-giraffe-image': position.giraffe.id === 2,
+                       'medium-giraffe-image': position.giraffe.id === 3,
+                       'shortest-giraffe-image': position.giraffe.id === 1
+                     }
+                   ]" />
             </div>
           </template>
         </div>
@@ -302,6 +315,7 @@ export default defineComponent({
     const hasFeedback = ref(false);
     const showButtons = ref(true);
     const showBronzeBadgeUnlock = ref(false);
+    const windowWidth = ref(0);
 
     // Define giraffes with correct order
     const giraffes: Giraffe[] = [
@@ -392,6 +406,65 @@ export default defineComponent({
       }
       
       return `../assets/icons/Giraffe${position.giraffe.id}.png`;
+    };
+
+    // Update window width on mount and resize
+    onMounted(() => {
+      showTitle.value = true;
+      showGiraffes.value = true;
+      showAnswers.value = true;
+      
+      // Get current play count
+      playCount.value = getPlayCount();
+      
+      // Check if feedback was already given
+      hasFeedback.value = document.cookie.includes('giraffe_game_feedback=true');
+      
+      // Initialize window width
+      windowWidth.value = window.innerWidth;
+      
+      // Add resize listener
+      window.addEventListener('resize', () => {
+        windowWidth.value = window.innerWidth;
+      });
+    });
+
+    // Add inline styles for each giraffe based on its ID
+    const getGiraffeStyle = (giraffeId: number) => {
+      // Check for desktop/laptop screens
+      if (windowWidth.value >= 1024) {
+        // Tallest giraffe (ID 2)
+        if (giraffeId === 2) {
+          return {
+            height: '300px',
+            objectFit: 'contain',
+            objectPosition: 'bottom',
+            width: '65px',
+            marginBottom: '0'
+          };
+        }
+        // Medium giraffe (ID 3)
+        else if (giraffeId === 3) {
+          return {
+            height: '170px',
+            objectFit: 'contain',
+            objectPosition: 'bottom',
+            width: '65px',
+            marginBottom: '0'
+          };
+        }
+        // Shortest giraffe (ID 1)
+        else {
+          return {
+            height: '120px',
+            objectFit: 'contain',
+            objectPosition: 'bottom',
+            width: '65px',
+            marginBottom: '0'
+          };
+        }
+      }
+      return {};
     };
 
     const checkAnswer = () => {
@@ -617,18 +690,6 @@ export default defineComponent({
       return newCount;
     };
 
-    onMounted(() => {
-      showTitle.value = true;
-      showGiraffes.value = true;
-      showAnswers.value = true;
-      
-      // Get current play count
-      playCount.value = getPlayCount();
-      
-      // Check if feedback was already given
-      hasFeedback.value = document.cookie.includes('giraffe_game_feedback=true');
-    });
-
     return {
       showCountdown,
       isCountdownFading,
@@ -676,6 +737,7 @@ export default defineComponent({
       showGreatWorkModal,
       handleSecondaryComplete,
       showBronzeBadgeUnlock,
+      getGiraffeStyle,
     };
   }
 });
@@ -815,6 +877,210 @@ export default defineComponent({
   object-fit: contain;
   object-position: bottom;
   margin-bottom: 0;
+}
+
+/* Base responsive classes for different giraffe sizes */
+.tallest-giraffe .giraffe-image {
+  height: 150px;
+  clip-path: none;
+  margin-bottom: 0;
+}
+
+.medium-giraffe .giraffe-image {
+  height: 120px;
+}
+
+.shortest-giraffe .giraffe-image {
+  height: 100px;
+}
+
+/* Laptop/desktop adjustments for phase 1 giraffes */
+@media (min-width: 768px) {
+  .giraffes-area {
+    gap: 90px;
+  }
+  
+  .giraffe-slot {
+    width: 55px;
+  }
+  
+  .giraffe-container {
+    width: 55px;
+  }
+  
+  .tallest-giraffe .giraffe-image,
+  .medium-giraffe .giraffe-image,
+  .shortest-giraffe .giraffe-image {
+    width: 55px;
+  }
+  
+  /* Make sure the tallest giraffe is rendered at FULL height */
+  .tallest-giraffe .giraffe-image {
+    height: 180px;
+    clip-path: none;
+    margin-bottom: 0;
+  }
+  
+  /* Medium giraffe should be clearly smaller than tallest */
+  .medium-giraffe .giraffe-image {
+    height: 140px;
+  }
+  
+  /* Shortest giraffe */
+  .shortest-giraffe .giraffe-image {
+    height: 120px;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Ensure the giraffe area has proper positioning relative to grass */
+  .giraffes-area {
+    height: auto !important; 
+    min-height: 350px !important;
+    bottom: 224px !important; /* Position right above grass line */
+    overflow: visible !important;
+    gap: 100px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    align-items: flex-end !important; /* Align items to bottom */
+    position: absolute !important;
+    z-index: 5 !important;
+  }
+  
+  /* Position speech bubbles properly for phase 1 */
+  .giraffe-slot .speech-bubble {
+    top: -60px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    white-space: nowrap !important;
+  }
+  
+  /* When success modal shows, adjust bubble position to be closer to giraffe */
+  .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
+    top: -180px !important;
+  }
+  
+  .giraffe-slot {
+    width: 65px !important;
+    margin-bottom: 0 !important; /* Ensure no margin below */
+    display: flex !important;
+    align-items: flex-end !important; /* Align to bottom */
+    height: auto !important;
+    position: relative !important;
+    transition: transform 0.3s ease !important;
+  }
+  
+  .giraffe-container {
+    width: 65px !important;
+    position: relative !important;
+    margin-bottom: 0 !important; /* Ensure no margin below */
+  }
+  
+  /* Speech bubble positioning for secondary phase */
+  .secondary-giraffe:nth-child(1) .speech-bubble {
+    transform: translateX(-45%) !important;
+    top: 30px !important;
+  }
+  
+  /* Restore the original phase 2 giraffe positioning with clipping */
+  .secondary-giraffe:nth-child(2) .giraffe-image {
+    clip-path: inset(0 0 30% 0) !important;
+    margin-bottom: -70px !important; /* Adjusted to touch grass dark shade properly */
+  }
+  
+  /* Container styles for different giraffe types */
+  .tallest-giraffe, .medium-giraffe, .shortest-giraffe {
+    display: flex !important;
+    align-items: flex-end !important;
+    overflow: visible !important;
+    height: auto !important;
+    position: relative !important;
+    bottom: 0 !important;
+  }
+  
+  /* Make sure all giraffe images align to the bottom */
+  .giraffe-image {
+    object-position: bottom !important;
+    position: relative !important;
+    bottom: 0 !important; 
+    margin-bottom: 0 !important;
+    vertical-align: bottom !important;
+  }
+  
+  /* Specific giraffe image styles */
+  .tallest-giraffe-image {
+    height: 350px !important;
+    width: 65px !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+    margin-bottom: 0 !important;
+    vertical-align: bottom !important;
+    clip-path: none !important;
+  }
+
+  .medium-giraffe-image {
+    height: 200px !important;
+    width: 65px !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+    margin-bottom: 0 !important;
+    vertical-align: bottom !important;
+    clip-path: none !important;
+  }
+
+  .shortest-giraffe-image {
+    height: 150px !important;
+    width: 65px !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+    margin-bottom: 0 !important;
+    vertical-align: bottom !important;
+    clip-path: none !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .giraffes-area {
+    gap: 120px;
+    bottom: 244px;
+    height: calc(100vh - 480px);
+  }
+  
+  .giraffe-slot {
+    width: 75px;
+  }
+  
+  .giraffe-container {
+    width: 75px;
+  }
+  
+  .tallest-giraffe .giraffe-image,
+  .medium-giraffe .giraffe-image,
+  .shortest-giraffe .giraffe-image {
+    width: 75px;
+  }
+  
+  /* Make sure the tallest giraffe is rendered at FULL height */
+  .tallest-giraffe .giraffe-image {
+    height: 260px;
+    clip-path: none;
+    margin-bottom: 0;
+  }
+  
+  /* Medium giraffe should be clearly smaller than tallest */
+  .medium-giraffe .giraffe-image {
+    height: 190px;
+  }
+  
+  /* Shortest giraffe */
+  .shortest-giraffe .giraffe-image {
+    height: 160px;
+  }
+  
+  .secondary-giraffe:nth-child(1) .speech-bubble {
+    transform: translateX(-45%);
+    top: 30px;
+  }
 }
 
 /* Secondary phase styles */
@@ -1222,12 +1488,6 @@ export default defineComponent({
     height: 200px;
   }
 
-  /* Adjust clip-path for desktop */
-  .giraffe-slot:nth-child(2) .giraffe-image {
-    clip-path: inset(0 0 30% 0);
-    margin-bottom: -60px;
-  }
-
   .secondary-giraffe:nth-child(1) .speech-bubble {
     transform: translateX(-45%);
     top: 30px;
@@ -1240,10 +1500,17 @@ export default defineComponent({
     height: calc(100vh - 480px);
   }
 
-  /* Adjust clip-path for large desktop */
-  .giraffe-slot:nth-child(2) .giraffe-image {
-    clip-path: inset(0 0 30% 0);
-    margin-bottom: -60px;
+  /* Giraffe height adjustments for large screens */
+  .tallest-giraffe .giraffe-image {
+    height: 230px;
+  }
+  
+  .medium-giraffe .giraffe-image {
+    height: 190px;
+  }
+  
+  .shortest-giraffe .giraffe-image {
+    height: 160px;
   }
 
   .secondary-giraffe:nth-child(1) .speech-bubble {
@@ -1417,6 +1684,19 @@ export default defineComponent({
 @media (min-width: 1024px) {
   .objective-text {
     font-size: 32px;
+  }
+  
+  /* Giraffe height adjustments for laptop/desktop */
+  .tallest-giraffe .giraffe-image {
+    height: 200px;
+  }
+  
+  .medium-giraffe .giraffe-image {
+    height: 170px;
+  }
+  
+  .shortest-giraffe .giraffe-image {
+    height: 140px;
   }
 }
 
@@ -1860,6 +2140,98 @@ export default defineComponent({
     top: -45px;
     padding: 8px 14px;
     font-size: 16px;
+  }
+}
+
+/* Styling for the explicit giraffe types - with higher specificity and !important */
+@media (min-width: 1024px) {
+  .tallest-giraffe {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 300px !important;
+    clip-path: none !important;
+  }
+  
+  .tallest-giraffe-image {
+    height: 300px !important;
+    width: 65px !important;
+    clip-path: none !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+    margin-bottom: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .medium-giraffe-image {
+    height: 170px !important;
+    width: 65px !important;
+    clip-path: none !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+  }
+
+  .shortest-giraffe-image {
+    height: 120px !important;
+    width: 65px !important;
+    clip-path: none !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+  }
+}
+
+/* Fix for ensuring all giraffes stick to the grass regardless of swapping */
+.giraffe-fixed-bottom {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  position: relative !important;
+  bottom: 0 !important;
+  margin-bottom: 0 !important;
+  object-position: bottom !important;
+  vertical-align: bottom !important;
+}
+
+/* Add a class for the grass-area to assist with positioning */
+.grass-area .grass-outline {
+  z-index: 10 !important;
+}
+
+/* Ensure the giraffe images maintain their relative proportions */
+@media (min-width: 1024px) {
+  .tallest-giraffe-image {
+    transform-origin: bottom center !important;
+  }
+  
+  .medium-giraffe-image {
+    transform-origin: bottom center !important;
+  }
+  
+  .shortest-giraffe-image {
+    transform-origin: bottom center !important;
+  }
+}
+
+/* Fix for the positioning when success modal appears */
+@media (min-width: 1024px) {
+  /* When success modal shows, maintain proper giraffe positioning */
+  .success-feedback.slide-in ~ .game-content .giraffes-area {
+    bottom: 224px !important;
+    position: absolute !important;
+    z-index: 5 !important;
+  }
+
+  .success-feedback.slide-in ~ .game-content .giraffe-slot,
+  .success-feedback.slide-in ~ .game-content .giraffe-container {
+    margin-bottom: 0 !important;
+    bottom: 0 !important;
+  }
+
+  /* Make sure the success feedback doesn't disrupt positioning */
+  .success-feedback {
+    z-index: 2000 !important;
+    position: fixed !important;
+    bottom: 0 !important;
   }
 }
 </style>
