@@ -4,8 +4,7 @@ An interactive educational game designed to teach children about comparing numbe
 
 ## Live Demo
 
-The application is deployed on Vercel and can be accessed at:
-[https://comini-iqef1i2yt-ihthisham6s-projects.vercel.app](https://comini-iqef1i2yt-ihthisham6s-projects.vercel.app)
+The application is deployed on Vercel and can be accessed at : https://comini-ui-challenge.vercel.app
 
 ## Features
 
