@@ -94,3 +94,59 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Add touch-specific CSS to prevent unwanted behaviors */
+.gameplay-container {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Style for the dragged clone during touch operations */
+#touch-clone {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+  pointer-events: none !important;
+  position: absolute !important;
+  z-index: 9999 !important;
+}
+
+/* Improve touch target sizes for mobile */
+.number-button,
+.option-button {
+  min-width: 50px;
+  min-height: 50px;
+  touch-action: none;
+}
+
+/* Prevent text selection when dragging */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Override body touch behavior during active dragging */
+body.touch-dragging {
+  overflow: hidden;
+  touch-action: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* Specific iPad improvements */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .number-button,
+  .option-button {
+    min-width: 60px;
+    min-height: 60px;
+  }
+  
+  .check-button {
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+}

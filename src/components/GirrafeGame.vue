@@ -11,9 +11,11 @@
 
       <!-- Rive animation container -->
       <div class="rive-container">
-        <div class="fallback-image">
-          <img src="../assets/icons/Giraffe2.png" alt="Giraffe" class="fallback-giraffe" />
-        </div>
+        <RivePlayer 
+          src="src/assets/rive/giraffes.riv"
+          :width="350"
+          :height="250"
+        />
       </div>
 
       <!-- Action buttons -->

@@ -65,7 +65,10 @@
                    class="number-button"
                    draggable="true"
                    @dragstart="handleDragStart($event, index)"
-                   @dragend="handleDragEnd($event)">
+                   @dragend="handleDragEnd($event)"
+                   @touchstart.passive="handleTouchStart($event, index)"
+                   @touchmove.prevent="handleTouchMove($event)"
+                   @touchend="handleTouchEnd($event)">
                 {{ position.number }}
               </div>
             </div>
@@ -429,6 +432,16 @@ export default defineComponent({
 
     const router = useRouter();
 
+    // Add these variables for touch support
+    const touchStartX = ref(0);
+    const touchStartY = ref(0);
+    const currentTouchElement = ref<HTMLElement | null>(null);
+    const lastTouchedSlot = ref<number | null>(null);
+    const touchOffsetX = ref(0);
+    const touchOffsetY = ref(0);
+    const touchActive = ref(false);
+    const touchTarget = ref<number | null>(null);
+
     onMounted(() => {
       // Show game content after 1.5s delay
       setTimeout(() => {
@@ -517,7 +530,8 @@ export default defineComponent({
     const checkAnswer = () => {
       const numbers = positions.value.map(pos => pos.number);
       // Check if numbers are in ascending order (300, 380, 410)
-      const isCorrectOrder = numbers[0] < numbers[1] && numbers[1] < numbers[2];
+      const isCorrectOrder = numbers[0] !== null && numbers[1] !== null && numbers[2] !== null &&
+                             numbers[0] < numbers[1] && numbers[1] < numbers[2];
 
       positions.value.forEach(position => {
         position.isCorrect = isCorrectOrder;
@@ -721,6 +735,116 @@ export default defineComponent({
       }
     };
 
+    const handleTouchStart = (event: TouchEvent, index: number) => {
+      // Store the initial touch position
+      touchStartX.value = event.touches[0].clientX;
+      touchStartY.value = event.touches[0].clientY;
+      lastTouchedSlot.value = index;
+      currentTouchElement.value = event.currentTarget as HTMLElement;
+      
+      // Calculate offset within the element
+      const rect = currentTouchElement.value.getBoundingClientRect();
+      touchOffsetX.value = touchStartX.value - rect.left;
+      touchOffsetY.value = touchStartY.value - rect.top;
+      
+      // Add visual feedback
+      currentTouchElement.value.style.opacity = '0.8';
+      currentTouchElement.value.style.zIndex = '1000';
+      
+      // Track that we're in a touch operation
+      touchActive.value = true;
+      
+      // Add class to body to prevent scrolling
+      document.body.classList.add('touch-dragging');
+      
+      // Create a visual clone for dragging
+      const clone = currentTouchElement.value.cloneNode(true) as HTMLElement;
+      clone.id = 'touch-clone';
+      clone.style.position = 'absolute';
+      clone.style.left = `${event.touches[0].clientX - touchOffsetX.value}px`;
+      clone.style.top = `${event.touches[0].clientY - touchOffsetY.value}px`;
+      clone.style.width = `${currentTouchElement.value.offsetWidth}px`;
+      clone.style.height = `${currentTouchElement.value.offsetHeight}px`;
+      clone.style.zIndex = '2000';
+      clone.style.opacity = '0.9';
+      clone.style.pointerEvents = 'none';
+      clone.style.transition = 'none';
+      document.body.appendChild(clone);
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!touchActive.value || !currentTouchElement.value) return;
+      
+      const touch = event.touches[0];
+      
+      // Move the clone to follow the finger
+      const clone = document.getElementById('touch-clone');
+      if (clone) {
+        clone.style.left = `${touch.clientX - touchOffsetX.value}px`;
+        clone.style.top = `${touch.clientY - touchOffsetY.value}px`;
+      }
+      
+      // Detect which slot we're over
+      const slots = document.querySelectorAll('.number-slot');
+      let newTarget = null;
+      
+      slots.forEach((slot, idx) => {
+        const rect = slot.getBoundingClientRect();
+        if (
+          touch.clientX >= rect.left && 
+          touch.clientX <= rect.right && 
+          touch.clientY >= rect.top && 
+          touch.clientY <= rect.bottom
+        ) {
+          newTarget = idx;
+        }
+      });
+      
+      touchTarget.value = newTarget;
+    };
+
+    const handleTouchEnd = (event: TouchEvent) => {
+      if (!touchActive.value || currentTouchElement.value === null || lastTouchedSlot.value === null) return;
+      
+      // Remove the clone
+      const clone = document.getElementById('touch-clone');
+      if (clone) {
+        document.body.removeChild(clone);
+      }
+      
+      // Reset the original element's styling
+      currentTouchElement.value.style.opacity = '';
+      currentTouchElement.value.style.zIndex = '';
+      
+      // Remove body class to allow scrolling again
+      document.body.classList.remove('touch-dragging');
+      
+      // Check if we have a valid target to swap with
+      if (touchTarget.value !== null && touchTarget.value !== lastTouchedSlot.value) {
+        // Perform the swap just like in handleDrop
+        const startIndex = lastTouchedSlot.value;
+        const dropIndex = touchTarget.value;
+        
+        // Swap both numbers and giraffes
+        const tempNumber = positions.value[startIndex].number;
+        const tempGiraffe = positions.value[startIndex].giraffe;
+        
+        positions.value[startIndex].number = positions.value[dropIndex].number;
+        positions.value[startIndex].giraffe = positions.value[dropIndex].giraffe;
+        
+        positions.value[dropIndex].number = tempNumber;
+        positions.value[dropIndex].giraffe = tempGiraffe;
+        
+        showFeedback.value = false;
+      }
+      
+      // Reset touch state
+      touchActive.value = false;
+      currentTouchElement.value = null;
+      lastTouchedSlot.value = null;
+      touchTarget.value = null;
+    };
+
     return {
       showGameContent,
       showGiraffes,
@@ -768,7 +892,18 @@ export default defineComponent({
       filledStars,
       showButtons,
       handlePlayAgain,
-      handleContinueToHome
+      handleContinueToHome,
+      touchStartX,
+      touchStartY,
+      currentTouchElement,
+      lastTouchedSlot,
+      touchOffsetX,
+      touchOffsetY,
+      touchActive,
+      touchTarget,
+      handleTouchStart,
+      handleTouchMove,
+      handleTouchEnd
     };
   }
 });
@@ -1030,6 +1165,7 @@ export default defineComponent({
 .control-buttons {
   display: flex;
   gap: 12px;
+  z-index: 100;
 }
 
 .pause-button,
@@ -1044,12 +1180,15 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   font-size: 18px; /* Slightly larger icons */
+  z-index: 100;
 }
 
 .pause-button svg,
 .options-button svg {
   width: 20px;  /* Explicit icon sizing */
   height: 20px;
+  color: #333333;
+  opacity: 0.8;
 }
 
 .warning-feedback {

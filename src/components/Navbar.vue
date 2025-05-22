@@ -1,10 +1,6 @@
 Navbar.vue : <!-- Fixed Navbar.vue -->
 <script setup>
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBars, faSearch, faFilter } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faBars, faSearch, faFilter)
+// No local FontAwesome setup needed - using global setup
 </script>
 
 <template>

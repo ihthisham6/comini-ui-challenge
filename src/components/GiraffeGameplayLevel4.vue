@@ -82,6 +82,9 @@
                 class="option-button" 
                 draggable="true"
                 @dragstart="handleDragStart($event, option, index)"
+                @touchstart.passive="handleTouchStart($event, option, index)"
+                @touchmove.prevent="handleTouchMove($event)"
+                @touchend="handleTouchEnd($event)"
               >
                 {{ option }}
               </div>
@@ -567,6 +570,17 @@ export default defineComponent({
     // Comparison options
     const comparisonOptions = [">", "<", "="];
 
+    // Add variables for touch support
+    const touchStartX = ref(0);
+    const touchStartY = ref(0);
+    const currentTouchElement = ref<HTMLElement | null>(null);
+    const touchDragOption = ref<string | null>(null);
+    const touchDragIndex = ref<number | null>(null);
+    const touchOffsetX = ref(0);
+    const touchOffsetY = ref(0);
+    const touchActive = ref(false);
+    const touchTarget = ref<number | null>(null);
+
     onMounted(() => {
       startGameSequence();
     });
@@ -980,6 +994,114 @@ export default defineComponent({
       showTertiaryQuestion.value = true;
     };
 
+    const handleTouchStart = (event: TouchEvent, option: string, index: number) => {
+      // Store the initial touch position
+      touchStartX.value = event.touches[0].clientX;
+      touchStartY.value = event.touches[0].clientY;
+      touchDragOption.value = option;
+      touchDragIndex.value = index;
+      currentTouchElement.value = event.currentTarget as HTMLElement;
+      
+      // Calculate offset within the element
+      const rect = currentTouchElement.value.getBoundingClientRect();
+      touchOffsetX.value = touchStartX.value - rect.left;
+      touchOffsetY.value = touchStartY.value - rect.top;
+      
+      // Add visual feedback
+      currentTouchElement.value.style.opacity = '0.8';
+      currentTouchElement.value.style.zIndex = '1000';
+      
+      // Track that we're in a touch operation
+      touchActive.value = true;
+      
+      // Add class to body to prevent scrolling
+      document.body.classList.add('touch-dragging');
+      
+      // Create a visual clone for dragging
+      const clone = currentTouchElement.value.cloneNode(true) as HTMLElement;
+      clone.id = 'touch-clone';
+      clone.style.position = 'absolute';
+      clone.style.left = `${event.touches[0].clientX - touchOffsetX.value}px`;
+      clone.style.top = `${event.touches[0].clientY - touchOffsetY.value}px`;
+      clone.style.width = `${currentTouchElement.value.offsetWidth}px`;
+      clone.style.height = `${currentTouchElement.value.offsetHeight}px`;
+      clone.style.zIndex = '2000';
+      clone.style.opacity = '0.9';
+      clone.style.pointerEvents = 'none';
+      clone.style.transition = 'none';
+      document.body.appendChild(clone);
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!touchActive.value || !currentTouchElement.value) return;
+      
+      const touch = event.touches[0];
+      
+      // Move the clone to follow the finger
+      const clone = document.getElementById('touch-clone');
+      if (clone) {
+        clone.style.left = `${touch.clientX - touchOffsetX.value}px`;
+        clone.style.top = `${touch.clientY - touchOffsetY.value}px`;
+      }
+      
+      // Detect which slot we're over
+      const slots = document.querySelectorAll('.option-slot');
+      let newTarget = null;
+      
+      slots.forEach((slot, idx) => {
+        const rect = slot.getBoundingClientRect();
+        if (
+          touch.clientX >= rect.left && 
+          touch.clientX <= rect.right && 
+          touch.clientY >= rect.top && 
+          touch.clientY <= rect.bottom
+        ) {
+          newTarget = idx;
+        }
+      });
+      
+      touchTarget.value = newTarget;
+    };
+
+    const handleTouchEnd = (event: TouchEvent) => {
+      if (!touchActive.value || currentTouchElement.value === null || touchDragIndex.value === null) return;
+      
+      // Remove the clone
+      const clone = document.getElementById('touch-clone');
+      if (clone) {
+        document.body.removeChild(clone);
+      }
+      
+      // Reset the original element's styling
+      currentTouchElement.value.style.opacity = '';
+      currentTouchElement.value.style.zIndex = '';
+      
+      // Remove body class to allow scrolling again
+      document.body.classList.remove('touch-dragging');
+      
+      // Check if we have a valid target to swap with
+      if (touchTarget.value !== null && touchTarget.value !== touchDragIndex.value) {
+        // Get the current order
+        const newOrder = [...optionOrder.value];
+        
+        // Remove the dragged option from its original position
+        const [draggedOption] = newOrder.splice(touchDragIndex.value, 1);
+        
+        // Insert it at the new position
+        newOrder.splice(touchTarget.value, 0, draggedOption);
+        
+        // Update the order
+        optionOrder.value = newOrder;
+      }
+      
+      // Reset touch state
+      touchActive.value = false;
+      currentTouchElement.value = null;
+      touchDragOption.value = null;
+      touchDragIndex.value = null;
+      touchTarget.value = null;
+    };
+
     return {
       showStartTransition,
       isStartTransitionFading,
@@ -1039,7 +1161,10 @@ export default defineComponent({
       showPositiveTertiaryFeedback,
       showNegativeTertiaryFeedback,
       handleTertiaryContinue,
-      handleTertiaryTryAgain
+      handleTertiaryTryAgain,
+      handleTouchStart,
+      handleTouchMove,
+      handleTouchEnd
     };
   }
 });
@@ -1136,6 +1261,7 @@ export default defineComponent({
 .control-buttons {
   display: flex;
   gap: 12px;
+  z-index: 100;
 }
 
 .pause-button,
@@ -1150,6 +1276,15 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  z-index: 100;
+}
+
+.pause-button svg,
+.options-button svg {
+  width: 20px;
+  height: 20px;
+  color: #333333;
+  opacity: 0.8;
 }
 
 .instruction-text {
