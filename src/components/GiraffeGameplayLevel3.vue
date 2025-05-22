@@ -2187,12 +2187,32 @@ export default defineComponent({
     max-width: 100px;
     text-align: center;
     white-space: normal;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    position: absolute;
   }
   
   .tertiary-giraffe .speech-bubble,
   .secondary-giraffe .speech-bubble {
-    transform: translateY(-5px);
+    transform: translateX(-50%) translateY(-5px);
     text-align: center;
+    left: 50%;
+    right: auto;
+  }
+  
+  /* Fix for secondary phase giraffes */
+  .secondary-giraffes-container {
+    gap: 20px;
+  }
+  
+  .secondary-giraffe {
+    position: relative;
+  }
+  
+  .secondary-giraffe .speech-bubble {
+    top: -30px;
+    width: auto;
   }
 }
 </style>
