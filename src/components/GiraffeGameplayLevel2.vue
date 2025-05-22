@@ -57,7 +57,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number buttons -->
         <div class="number-slots">
@@ -130,7 +130,7 @@
                }">
             {{ showSuccessSpeech ? giraffe.successSpeech : giraffe.speech }}
           </div>
-          <img :src="`/src/assets/icons/${giraffe.image}`" 
+          <img :src="`@/assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${index + 1}`"
                class="giraffe-image" />
         </div>
@@ -139,7 +139,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showGrassArea }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Question Modal -->
@@ -208,7 +208,7 @@
             <span v-for="label in ['A', 'B', 'C', 'D']" :key="label">{{ label }}</span>
           </div>
         </div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Giraffes with equal heights -->
@@ -277,7 +277,7 @@
                :class="{ 'fade-in': showTertiarySuccess }">
             I'm the tallest!
           </div>
-          <img :src="`/src/assets/icons/${giraffe.image}`" 
+          <img :src="`@/assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${giraffe.label}`"
                class="giraffe-image" />
         </div>
@@ -286,7 +286,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showTertiarySuccess }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Success Modal -->

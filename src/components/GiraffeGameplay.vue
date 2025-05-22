@@ -64,7 +64,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section" :class="{ 'fade-in': showAnswers }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number buttons -->
         <div class="number-slots">
@@ -143,7 +143,7 @@
             {{ giraffe.speech }}
           </div>
           
-          <img :src="`/src/assets/icons/${giraffe.image}`" 
+          <img :src="`@/assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${index + 1}`"
                class="giraffe-image" />
         </div>
@@ -370,28 +370,28 @@ export default defineComponent({
       
       // For the tallest giraffe (always happy)
       if (position.giraffe.id === 2) {
-        return '/src/assets/icons/giraffe2.png';
+        return '@/assets/icons/giraffe2.png';
       }
       
       // Show confused images when feedback is shown and sequence is wrong
       if (showFeedback.value && !position.isCorrect) {
         if (position.giraffe.id === 1) {
-          return '/src/assets/icons/shortgiraffeconfused.png';
+          return '@/assets/icons/shortgiraffeconfused.png';
         }
         if (position.giraffe.id === 3) {
-          return '/src/assets/icons/midgiraffeconfused.png';
+          return '@/assets/icons/midgiraffeconfused.png';
         }
       }
       
       // Default idle states
       if (position.giraffe.id === 1) {
-        return '/src/assets/icons/Giraffe1.png';
+        return '@/assets/icons/Giraffe1.png';
       }
       if (position.giraffe.id === 3) {
-        return '/src/assets/icons/giraffe3.png';
+        return '@/assets/icons/giraffe3.png';
       }
       
-      return `/src/assets/icons/giraffe${position.giraffe.id}.png`;
+      return `@/assets/icons/giraffe${position.giraffe.id}.png`;
     };
 
     const checkAnswer = () => {

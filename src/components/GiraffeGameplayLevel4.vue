@@ -608,13 +608,7 @@ export default defineComponent({
     };
     
     const getGiraffeImage = (position: number) => {
-      if (position === 3) {
-        return '/src/assets/icons/Giraffe3.png'; // Clipped giraffe
-      } else if (position === 2) {
-        return '/src/assets/icons/Giraffe2.png'; // Tall giraffe
-      } else {
-        return '/src/assets/icons/Giraffe1.png'; // Short giraffe
-      }
+      return `@/assets/icons/giraffe${position}.png`;
     };
     
     const handleDragStart = (event: DragEvent, option: string, index: number) => {

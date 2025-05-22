@@ -51,7 +51,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number slots -->
         <div class="number-slots">
@@ -146,7 +146,7 @@
                }">
             {{ showSuccessSpeech ? giraffe.successSpeech : giraffe.speech }}
           </div>
-          <img :src="`/src/assets/icons/${giraffe.image}`" 
+          <img :src="`@/assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${index + 1}`"
                class="giraffe-image" />
         </div>
@@ -155,7 +155,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showGrassArea }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Secondary Phase Question Modal -->
@@ -241,8 +241,8 @@
                giraffe.speech }}
           </div>
           <img :src="showTertiaryError && index === 0 ? 
-                     '/src/assets/icons/giraffe3.png' : 
-                     `/src/assets/icons/${giraffe.image}`"
+                     '@/assets/icons/giraffe3.png' : 
+                     `@/assets/icons/${giraffe.image}`"
                :alt="`Giraffe ${giraffe.label}`"
                :class="{ 
                  'giraffe-image': true,
@@ -255,7 +255,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showTertiaryContent }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Question Modal -->
