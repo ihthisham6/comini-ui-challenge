@@ -9,7 +9,11 @@
           </button>
         </div>
         <div class="preview-container">
-          <img src="../assets/icons/Giraffe3.png" alt="Giraffe Game Preview" class="preview-image" />
+          <RivePlayer
+            src="../assets/rive/giraffes.riv"
+            :width="312"
+            :height="200"
+          />
         </div>
         <button class="lets-go-button" @click="handleStartGame">
           Let's go!

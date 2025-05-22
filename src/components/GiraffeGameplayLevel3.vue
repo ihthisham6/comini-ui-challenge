@@ -497,21 +497,21 @@ export default defineComponent({
       
       // For the tallest giraffe (always happy)
       if (position.giraffe.id === 2) {
-        return '/src/assets/icons/Giraffe2.png';
+        return '../assets/icons/Giraffe2.png';
       }
       
       // Show confused images when feedback is shown and sequence is wrong
       if (showFeedback.value && !position.isCorrect) {
         if (position.giraffe.id === 1) {
-          return '/src/assets/icons/ShortGiraffeConfused.png';
+          return '../assets/icons/ShortGiraffeConfused.png';
         }
         if (position.giraffe.id === 3) {
-          return '/src/assets/icons/MidGiraffeConfused.png';
+          return '../assets/icons/MidGiraffeConfused.png';
         }
       }
       
       // Default idle states
-      return `/src/assets/icons/Giraffe${position.giraffe.id}.png`;
+      return `../assets/icons/Giraffe${position.giraffe.id}.png`;
     };
 
     const checkAnswer = () => {
