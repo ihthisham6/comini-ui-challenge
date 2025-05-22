@@ -45,10 +45,23 @@
           </div>
           
           <template v-if="position.giraffe">
-            <div class="giraffe-container">
+            <div class="giraffe-container giraffe-fixed-bottom"
+                 :class="{
+                   'tallest-giraffe': position.giraffe.id === 2,
+                   'medium-giraffe': position.giraffe.id === 3,
+                   'shortest-giraffe': position.giraffe.id === 1
+                 }">
               <img :src="getGiraffeHead(position)" 
                    :alt="`Giraffe ${position.giraffe.id}`"
-                   class="giraffe-image" />
+                   :class="[
+                     'giraffe-image',
+                     'giraffe-fixed-bottom',
+                     {
+                       'tallest-giraffe-image': position.giraffe.id === 2,
+                       'medium-giraffe-image': position.giraffe.id === 3,
+                       'shortest-giraffe-image': position.giraffe.id === 1
+                     }
+                   ]" />
             </div>
           </template>
         </div>
@@ -67,10 +80,10 @@
                @dragover.prevent
                @drop="handleDrop($event, index)">
             <div v-if="position.number !== null"
-                 class="number-button"
+                 class="number-button draggable-item"
                  draggable="true"
                  @dragstart="handleDragStart($event, index)"
-                 @touchstart.passive="handleTouchStart($event, index)"
+                 @touchstart="handleTouchStart($event, index)"
                  @touchmove.prevent="handleTouchMove($event)"
                  @touchend="handleTouchEnd($event)">
               {{ position.number }}
@@ -635,6 +648,16 @@ export default defineComponent({
         showGameContent.value = true;
         showGiraffes.value = true;
       }, 1500);
+      
+      // Improve touch handling across iOS and Android
+      const numberButtons = document.querySelectorAll('.number-button');
+      numberButtons.forEach(button => {
+        // Mark element as draggable for iOS
+        if ((button as HTMLElement).style) {
+          // Use type assertion for webkit-specific property
+          ((button as HTMLElement).style as any).webkitUserDrag = 'element';
+        }
+      });
     });
 
     // Define giraffes with correct order (using numbers similar to Level 1)
@@ -1216,11 +1239,41 @@ export default defineComponent({
   transform: translateY(2px);
 }
 
+/* Base responsive classes for different giraffe sizes */
+.tallest-giraffe .giraffe-image, 
+.tallest-giraffe-image {
+  height: 150px !important;
+  clip-path: none !important;
+  margin-bottom: 0 !important;
+}
+
+.medium-giraffe .giraffe-image,
+.medium-giraffe-image {
+  height: 120px !important;
+}
+
+.shortest-giraffe .giraffe-image,
+.shortest-giraffe-image {
+  height: 100px !important;
+}
+
 /* Remove giraffe scaling */
 .giraffe-slot:nth-child(1) .giraffe-image,
 .giraffe-slot:nth-child(2) .giraffe-image,
 .giraffe-slot:nth-child(3) .giraffe-image {
   transform: translateY(2px);
+}
+
+/* Fix for ensuring all giraffes stick to the grass */
+.giraffe-fixed-bottom {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  position: relative !important;
+  bottom: 0 !important;
+  margin-bottom: 0 !important;
+  object-position: bottom !important;
+  vertical-align: bottom !important;
 }
 
 .speech-bubble {
@@ -1370,6 +1423,26 @@ export default defineComponent({
   .giraffe-image {
     width: 55px;
     height: 170px;
+  }
+  
+  /* Make sure the tallest giraffe is rendered at FULL height */
+  .tallest-giraffe .giraffe-image,
+  .tallest-giraffe-image {
+    height: 180px !important;
+    clip-path: none !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Medium giraffe should be clearly smaller than tallest */
+  .medium-giraffe .giraffe-image,
+  .medium-giraffe-image {
+    height: 140px !important;
+  }
+  
+  /* Shortest giraffe */
+  .shortest-giraffe .giraffe-image,
+  .shortest-giraffe-image {
+    height: 120px !important;
   }
 }
 

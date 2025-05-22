@@ -34,15 +34,23 @@
             {{ getSpeechText(position) }}
           </div>
           <template v-if="position.giraffe">
-            <div class="giraffe-container"
+            <div class="giraffe-container giraffe-fixed-bottom"
                  :class="{
                    'tallest-giraffe': position.giraffe.id === 2,
-                   'short-giraffe': position.giraffe.id === 1,
-                   'mid-giraffe': position.giraffe.id === 3
+                   'medium-giraffe': position.giraffe.id === 3,
+                   'shortest-giraffe': position.giraffe.id === 1
                  }">
               <img :src="getGiraffeHead(position)" 
                    :alt="`Giraffe ${position.giraffe.id}`"
-                   class="giraffe-image" />
+                   :class="[
+                     'giraffe-image',
+                     'giraffe-fixed-bottom',
+                     {
+                       'tallest-giraffe-image': position.giraffe.id === 2,
+                       'medium-giraffe-image': position.giraffe.id === 3,
+                       'shortest-giraffe-image': position.giraffe.id === 1
+                     }
+                   ]" />
             </div>
           </template>
         </div>
@@ -452,6 +460,16 @@ export default defineComponent({
       setTimeout(() => {
         showGiraffes.value = true;
       }, 2500);
+      
+      // Improve touch handling across iOS and Android
+      const numberButtons = document.querySelectorAll('.number-button');
+      numberButtons.forEach(button => {
+        // Mark element as draggable for iOS
+        if ((button as HTMLElement).style) {
+          // Use type assertion for webkit-specific property
+          ((button as HTMLElement).style as any).webkitUserDrag = 'element';
+        }
+      });
     });
 
     const handleDragStart = (event: DragEvent, index: number) => {
@@ -2213,6 +2231,59 @@ export default defineComponent({
   .secondary-giraffe .speech-bubble {
     top: -30px;
     width: auto;
+  }
+}
+
+/* Fix for ensuring all giraffes stick to the grass */
+.giraffe-fixed-bottom {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  position: relative !important;
+  bottom: 0 !important;
+  margin-bottom: 0 !important;
+  object-position: bottom !important;
+  vertical-align: bottom !important;
+}
+
+/* Specific classes for giraffe images */
+.tallest-giraffe-image {
+  height: 200px !important;
+  width: 65px !important;
+  clip-path: none !important;
+  object-fit: contain !important;
+  object-position: bottom !important;
+  margin-bottom: 0 !important;
+}
+
+.medium-giraffe-image {
+  height: 170px !important;
+  width: 65px !important;
+  clip-path: none !important;
+  object-fit: contain !important;
+  object-position: bottom !important;
+}
+
+.shortest-giraffe-image {
+  height: 140px !important;
+  width: 65px !important;
+  clip-path: none !important;
+  object-fit: contain !important;
+  object-position: bottom !important;
+}
+
+@media (min-width: 1024px) {
+  /* When success modal shows, adjust bubble position to be closer to giraffe */
+  .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
+    top: -180px !important;
+  }
+  
+  /* Position speech bubbles properly */
+  .giraffe-slot .speech-bubble {
+    top: -60px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    white-space: nowrap !important;
   }
 }
 </style>

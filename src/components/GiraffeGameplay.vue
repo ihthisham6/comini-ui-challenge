@@ -87,9 +87,13 @@
                @dragover.prevent
                @drop="handleDrop($event, index)">
             <div v-if="position.number !== null"
-                 class="number-button"
+                 class="number-button draggable-item"
                  draggable="true"
-                 @dragstart="handleDragStart($event, index)">
+                 @dragstart="handleDragStart($event, index)"
+                 @touchstart="handleTouchStart($event, index)"
+                 @touchmove.prevent="handleTouchMove($event)"
+                 @touchend="handleTouchEnd($event, index)">
+              <div class="drag-handle"></div>
               {{ position.number }}
             </div>
           </div>
@@ -367,6 +371,118 @@ export default defineComponent({
       dragStartIndex.value = null;
     };
 
+    // Touch event handling for mobile devices
+    const touchStartY = ref(0);
+    const touchStartX = ref(0);
+    const currentTouchY = ref(0);
+    const currentTouchX = ref(0);
+    const activeTouchElement = ref<HTMLElement | null>(null);
+    const touchTargetIndex = ref<number | null>(null);
+    const isDraggingTouch = ref(false);
+    
+    const handleTouchStart = (event: TouchEvent, index: number) => {
+      if (event.touches.length !== 1) return;
+      
+      // Store starting position
+      touchStartX.value = event.touches[0].clientX;
+      touchStartY.value = event.touches[0].clientY;
+      currentTouchX.value = touchStartX.value;
+      currentTouchY.value = touchStartY.value;
+      
+      // Store the element and index
+      activeTouchElement.value = event.currentTarget as HTMLElement;
+      touchTargetIndex.value = index;
+      
+      // Begin dragging after a short delay to differentiate from scrolling
+      setTimeout(() => {
+        if (Math.abs(currentTouchX.value - touchStartX.value) > 5 || 
+            Math.abs(currentTouchY.value - touchStartY.value) > 5) {
+          isDraggingTouch.value = true;
+          
+          // Visual feedback
+          if (activeTouchElement.value) {
+            activeTouchElement.value.style.opacity = '0.6';
+          }
+        }
+      }, 100);
+    };
+    
+    const handleTouchMove = (event: TouchEvent) => {
+      if (event.touches.length !== 1 || !isDraggingTouch.value || !activeTouchElement.value) return;
+      
+      // Update current position
+      currentTouchX.value = event.touches[0].clientX;
+      currentTouchY.value = event.touches[0].clientY;
+      
+      // Move the element with the touch
+      if (activeTouchElement.value) {
+        activeTouchElement.value.style.transform = `translate(${currentTouchX.value - touchStartX.value}px, ${currentTouchY.value - touchStartY.value}px)`;
+      }
+      
+      // Detect if we're over a drop target
+      const elements = document.elementsFromPoint(currentTouchX.value, currentTouchY.value);
+      const dropTarget = elements.find(el => el.classList.contains('number-slot'));
+      
+      // Highlight potential drop target
+      document.querySelectorAll('.number-slot').forEach(slot => {
+        slot.classList.remove('touch-drop-target');
+      });
+      
+      if (dropTarget && dropTarget.classList.contains('number-slot')) {
+        dropTarget.classList.add('touch-drop-target');
+      }
+    };
+    
+    const handleTouchEnd = (event: TouchEvent, startIndex: number) => {
+      if (!isDraggingTouch.value || touchTargetIndex.value === null) {
+        isDraggingTouch.value = false;
+        activeTouchElement.value = null;
+        return;
+      }
+      
+      // Get target element under touch point
+      const elements = document.elementsFromPoint(currentTouchX.value, currentTouchY.value);
+      const dropTarget = elements.find(el => el.classList.contains('number-slot'));
+      
+      // Reset visual appearance
+      if (activeTouchElement.value) {
+        activeTouchElement.value.style.opacity = '';
+        activeTouchElement.value.style.transform = '';
+      }
+      
+      // Remove all highlights
+      document.querySelectorAll('.number-slot').forEach(slot => {
+        slot.classList.remove('touch-drop-target');
+      });
+      
+      // If we have a valid drop target, perform the swap
+      if (dropTarget) {
+        const dropIndex = Array.from(document.querySelectorAll('.number-slot')).indexOf(dropTarget);
+        if (dropIndex !== -1 && dropIndex !== startIndex) {
+          dragStartIndex.value = startIndex; // Set for the swap function
+          
+          // Use the same swap logic as handleDrop
+          const tempNumber = positions.value[startIndex].number;
+          const tempGiraffe = positions.value[startIndex].giraffe;
+          
+          positions.value[startIndex].number = positions.value[dropIndex].number;
+          positions.value[startIndex].giraffe = positions.value[dropIndex].giraffe;
+          
+          positions.value[dropIndex].number = tempNumber;
+          positions.value[dropIndex].giraffe = tempGiraffe;
+          
+          // Hide feedback when positions change
+          showFeedback.value = false;
+        }
+      }
+      
+      // Reset state
+      isDraggingTouch.value = false;
+      activeTouchElement.value = null;
+      touchTargetIndex.value = null;
+      dragStartIndex.value = null;
+    };
+
     const getSpeechText = (position: Position) => {
       if (!position.giraffe) return '';
       
@@ -426,6 +542,16 @@ export default defineComponent({
       // Add resize listener
       window.addEventListener('resize', () => {
         windowWidth.value = window.innerWidth;
+      });
+      
+      // Improve touch handling across iOS and Android
+      const numberButtons = document.querySelectorAll('.number-button');
+      numberButtons.forEach(button => {
+        // Mark element as draggable for iOS
+        if ((button as HTMLElement).style) {
+          // Use type assertion for webkit-specific property
+          ((button as HTMLElement).style as any).webkitUserDrag = 'element';
+        }
       });
     });
 
@@ -738,6 +864,16 @@ export default defineComponent({
       handleSecondaryComplete,
       showBronzeBadgeUnlock,
       getGiraffeStyle,
+      touchStartY,
+      touchStartX,
+      currentTouchY,
+      currentTouchX,
+      activeTouchElement,
+      touchTargetIndex,
+      isDraggingTouch,
+      handleTouchStart,
+      handleTouchMove,
+      handleTouchEnd,
     };
   }
 });
@@ -1336,6 +1472,38 @@ export default defineComponent({
   cursor: grab;
   user-select: none;
   transition: transform 0.3s ease;
+  position: relative;
+  touch-action: none; /* Disable browser handling of touch events */
+}
+
+/* Mobile drag handle visual cue */
+.drag-handle {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 25px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+}
+
+/* Touch drop target highlight */
+.touch-drop-target {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+/* Ensure warning/success messages appear on top */
+.warning-feedback, .success-feedback, .secondary-warning-feedback, .secondary-success-feedback {
+  z-index: 2000 !important;
+  position: fixed !important;
+}
+
+/* Fix speech bubble positions during warning display */
+.warning-feedback.slide-in ~ .game-content .speech-bubble,
+.success-feedback.slide-in ~ .game-content .speech-bubble {
+  z-index: 1 !important; /* Keep behind feedback */
 }
 
 .speech-bubble {

@@ -583,6 +583,18 @@ export default defineComponent({
 
     onMounted(() => {
       startGameSequence();
+      
+      // Improve touch handling across iOS and Android
+      setTimeout(() => {
+        const optionButtons = document.querySelectorAll('.option-button');
+        optionButtons.forEach(button => {
+          // Mark element as draggable for iOS
+          if ((button as HTMLElement).style) {
+            // Use type assertion for webkit-specific property
+            ((button as HTMLElement).style as any).webkitUserDrag = 'element';
+          }
+        });
+      }, 2000); // Wait a bit for the elements to be in the DOM
     });
 
     const startGameSequence = () => {
@@ -2460,5 +2472,30 @@ export default defineComponent({
     font-size: 14px;
     padding: 8px;
   }
+}
+
+/* Fix for success feedback speech bubble positioning */
+.success-feedback.slide-in ~ .game-content .speech-bubble {
+  top: -180px !important;
+  position: fixed !important;
+  z-index: 2000 !important;
+}
+
+/* Fix for ensuring giraffe images display at proper heights */
+.giraffe-img {
+  object-fit: contain !important;
+  object-position: bottom !important;
+  position: absolute !important;
+  bottom: 0 !important;
+}
+
+/* Ensure touch targets are large enough on mobile */
+.option-button {
+  touch-action: none !important;
+}
+
+/* Prevent z-index issues when interacting with warning messages */
+.warning-feedback, .success-feedback {
+  z-index: 2000 !important;
 }
 </style> 
