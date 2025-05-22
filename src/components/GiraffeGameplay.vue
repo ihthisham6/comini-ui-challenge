@@ -225,7 +225,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="bronze-badge-unlock-text">Bronze Badge</h2>
-      <img src="/src/assets/icons/Bronze league.png" alt="Bronze Badge" class="badge-icon" />
+      <img src="/src/assets/icons/BronzeLeague.png" alt="Bronze Badge" class="badge-icon" />
       <p class="badge-subtitle">Keep going to unlock the silver badge!</p>
     </div>
 

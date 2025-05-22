@@ -347,7 +347,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="silver-badge-unlock-text">You unlocked the Silver Badge!</h2>
-      <img src="/src/assets/icons/Silver League.png" alt="Silver Badge" class="badge-icon-unlock" />
+      <img src="/src/assets/icons/SilverLeague.png" alt="Silver Badge" class="badge-icon-unlock" />
     </div>
 
     <!-- Silver Badge Screen -->
@@ -361,7 +361,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="silver-badge-title">You unlocked the Silver Badge!</h2>
-      <img src="/src/assets/icons/Silver League.png" alt="Silver Badge" class="badge-icon" />
+      <img src="/src/assets/icons/SilverLeague.png" alt="Silver Badge" class="badge-icon" />
       <div class="progress-container">
         <div class="progress-bar"></div>
       </div>

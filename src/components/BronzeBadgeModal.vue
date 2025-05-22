@@ -9,7 +9,7 @@
       </div>
       
       <div class="badge-icon">
-        <img src="/src/assets/icons/Bronze league.png" alt="Bronze Badge" class="badge-image" />
+        <img src="/src/assets/icons/BronzeLeague.png" alt="Bronze Badge" class="badge-image" />
       </div>
 
       <h2 class="badge-title">Bronze Badge</h2>
