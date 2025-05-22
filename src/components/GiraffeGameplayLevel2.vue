@@ -540,69 +540,75 @@ export default defineComponent({
       lastTouchedSlot.value = index;
       currentTouchElement.value = event.currentTarget as HTMLElement;
       
-      // Calculate offset within the element
+      // Create a visual clone for dragging on iOS
       const rect = currentTouchElement.value.getBoundingClientRect();
-      touchOffsetX.value = touchStartX.value - rect.left;
-      touchOffsetY.value = touchStartY.value - rect.top;
+      const clone = currentTouchElement.value.cloneNode(true) as HTMLElement;
+      clone.id = 'touch-clone';
+      clone.style.position = 'absolute';
+      clone.style.left = `${rect.left}px`;
+      clone.style.top = `${rect.top}px`;
+      clone.style.width = `${rect.width}px`;
+      clone.style.height = `${rect.height}px`;
+      clone.style.zIndex = '2000';
+      clone.style.opacity = '0.8';
+      clone.style.pointerEvents = 'none';
+      document.body.appendChild(clone);
       
-      // Add visual feedback
-      currentTouchElement.value.style.opacity = '0.8';
-      currentTouchElement.value.style.zIndex = '1000';
+      // Visual feedback for the original element
+      currentTouchElement.value.style.opacity = '0.4';
+      
+      // Prevent scrolling during drag
+      document.body.style.overflow = 'hidden';
       
       // Track that we're in a touch operation
       touchActive.value = true;
       
       // Add class to body to prevent scrolling
       document.body.classList.add('touch-dragging');
-      
-      // Create a visual clone for dragging
-      const clone = currentTouchElement.value.cloneNode(true) as HTMLElement;
-      clone.id = 'touch-clone';
-      clone.style.position = 'absolute';
-      clone.style.left = `${event.touches[0].clientX - touchOffsetX.value}px`;
-      clone.style.top = `${event.touches[0].clientY - touchOffsetY.value}px`;
-      clone.style.width = `${currentTouchElement.value.offsetWidth}px`;
-      clone.style.height = `${currentTouchElement.value.offsetHeight}px`;
-      clone.style.zIndex = '2000';
-      clone.style.opacity = '0.9';
-      clone.style.pointerEvents = 'none';
-      clone.style.transition = 'none';
-      document.body.appendChild(clone);
     };
 
     const handleTouchMove = (event: TouchEvent) => {
       if (!touchActive.value || !currentTouchElement.value) return;
+      
+      event.preventDefault(); // Prevent scrolling
       
       const touch = event.touches[0];
       
       // Move the clone to follow the finger
       const clone = document.getElementById('touch-clone');
       if (clone) {
-        clone.style.left = `${touch.clientX - touchOffsetX.value}px`;
-        clone.style.top = `${touch.clientY - touchOffsetY.value}px`;
+        clone.style.transform = `translate(${touch.clientX - touchStartX.value}px, ${touch.clientY - touchStartY.value}px)`;
       }
       
       // Detect which slot we're over
-      const slots = document.querySelectorAll('.number-slot');
+      const slots = Array.from(document.querySelectorAll('.number-slot'));
       let newTarget = null;
       
-      slots.forEach((slot, idx) => {
-        const rect = slot.getBoundingClientRect();
-        if (
-          touch.clientX >= rect.left && 
-          touch.clientX <= rect.right && 
-          touch.clientY >= rect.top && 
-          touch.clientY <= rect.bottom
-        ) {
-          newTarget = idx;
-        }
+      // Find the slot under the current touch position
+      const elements = document.elementsFromPoint(touch.clientX, touch.clientY);
+      const dropTarget = elements.find(el => el.classList.contains('number-slot'));
+      
+      if (dropTarget) {
+        newTarget = slots.indexOf(dropTarget as HTMLElement);
+      }
+      
+      // Highlight potential drop target
+      slots.forEach(slot => {
+        slot.classList.remove('touch-drop-target');
       });
+      
+      if (dropTarget) {
+        dropTarget.classList.add('touch-drop-target');
+      }
       
       touchTarget.value = newTarget;
     };
 
     const handleTouchEnd = (event: TouchEvent) => {
       if (!touchActive.value || currentTouchElement.value === null || lastTouchedSlot.value === null) return;
+      
+      // Re-enable scrolling
+      document.body.style.overflow = '';
       
       // Remove the clone
       const clone = document.getElementById('touch-clone');
@@ -612,7 +618,6 @@ export default defineComponent({
       
       // Reset the original element's styling
       currentTouchElement.value.style.opacity = '';
-      currentTouchElement.value.style.zIndex = '';
       
       // Remove body class to allow scrolling again
       document.body.classList.remove('touch-dragging');
@@ -1401,11 +1406,11 @@ export default defineComponent({
 }
 
 @keyframes slideIn {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1976,19 +1981,12 @@ export default defineComponent({
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 .slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  animation: slideIn 0.5s ease forwards;
 }
 
 .success-screen {

@@ -760,22 +760,8 @@ export default defineComponent({
       lastTouchedSlot.value = index;
       currentTouchElement.value = event.currentTarget as HTMLElement;
       
-      // Calculate offset within the element
+      // Create a visual clone for dragging on iOS
       const rect = currentTouchElement.value.getBoundingClientRect();
-      touchOffsetX.value = touchStartX.value - rect.left;
-      touchOffsetY.value = touchStartY.value - rect.top;
-      
-      // Add visual feedback
-      currentTouchElement.value.style.opacity = '0.8';
-      currentTouchElement.value.style.zIndex = '1000';
-      
-      // Track that we're in a touch operation
-      touchActive.value = true;
-      
-      // Add class to body to prevent scrolling
-      document.body.classList.add('touch-dragging');
-      
-      // Create a visual clone for dragging
       const clone = currentTouchElement.value.cloneNode(true) as HTMLElement;
       clone.id = 'touch-clone';
       clone.style.position = 'absolute';
@@ -1327,11 +1313,11 @@ export default defineComponent({
 }
 
 @keyframes slideIn {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -1637,11 +1623,11 @@ export default defineComponent({
 }
 
 @keyframes modalSlideIn {
-  from {
+  0% {
     opacity: 0;
     transform: translate(-50%, 20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateX(-50%);
   }
@@ -2160,11 +2146,11 @@ export default defineComponent({
 }
 
 @keyframes scaleIn {
-  from {
+  0% {
     transform: scale(0);
     opacity: 0;
   }
-  to {
+  100% {
     transform: scale(1);
     opacity: 1;
   }

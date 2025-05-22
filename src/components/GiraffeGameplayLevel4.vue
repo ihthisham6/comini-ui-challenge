@@ -1824,27 +1824,27 @@ export default defineComponent({
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 @keyframes slideIn {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes scaleIn {
-  from {
+  0% {
     transform: scale(0);
     opacity: 0;
   }
-  to {
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -1852,11 +1852,11 @@ export default defineComponent({
 
 /* Add new slide-in animation from bottom */
 @keyframes slideInFromBottom {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(100%);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }

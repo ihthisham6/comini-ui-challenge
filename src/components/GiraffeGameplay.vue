@@ -92,7 +92,7 @@
                  @dragstart="handleDragStart($event, index)"
                  @touchstart="handleTouchStart($event, index)"
                  @touchmove.prevent="handleTouchMove($event)"
-                 @touchend="handleTouchEnd($event, index)">
+                 @touchend="handleTouchEnd($event)">
               <div class="drag-handle"></div>
               {{ position.number }}
             </div>
@@ -372,10 +372,10 @@ export default defineComponent({
     };
 
     // Touch event handling for mobile devices
-    const touchStartY = ref(0);
     const touchStartX = ref(0);
-    const currentTouchY = ref(0);
+    const touchStartY = ref(0);
     const currentTouchX = ref(0);
+    const currentTouchY = ref(0);
     const activeTouchElement = ref<HTMLElement | null>(null);
     const touchTargetIndex = ref<number | null>(null);
     const isDraggingTouch = ref(false);
@@ -393,30 +393,43 @@ export default defineComponent({
       activeTouchElement.value = event.currentTarget as HTMLElement;
       touchTargetIndex.value = index;
       
-      // Begin dragging after a short delay to differentiate from scrolling
-      setTimeout(() => {
-        if (Math.abs(currentTouchX.value - touchStartX.value) > 5 || 
-            Math.abs(currentTouchY.value - touchStartY.value) > 5) {
-          isDraggingTouch.value = true;
-          
-          // Visual feedback
-          if (activeTouchElement.value) {
-            activeTouchElement.value.style.opacity = '0.6';
-          }
-        }
-      }, 100);
+      // Create a visual clone for dragging on iOS
+      const rect = activeTouchElement.value.getBoundingClientRect();
+      const clone = activeTouchElement.value.cloneNode(true) as HTMLElement;
+      clone.id = 'touch-clone';
+      clone.style.position = 'absolute';
+      clone.style.left = `${rect.left}px`;
+      clone.style.top = `${rect.top}px`;
+      clone.style.width = `${rect.width}px`;
+      clone.style.height = `${rect.height}px`;
+      clone.style.zIndex = '2000';
+      clone.style.opacity = '0.8';
+      clone.style.pointerEvents = 'none';
+      document.body.appendChild(clone);
+      
+      // Visual feedback for the original element
+      activeTouchElement.value.style.opacity = '0.4';
+      
+      // Prevent scrolling during drag
+      document.body.style.overflow = 'hidden';
+      
+      // Mark as dragging
+      isDraggingTouch.value = true;
     };
     
     const handleTouchMove = (event: TouchEvent) => {
-      if (event.touches.length !== 1 || !isDraggingTouch.value || !activeTouchElement.value) return;
+      if (!isDraggingTouch.value || !activeTouchElement.value) return;
+      
+      event.preventDefault(); // Prevent scrolling
       
       // Update current position
       currentTouchX.value = event.touches[0].clientX;
       currentTouchY.value = event.touches[0].clientY;
       
-      // Move the element with the touch
-      if (activeTouchElement.value) {
-        activeTouchElement.value.style.transform = `translate(${currentTouchX.value - touchStartX.value}px, ${currentTouchY.value - touchStartY.value}px)`;
+      // Move the clone with the touch
+      const clone = document.getElementById('touch-clone');
+      if (clone) {
+        clone.style.transform = `translate(${currentTouchX.value - touchStartX.value}px, ${currentTouchY.value - touchStartY.value}px)`;
       }
       
       // Detect if we're over a drop target
@@ -433,35 +446,49 @@ export default defineComponent({
       }
     };
     
-    const handleTouchEnd = (event: TouchEvent, startIndex: number) => {
+    const handleTouchEnd = (event: TouchEvent) => {
       if (!isDraggingTouch.value || touchTargetIndex.value === null) {
         isDraggingTouch.value = false;
+        if (activeTouchElement.value) {
+          activeTouchElement.value.style.opacity = '';
+        }
         activeTouchElement.value = null;
         return;
       }
+      
+      // Re-enable scrolling
+      document.body.style.overflow = '';
+      
+      // Get all drop targets
+      const slots = Array.from(document.querySelectorAll('.number-slot'));
       
       // Get target element under touch point
       const elements = document.elementsFromPoint(currentTouchX.value, currentTouchY.value);
       const dropTarget = elements.find(el => el.classList.contains('number-slot'));
       
+      // Remove the clone
+      const clone = document.getElementById('touch-clone');
+      if (clone) {
+        document.body.removeChild(clone);
+      }
+      
       // Reset visual appearance
       if (activeTouchElement.value) {
         activeTouchElement.value.style.opacity = '';
-        activeTouchElement.value.style.transform = '';
       }
       
       // Remove all highlights
-      document.querySelectorAll('.number-slot').forEach(slot => {
+      slots.forEach(slot => {
         slot.classList.remove('touch-drop-target');
       });
       
       // If we have a valid drop target, perform the swap
       if (dropTarget) {
-        const dropIndex = Array.from(document.querySelectorAll('.number-slot')).indexOf(dropTarget);
+        const dropIndex = slots.indexOf(dropTarget as HTMLElement);
+        const startIndex = touchTargetIndex.value;
+        
         if (dropIndex !== -1 && dropIndex !== startIndex) {
-          dragStartIndex.value = startIndex; // Set for the swap function
-          
-          // Use the same swap logic as handleDrop
+          // Swap both numbers and giraffes
           const tempNumber = positions.value[startIndex].number;
           const tempGiraffe = positions.value[startIndex].giraffe;
           
@@ -476,11 +503,10 @@ export default defineComponent({
         }
       }
       
-      // Reset state
+      // Reset touch state
       isDraggingTouch.value = false;
       activeTouchElement.value = null;
       touchTargetIndex.value = null;
-      dragStartIndex.value = null;
     };
 
     const getSpeechText = (position: Position) => {
@@ -864,8 +890,8 @@ export default defineComponent({
       handleSecondaryComplete,
       showBronzeBadgeUnlock,
       getGiraffeStyle,
-      touchStartY,
       touchStartX,
+      touchStartY,
       currentTouchY,
       currentTouchX,
       activeTouchElement,
@@ -1602,11 +1628,11 @@ export default defineComponent({
 }
 
 @keyframes slideIn {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -2061,11 +2087,11 @@ export default defineComponent({
 }
 
 @keyframes slideIn {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -2262,11 +2288,11 @@ export default defineComponent({
 }
 
 @keyframes scaleIn {
-  from {
+  0% {
     transform: scale(0);
     opacity: 0;
   }
-  to {
+  100% {
     transform: scale(1);
     opacity: 1;
   }
