@@ -2185,10 +2185,14 @@ export default defineComponent({
     padding: 8px;
     min-width: 80px;
     max-width: 100px;
+    text-align: center;
+    white-space: normal;
   }
   
-  .tertiary-giraffe .speech-bubble {
+  .tertiary-giraffe .speech-bubble,
+  .secondary-giraffe .speech-bubble {
     transform: translateY(-5px);
+    text-align: center;
   }
 }
 </style>
