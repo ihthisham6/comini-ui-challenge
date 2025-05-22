@@ -109,7 +109,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="diamond-badge-unlock-text">You've unlocked the Diamond Badge!</h2>
-      <img src="/src/assets/icons/DiamondLeague.png" alt="Diamond Badge" class="badge-icon-unlock" />
+      <img src="../assets/icons/DiamondLeague.png" alt="Diamond Badge" class="badge-icon-unlock" />
     </div>
 
     <div v-if="showDiamondBadgeScreen" class="diamond-badge-screen fade-in">
@@ -120,7 +120,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="diamond-badge-title">Diamond Badge</h2>
-      <img src="/src/assets/icons/DiamondLeague.png" alt="Diamond Badge" class="badge-icon" />
+      <img src="../assets/icons/DiamondLeague.png" alt="Diamond Badge" class="badge-icon" />
       <p class="progress-text">Congratulations on completing all levels!</p>
       <button class="play-again-button" @click="handlePlayAgain">Play again</button>
       <button class="continue-home-button" @click="handleContinueToHome">Continue to Home</button>

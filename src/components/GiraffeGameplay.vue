@@ -64,7 +64,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section" :class="{ 'fade-in': showAnswers }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
+        <img src="../assets/icons/Grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number buttons -->
         <div class="number-slots">
@@ -143,7 +143,7 @@
             {{ giraffe.speech }}
           </div>
           
-          <img :src="`/src/assets/icons/${giraffe.image}`" 
+          <img :src="`../assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${index + 1}`"
                class="giraffe-image" />
         </div>
@@ -225,7 +225,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="bronze-badge-unlock-text">Bronze Badge</h2>
-      <img src="/src/assets/icons/BronzeLeague.png" alt="Bronze Badge" class="badge-icon" />
+      <img src="../assets/icons/BronzeLeague.png" alt="Bronze Badge" class="badge-icon" />
       <p class="badge-subtitle">Keep going to unlock the silver badge!</p>
     </div>
 
@@ -370,28 +370,28 @@ export default defineComponent({
       
       // For the tallest giraffe (always happy)
       if (position.giraffe.id === 2) {
-        return '/src/assets/icons/Giraffe2.png';
+        return '../assets/icons/Giraffe2.png';
       }
       
       // Show confused images when feedback is shown and sequence is wrong
       if (showFeedback.value && !position.isCorrect) {
         if (position.giraffe.id === 1) {
-          return '/src/assets/icons/ShortGiraffeConfused.png';
+          return '../assets/icons/ShortGiraffeConfused.png';
         }
         if (position.giraffe.id === 3) {
-          return '/src/assets/icons/MidGiraffeConfused.png';
+          return '../assets/icons/MidGiraffeConfused.png';
         }
       }
       
       // Default idle states
       if (position.giraffe.id === 1) {
-        return '/src/assets/icons/Giraffe1.png';
+        return '../assets/icons/Giraffe1.png';
       }
       if (position.giraffe.id === 3) {
-        return '/src/assets/icons/Giraffe3.png';
+        return '../assets/icons/Giraffe3.png';
       }
       
-      return `/src/assets/icons/Giraffe${position.giraffe.id}.png`;
+      return `../assets/icons/Giraffe${position.giraffe.id}.png`;
     };
 
     const checkAnswer = () => {

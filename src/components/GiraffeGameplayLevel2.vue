@@ -57,7 +57,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
+        <img src="../assets/icons/Grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number buttons -->
         <div class="number-slots">
@@ -139,7 +139,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showGrassArea }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
+        <img src="../assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Question Modal -->
@@ -208,7 +208,7 @@
             <span v-for="label in ['A', 'B', 'C', 'D']" :key="label">{{ label }}</span>
           </div>
         </div>
-        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
+        <img src="../assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Giraffes with equal heights -->
@@ -223,7 +223,7 @@
             {{ giraffe.height }}
           </div>
           <div class="giraffe-wrapper">
-            <img src="/src/assets/icons/Giraffe2.png" 
+            <img src="../assets/icons/Giraffe2.png" 
                  :alt="`Giraffe ${giraffe.label}`"
                  class="giraffe-image" />
           </div>
@@ -286,7 +286,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showTertiarySuccess }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
+        <img src="../assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Success Modal -->
@@ -347,7 +347,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="silver-badge-unlock-text">You unlocked the Silver Badge!</h2>
-      <img src="/src/assets/icons/SilverLeague.png" alt="Silver Badge" class="badge-icon-unlock" />
+      <img src="../assets/icons/SilverLeague.png" alt="Silver Badge" class="badge-icon-unlock" />
     </div>
 
     <!-- Silver Badge Screen -->
@@ -361,7 +361,7 @@
         <OctopusIcon :width="40" :height="40" color="#0DA49F" />
       </div>
       <h2 class="silver-badge-title">You unlocked the Silver Badge!</h2>
-      <img src="/src/assets/icons/SilverLeague.png" alt="Silver Badge" class="badge-icon" />
+      <img src="../assets/icons/SilverLeague.png" alt="Silver Badge" class="badge-icon" />
       <div class="progress-container">
         <div class="progress-bar"></div>
       </div>
