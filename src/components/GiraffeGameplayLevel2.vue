@@ -57,7 +57,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img src="/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number buttons -->
         <div class="number-slots">
@@ -130,7 +130,7 @@
                }">
             {{ showSuccessSpeech ? giraffe.successSpeech : giraffe.speech }}
           </div>
-          <img :src="`@/assets/icons/${giraffe.image}`" 
+          <img :src="`/src/assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${index + 1}`"
                class="giraffe-image" />
         </div>
@@ -139,7 +139,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showGrassArea }">
         <div class="grass-outline"></div>
-        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Question Modal -->
@@ -208,7 +208,7 @@
             <span v-for="label in ['A', 'B', 'C', 'D']" :key="label">{{ label }}</span>
           </div>
         </div>
-        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Giraffes with equal heights -->
@@ -277,7 +277,7 @@
                :class="{ 'fade-in': showTertiarySuccess }">
             I'm the tallest!
           </div>
-          <img :src="`@/assets/icons/${giraffe.image}`" 
+          <img :src="`/src/assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${giraffe.label}`"
                class="giraffe-image" />
         </div>
@@ -286,7 +286,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showTertiarySuccess }">
         <div class="grass-outline"></div>
-        <img src="@/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Success Modal -->
@@ -417,7 +417,6 @@ import { defineComponent, ref, onMounted, nextTick } from 'vue';
 import OctopusIcon from './OctopusIcon.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useRouter } from 'vue-router';
-import { getImageUrl } from '../utils/imageUtils';
 
 interface Giraffe {
   id: number;
@@ -841,17 +840,17 @@ export default defineComponent({
       
       if (isFirstTimePlayer.value) {
         // For first-time players, show great work modal with buttons
-        showGreatWorkModal.value = true;
-        filledStars.value = 0;
+      showGreatWorkModal.value = true;
+      filledStars.value = 0;
         showButtons.value = true; // Show buttons for first-time players
-        
-        // Animate stars
-        setTimeout(() => {
-          const starInterval = setInterval(() => {
-            if (filledStars.value < 2) {
-              filledStars.value++;
-            } else {
-              clearInterval(starInterval);
+
+      // Animate stars
+      setTimeout(() => {
+        const starInterval = setInterval(() => {
+          if (filledStars.value < 2) {
+            filledStars.value++;
+          } else {
+            clearInterval(starInterval);
             }
           }, 500);
         }, 500);
@@ -863,7 +862,7 @@ export default defineComponent({
         showButtons.value = false; // Hide buttons initially
         
         // 2. Animate stars
-        setTimeout(() => {
+              setTimeout(() => {
           const starInterval = setInterval(() => {
             if (filledStars.value < 2) {
               filledStars.value++;
@@ -871,12 +870,12 @@ export default defineComponent({
               clearInterval(starInterval);
               
               // 3. After stars are filled, transition to badge unlock screen
-              setTimeout(() => {
-                // Hide great work modal
-                showGreatWorkModal.value = false;
-                
-                // Show badge unlock screen
                 setTimeout(() => {
+                // Hide great work modal
+                  showGreatWorkModal.value = false;
+                  
+                // Show badge unlock screen
+                  setTimeout(() => {
                   showSilverBadgeUnlock.value = true;
                   
                   // After delay, show badge screen with buttons
@@ -892,9 +891,9 @@ export default defineComponent({
                   }, 3000);
                 }, 100);
               }, 1500);
-            }
-          }, 500);
+          }
         }, 500);
+      }, 500);
       }
       
       // Set cookie to mark level as completed
@@ -957,8 +956,7 @@ export default defineComponent({
       showButtons,
       showLevel3Objective,
       handlePlayAgain,
-      showSilverBadgeUnlock,
-      getImageUrl
+      showSilverBadgeUnlock
     };
   }
 });

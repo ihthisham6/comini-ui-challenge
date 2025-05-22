@@ -51,7 +51,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img :src="getImageUrl('grass.png')" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number slots -->
         <div class="number-slots">
@@ -146,7 +146,7 @@
                }">
             {{ showSuccessSpeech ? giraffe.successSpeech : giraffe.speech }}
           </div>
-          <img :src="getImageUrl(giraffe.image)" 
+          <img :src="`/src/assets/icons/${giraffe.image}`" 
                :alt="`Giraffe ${index + 1}`"
                class="giraffe-image" />
         </div>
@@ -155,7 +155,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showGrassArea }">
         <div class="grass-outline"></div>
-        <img :src="getImageUrl('grass.png')" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Secondary Phase Question Modal -->
@@ -241,8 +241,8 @@
                giraffe.speech }}
           </div>
           <img :src="showTertiaryError && index === 0 ? 
-                     getImageUrl('giraffe3.png') : 
-                     getImageUrl(giraffe.image)"
+                     '/src/assets/icons/giraffe3.png' : 
+                     `/src/assets/icons/${giraffe.image}`"
                :alt="`Giraffe ${giraffe.label}`"
                :class="{ 
                  'giraffe-image': true,
@@ -255,7 +255,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showTertiaryContent }">
         <div class="grass-outline"></div>
-        <img :src="getImageUrl('grass.png')" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Question Modal -->
@@ -349,7 +349,6 @@ import { defineComponent, ref, onMounted } from 'vue';
 import OctopusIcon from './OctopusIcon.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useRouter } from 'vue-router';
-import { getImageUrl } from '../utils/imageUtils';
 
 interface Giraffe {
   id: number;
@@ -516,7 +515,7 @@ export default defineComponent({
     };
 
     const checkAnswer = () => {
-      const numbers = positions.value.map(pos => pos.number || 0);
+      const numbers = positions.value.map(pos => pos.number);
       // Check if numbers are in ascending order (300, 380, 410)
       const isCorrectOrder = numbers[0] < numbers[1] && numbers[1] < numbers[2];
 
@@ -769,8 +768,7 @@ export default defineComponent({
       filledStars,
       showButtons,
       handlePlayAgain,
-      handleContinueToHome,
-      getImageUrl
+      handleContinueToHome
     };
   }
 });

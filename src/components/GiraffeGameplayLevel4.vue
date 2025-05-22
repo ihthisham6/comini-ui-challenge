@@ -407,7 +407,6 @@ import { defineComponent, ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import OctopusIcon from './OctopusIcon.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { getImageUrl } from '../utils/imageUtils';
 
 interface GiraffeTown {
   townLabel: string;
@@ -608,8 +607,20 @@ export default defineComponent({
       }, 1000);
     };
     
+    // Secondary gameplay sequence - this is a placeholder function
+    // since we handle everything directly in handleComplete now
+    const startSecondaryGameplaySequence = () => {
+      console.log("This function is no longer used");
+    };
+
     const getGiraffeImage = (position: number) => {
-      return getImageUrl(`giraffe${position}.png`);
+      if (position === 3) {
+        return '/src/assets/icons/Giraffe3.png'; // Clipped giraffe
+      } else if (position === 2) {
+        return '/src/assets/icons/Giraffe2.png'; // Tall giraffe
+      } else {
+        return '/src/assets/icons/Giraffe1.png'; // Short giraffe
+      }
     };
     
     const handleDragStart = (event: DragEvent, option: string, index: number) => {
@@ -779,6 +790,76 @@ export default defineComponent({
       selectedPopulationAnswer.value = null;
       showPopulationQuestion.value = true;
     };
+
+    function showGreatWorkAfterComplete() {
+      isFirstTimePlayer.value = !document.cookie.includes('level4_completed=true');
+      
+      if (isFirstTimePlayer.value) {
+        // Show secondary phase for first-time players
+        showSecondaryObjective.value = true;
+        
+        setTimeout(() => {
+          showSecondaryObjective.value = false;
+          // Here you would start the secondary phase gameplay
+          showSecondaryPhase.value = true;
+          // For now, we'll just show the great work modal
+          showGreatWorkModal.value = true;
+          
+          // Animate stars
+          setTimeout(() => {
+            const starInterval = setInterval(() => {
+              if (filledStars.value < 3) {
+                filledStars.value++;
+              } else {
+                clearInterval(starInterval);
+              }
+            }, 500);
+          }, 500);
+        }, 3000);
+      } else {
+        // For repeat players, first show great work modal WITHOUT buttons
+        showGreatWorkModal.value = true;
+        filledStars.value = 0;
+        showButtons.value = false; // Hide buttons initially
+        
+        // Animate stars
+        setTimeout(() => {
+          const starInterval = setInterval(() => {
+            if (filledStars.value < 3) {
+              filledStars.value++;
+            } else {
+              clearInterval(starInterval);
+              
+              // After stars are filled, transition to badge unlock screen
+              setTimeout(() => {
+                // Hide great work modal first
+                showGreatWorkModal.value = false;
+                
+                // Then show badge unlock screen
+                setTimeout(() => {
+                  showDiamondBadgeUnlock.value = true;
+                  
+                  // After 3s, transition to badge screen with buttons
+                  setTimeout(() => {
+                    // Enable buttons for the final diamond badge screen
+                    showButtons.value = true;
+                    showDiamondBadgeScreen.value = true;
+                    
+                    // Hide unlock screen only after badge screen is visible
+                    setTimeout(() => {
+                      showDiamondBadgeUnlock.value = false;
+                    }, 100);
+                  }, 3000);
+                }, 100);
+              }, 1500);
+            }
+          }, 500);
+        }, 500);
+      }
+      
+      // Set cookie to mark level as completed
+      document.cookie = 'level4_completed=true; path=/; max-age=31536000';
+    }
 
     const handlePlayAgain = () => {
       // Reset all screens and restart level

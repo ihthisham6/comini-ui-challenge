@@ -32,7 +32,7 @@
                'animation-delay': `${300 * index}ms`,
                height: `${giraffe.height}px`
              }">
-          <img :src="getImageUrl(`giraffe${giraffe.id}.png`)" :alt="`Giraffe ${giraffe.id}`" />
+          <img :src="`/src/assets/icons/giraffe${giraffe.id}.png`" :alt="`Giraffe ${giraffe.id}`" />
           <div class="number-drop-zone" 
                @dragover.prevent
                @drop="handleDrop($event, index)">
@@ -43,7 +43,7 @@
 
       <!-- Grass background -->
       <div class="grass" :class="{ 'fade-in': showControls }">
-        <img :src="getImageUrl('grass.png')" alt="Grass" class="grass-image" />
+        <img src="/src/assets/icons/grass.png" alt="Grass" class="grass-image" />
       </div>
 
       <!-- Answer options -->
@@ -68,10 +68,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import OctopusIcon from './OctopusIcon.vue';
-import { getImageUrl } from '../utils/imageUtils';
 
 export default defineComponent({
   name: 'GiraffeGameUI',
@@ -168,8 +165,7 @@ export default defineComponent({
       handleDragStart,
       handleDrop,
       checkAnswer,
-      isComplete,
-      getImageUrl
+      isComplete
     };
   }
 });
