@@ -51,7 +51,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number slots -->
         <div class="number-slots">
@@ -155,7 +155,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showGrassArea }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Secondary Phase Question Modal -->
@@ -255,7 +255,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showTertiaryContent }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Question Modal -->

@@ -57,7 +57,7 @@
       <!-- Answer section with grass background -->
       <div class="answer-section">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
         
         <!-- Number buttons -->
         <div class="number-slots">
@@ -139,7 +139,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showGrassArea }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Question Modal -->
@@ -208,7 +208,7 @@
             <span v-for="label in ['A', 'B', 'C', 'D']" :key="label">{{ label }}</span>
           </div>
         </div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Giraffes with equal heights -->
@@ -286,7 +286,7 @@
       <!-- Grass Area -->
       <div class="grass-area" :class="{ 'fade-in': showTertiarySuccess }">
         <div class="grass-outline"></div>
-        <img src="/src/assets/icons/grass.png" class="grass-bg" alt="Grass" />
+        <img src="/src/assets/icons/Grass.png" class="grass-bg" alt="Grass" />
       </div>
 
       <!-- Success Modal -->

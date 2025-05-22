@@ -43,7 +43,7 @@
 
       <!-- Grass background -->
       <div class="grass" :class="{ 'fade-in': showControls }">
-        <img src="/src/assets/icons/grass.png" alt="Grass" class="grass-image" />
+        <img src="/src/assets/icons/Grass.png" alt="Grass" class="grass-image" />
       </div>
 
       <!-- Answer options -->
