@@ -2616,9 +2616,6 @@ export default defineComponent({
   left: 50%;
   transform: translateX(-50%);
 }
-</style> 
-
-/* Add the following CSS at the end of the file */
 
 /* Fix Font Awesome visibility */
 .close-button svg,
