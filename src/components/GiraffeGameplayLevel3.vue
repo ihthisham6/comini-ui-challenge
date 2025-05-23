@@ -760,20 +760,38 @@ export default defineComponent({
       lastTouchedSlot.value = index;
       currentTouchElement.value = event.currentTarget as HTMLElement;
       
-      // Create a visual clone for dragging on iOS
+      // Set touch active to true
+      touchActive.value = true;
+      
+      // Calculate offset within the element
       const rect = currentTouchElement.value.getBoundingClientRect();
-      const clone = currentTouchElement.value.cloneNode(true) as HTMLElement;
-      clone.id = 'touch-clone';
-      clone.style.position = 'absolute';
-      clone.style.left = `${event.touches[0].clientX - touchOffsetX.value}px`;
-      clone.style.top = `${event.touches[0].clientY - touchOffsetY.value}px`;
-      clone.style.width = `${currentTouchElement.value.offsetWidth}px`;
-      clone.style.height = `${currentTouchElement.value.offsetHeight}px`;
-      clone.style.zIndex = '2000';
-      clone.style.opacity = '0.9';
-      clone.style.pointerEvents = 'none';
-      clone.style.transition = 'none';
-      document.body.appendChild(clone);
+      touchOffsetX.value = touchStartX.value - rect.left;
+      touchOffsetY.value = touchStartY.value - rect.top;
+      
+      // Add visual feedback
+      currentTouchElement.value.style.opacity = '0.4';
+      
+      // Add class to body to prevent scrolling
+      document.body.classList.add('touch-dragging');
+      
+      // Create a visual clone for dragging on iOS
+      const clone = document.getElementById('touch-clone');
+      if (clone) {
+        document.body.removeChild(clone);
+      }
+      
+      const newClone = currentTouchElement.value.cloneNode(true) as HTMLElement;
+      newClone.id = 'touch-clone';
+      newClone.style.position = 'absolute';
+      newClone.style.left = `${rect.left}px`;
+      newClone.style.top = `${rect.top}px`;
+      newClone.style.width = `${rect.width}px`;
+      newClone.style.height = `${rect.height}px`;
+      newClone.style.zIndex = '2000';
+      newClone.style.opacity = '0.9';
+      newClone.style.pointerEvents = 'none';
+      newClone.style.transition = 'none';
+      document.body.appendChild(newClone);
     };
 
     const handleTouchMove = (event: TouchEvent) => {
