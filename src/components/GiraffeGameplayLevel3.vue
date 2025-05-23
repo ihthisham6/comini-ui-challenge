@@ -2350,4 +2350,29 @@ export default defineComponent({
   object-fit: contain !important;
   object-position: bottom !important;
 }
+
+/* Additional adjustments for Phase 3 */
+@media (max-width: 767px) {
+  /* Tertiary phase giraffes spacing */
+  .tertiary-giraffes-container {
+    gap: 50px; /* Increased gap between giraffes */
+    padding: 0 10px;
+  }
+  
+  /* Improve tertiary phase bubble positioning */
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
+    top: -45px;
+    left: 40%;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
+    top: -70px;
+    left: 60%;
+  }
+  
+  /* Separate bubble from giraffe head - specifically for tallest giraffe */
+  .giraffe-slot:nth-child(3) .speech-bubble {
+    top: -100px !important; /* Extra distance above tallest giraffe */
+  }
+}
 </style>

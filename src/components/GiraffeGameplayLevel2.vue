@@ -2717,22 +2717,31 @@ export default defineComponent({
   /* Prevent speech bubbles from overlapping in Phase 2 */
   .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
     top: -35px !important;
-    left: 45%;
+    left: 40%;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
-    top: -55px !important;
-    left: 55%;
+    top: -65px !important;
+    left: 60%;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
     top: -35px !important;
-    left: 45%;
+    left: 40%;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
-    top: -55px !important;
-    left: 55%;
+    top: -65px !important;
+    left: 60%;
+  }
+}
+
+/* Giraffe spacing in secondary phase */
+@media (max-width: 767px) {
+  .secondary-giraffes-container {
+    gap: 40px; /* Increased gap between giraffes */
+    padding: 0 15px;
+    justify-content: space-around;
   }
 }
 </style> 

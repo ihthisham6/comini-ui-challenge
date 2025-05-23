@@ -1389,47 +1389,51 @@ export default defineComponent({
 }
 
 .giraffe-population {
-  height: 130px;
+  position: relative;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  margin-bottom: 5px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 140px;
+  width: 100%;
+  margin-bottom: -10px;
+  z-index: 2;
+  transform-origin: bottom center;
 }
 
 .giraffe-group {
-  display: flex;
   position: relative;
-  width: 140px;
-  height: 130px;
-  overflow: visible;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .giraffe-img {
-  object-fit: contain;
-  object-position: bottom;
   position: absolute;
   bottom: 0;
+  width: 40px;
+  height: 120px;
+  object-fit: contain;
+  object-position: bottom;
 }
 
 .clipped-giraffe {
-  left: 10px;
+  left: calc(50% + 30px); /* More separation */
   z-index: 1;
   height: 110px;
-  width: 40px;
 }
 
 .tallest-giraffe {
-  left: 50px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 3;
-  height: 120px;
-  width: 45px;
 }
 
 .shortest-giraffe {
-  left: 90px;
+  left: calc(50% - 30px); /* More separation */
   z-index: 2;
-  height: 90px;
-  width: 40px;
+  height: 100px;
 }
 
 .population-platform {
@@ -1979,13 +1983,13 @@ export default defineComponent({
 }
 
 .shortest-giraffe {
-  left: calc(50% - 25px);
+  left: calc(50% - 30px); /* More separation */
   z-index: 2;
   height: 100px;
 }
 
 .clipped-giraffe {
-  left: calc(50% + 25px);
+  left: calc(50% + 30px); /* More separation */
   z-index: 1;
   height: 110px;
 }
@@ -2025,8 +2029,9 @@ export default defineComponent({
   
   /* Make sure town D doesn't overflow */
   .secondary-giraffe-container {
-    gap: 10px;
-    padding: 0 10px;
+    gap: 40px; /* Increased gap */
+    padding: 0 15px;
+    justify-content: space-around;
   }
   
   .secondary-town-container {
@@ -2037,7 +2042,7 @@ export default defineComponent({
   
   .secondary-town {
     min-width: 80px;
-    margin-bottom: 20px;
+    margin: 0 10px; /* Add horizontal margin */
   }
 }
 
@@ -2423,7 +2428,7 @@ export default defineComponent({
 
 .tertiary-town .speech-bubble {
   position: absolute;
-  top: -25px; /* Position bubble closer to giraffes, changed from -40px */
+  top: -55px !important; /* Position bubble closer to giraffes, changed from -40px */
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -2610,5 +2615,47 @@ export default defineComponent({
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
+}
+</style> 
+
+/* Add the following CSS at the end of the file */
+
+/* Fix Font Awesome visibility */
+.close-button svg,
+.emoji-button svg {
+  width: 20px !important;
+  height: 20px !important;
+  display: block !important;
+  opacity: 1 !important;
+  color: #333333 !important;
+  visibility: visible !important;
+}
+
+/* Fix emoji display in feedback screen */
+.emoji-screen .emoji-button {
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}
+
+/* Remove title in success modal */
+.success-feedback .success-title {
+  display: none;
+}
+
+/* Fix speech bubble positioning in Phase 2 */
+.speech-bubble-new {
+  max-width: 100px;
+  font-size: 14px;
+  white-space: normal;
+}
+
+.speech-bubbles-row {
+  margin-bottom: 15px;
+  gap: 40px; /* Add more horizontal separation */
+  justify-content: center;
 }
 </style> 

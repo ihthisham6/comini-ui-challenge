@@ -2459,22 +2459,22 @@ export default defineComponent({
   /* Prevent speech bubbles from overlapping in secondary phase */
   .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
     top: -35px !important;
-    left: 45%;
+    left: 40%;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
-    top: -55px !important;
-    left: 55%;
+    top: -65px !important;
+    left: 60%;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
     top: -35px !important;
-    left: 45%;
+    left: 40%;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
-    top: -55px !important;
-    left: 55%;
+    top: -65px !important;
+    left: 60%;
   }
   
   /* When success modal shows, adjust bubble positions */
