@@ -1474,7 +1474,7 @@ export default defineComponent({
 
 /* Answer Options */
 .answer-options-container {
-  padding-bottom: 10px; /* Increased padding */
+  padding-bottom: 5px; /* Increased padding */
   margin-bottom: 0;
   width: 100%;
   display: flex;
@@ -1535,12 +1535,12 @@ export default defineComponent({
 /* Additional media query to fix check button on smaller screens */
 @media (max-height: 700px) {
   .check-button {
-    margin-bottom: 70px !important; /* Even more margin on very small screens */
+    margin-bottom: 5px !important; /* Even more margin on very small screens */
     transform: scale(1); /* Slightly larger for better visibility */
   }
   
   .answer-options-container {
-    padding-bottom: 80px; /* More padding on very small screens */
+    padding-bottom: 20px; /* More padding on very small screens */
   }
 }
 
