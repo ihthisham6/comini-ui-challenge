@@ -1550,11 +1550,11 @@ export default defineComponent({
   height: 50px; /* Increased from 50px */
   background: #FFFFFF;
   border: none;
-  border-radius: 12px; /* Increased from 10px */
+  border-radius: 10px; /* Increased from 10px */
   font-family: 'Gabarito', sans-serif;
   font-size: 20px; /* Increased from 20px */
   color: #333333;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
   margin-bottom: 20px; /* Increased from 20px */
