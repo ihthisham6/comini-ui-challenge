@@ -153,7 +153,8 @@
           <div class="speech-bubble" 
                :class="{ 
                  'fade-in': showSecondaryFeedback || showSuccessSpeech,
-                 'fade-out': !showSecondaryFeedback && !showSuccessSpeech
+                 'fade-out': !showSecondaryFeedback && !showSuccessSpeech,
+                 'success-speech': showSuccessSpeech
                }">
             {{ showSuccessSpeech ? giraffe.successSpeech : giraffe.speech }}
           </div>
@@ -972,7 +973,7 @@ export default defineComponent({
 
 .giraffes-area {
   position: absolute;
-  bottom: 224px; /* Base alignment with grass tip */
+  bottom: 224px; /* Align exactly with grass tip (dark shade) */
   left: 0;
   right: 0;
   display: flex;
@@ -1296,19 +1297,31 @@ export default defineComponent({
 
 .speech-bubble {
   position: absolute;
-  top: -40px;
+  top: -30px; /* Reduced distance from giraffe */
   left: 50%;
   transform: translateX(-50%);
   background: #4FAB4C;
   color: white;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   font-family: 'Gabarito', sans-serif;
   white-space: nowrap;
   z-index: 3;
   opacity: 0;
   transition: opacity 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: #4FAB4C transparent transparent;
 }
 
 .speech-bubble.fade-in {
@@ -1338,7 +1351,7 @@ export default defineComponent({
 
   .giraffes-area {
     bottom: 224px; /* Keep consistent base alignment */
-    gap: 60px;
+    gap: 70px;
     padding-bottom: 0;
     transform: translateX(5px);
   }
@@ -1347,21 +1360,23 @@ export default defineComponent({
     gap: 60px;
     padding: 20px 10px;
     max-width: calc(210px + 120px);
-    transform: translateX(5px);
+    transform: translateX(0); /* Remove transform to match giraffes */
+    margin: 0 auto;
   }
 
   .check-button {
     max-width: calc(210px + 120px);
-    transform: translateX(5px);
+    transform: translateX(0); /* Consistent alignment */
+    margin: 20px auto;
   }
 
   .giraffe-container.short-giraffe {
-    width: 50px;
+    width: 65px;
     height: 150px;
   }
 
   .giraffe-container.mid-giraffe {
-    width: 55px;
+    width: 65px;
     height: 160px;
   }
 
@@ -1442,21 +1457,134 @@ export default defineComponent({
 /* Fix bubbles for different device sizes */
 @media (max-width: 767px) {
   .giraffe-slot .speech-bubble {
-    top: -80px !important; /* Move speech bubbles higher on mobile */
+    top: -25px !important; /* Closer to giraffe */
+    font-size: 14px;
+    padding: 6px 8px;
+    min-width: 80px;
+    max-width: 90px;
+    z-index: 10;
   }
   
+  /* Position speech bubbles directly above each giraffe */
   .giraffe-slot:nth-child(1) .speech-bubble {
-    top: -65px !important; /* Adjust for shortest giraffe */
+    top: -25px !important;
+    left: 50% !important;
+  }
+  
+  .giraffe-slot:nth-child(2) .speech-bubble {
+    top: -30px !important;
+    left: 50% !important;
   }
   
   .giraffe-slot:nth-child(3) .speech-bubble {
-    top: -95px !important; /* Adjust for tallest giraffe */
+    top: -35px !important;
+    left: 50% !important;
   }
+  
+  /* Secondary phase bubble improvements */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
+    top: -25px !important;
+    left: 50% !important;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
+    top: -30px !important;
+    left: 50% !important;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+    top: -25px !important;
+    left: 50% !important;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
+    top: -30px !important;
+    left: 50% !important;
+  }
+  
+  /* Tertiary phase bubble positioning */
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
+    top: -30px !important;
+    left: 50% !important;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
+    top: -30px !important;
+    left: 50% !important;
+  }
+}
 
-  /* Fix for success modal bubble positions */
-  .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
-    top: -120px !important;
+/* Tablet & desktop adjustments */
+@media (min-width: 768px) {
+  .giraffe-slot .speech-bubble {
+    top: -35px !important; /* Closer to giraffe */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
   }
+  
+  /* Secondary phase bubble positioning */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.success-speech {
+    top: -30px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.success-speech {
+    top: -35px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.success-speech {
+    top: -30px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.success-speech {
+    top: -35px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  /* Tertiary phase bubble positioning */
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
+    top: -35px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
+    top: -35px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+/* Secondary giraffe container alignment with grass */
+.secondary-giraffes-container {
+  position: absolute;
+  bottom: 224px; /* Align with the dark grass line */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 80px;
+  z-index: 3;
+}
+
+/* Tertiary giraffe container alignment with grass */
+.tertiary-giraffes-container {
+  position: absolute;
+  bottom: 224px; /* Align with the dark grass line */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 80px;
+  z-index: 3;
 }
 
 .objective-screen {
@@ -1774,7 +1902,7 @@ export default defineComponent({
 
 /* Special positioning for shortest giraffe */
 .secondary-giraffe:first-child .speech-bubble {
-  top: -25px; /* Move bubble closer to giraffe head */
+  top: -8px; /* Move bubble closer to giraffe head - was -5px */
 }
 
 .objective-screen.tertiary-objective {
@@ -2232,54 +2360,53 @@ export default defineComponent({
     max-width: 100px;
     text-align: center;
     white-space: normal;
-    left: 50%;
-    transform: translateX(-50%);
-    right: auto;
     position: absolute;
   }
   
-  .tertiary-giraffe .speech-bubble,
-  .secondary-giraffe .speech-bubble {
+  .tertiary-giraffe .speech-bubble {
     transform: translateX(-50%) translateY(-5px);
     text-align: center;
     left: 50%;
     right: auto;
+    font-size: 16px;
+    padding: 10px 14px;
+    min-width: 90px;
+    max-width: 120px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    background-color: #4FAB4C;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   
-  /* Fix for secondary phase giraffes */
-  .secondary-giraffes-container {
+  .tertiary-giraffe .speech-bubble.fade-in {
+    opacity: 1;
+  }
+  
+  /* Fix bubbles for tertiary phase - increase size */
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
+    top: -50px;
+    min-width: 100px;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
+    top: -55px;
+    min-width: 100px;
+  }
+  
+  /* Fix for tertiary phase giraffes */
+  .tertiary-giraffes-container {
     gap: 20px;
   }
   
-  .secondary-giraffe {
+  .tertiary-giraffe {
     position: relative;
-  }
-  
-  .secondary-giraffe .speech-bubble {
-    top: -30px;
-    width: auto;
-  }
-
-  /* Prevent speech bubbles from overlapping each other in secondary phase */
-  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
-    top: -35px;
-  }
-  
-  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
-    top: -55px;
-  }
-  
-  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
-    top: -35px;
-  }
-  
-  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
-    top: -55px;
   }
   
   /* Fix bubbles for tertiary phase */
   .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
-    top: -35px;
+    top: -55px;
   }
   
   .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
@@ -2287,42 +2414,12 @@ export default defineComponent({
   }
 
   /* Make sure bubbles don't overlap with giraffes */
-  .speech-bubble {
+  .tertiary-giraffe .speech-bubble {
     max-width: 90px;
     font-size: 12px;
     padding: 6px;
     z-index: 10;
   }
-  
-  /* Additional specific adjustments for Phase 2 */
-  .secondary-giraffes-container {
-    gap: 30px; /* Increase gap between giraffes */
-  }
-  
-  /* Prevent speech bubbles from overlapping more effectively */
-  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble,
-  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
-    top: -40px;
-    left: 45%;
-  }
-  
-  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble,
-  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
-    top: -60px;
-    left: 55%; 
-  }
-}
-
-/* Fix for ensuring all giraffes stick to the grass */
-.giraffe-fixed-bottom {
-  display: flex !important;
-  align-items: flex-end !important;
-  justify-content: center !important;
-  position: relative !important;
-  bottom: 0 !important;
-  margin-bottom: 0 !important;
-  object-position: bottom !important;
-  vertical-align: bottom !important;
 }
 
 /* Specific classes for giraffe images */
@@ -2372,7 +2469,403 @@ export default defineComponent({
   
   /* Separate bubble from giraffe head - specifically for tallest giraffe */
   .giraffe-slot:nth-child(3) .speech-bubble {
-    top: -100px !important; /* Extra distance above tallest giraffe */
+    top: -70px !important; /* Extra distance above tallest giraffe */
   }
+}
+
+/* Improve secondary phase bubble styling - main style outside media queries */
+.secondary-giraffes-container .speech-bubble {
+  font-size: 18px;
+  padding: 12px 15px; 
+  max-width: 110px;
+  min-width: 70px;
+  text-align: center;
+  z-index: 10;
+  background: #4FAB4C;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-family: 'Gabarito', sans-serif;
+  white-space: normal;
+    top: -30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Add speech bubble arrow for visual connection to giraffes */
+.secondary-giraffes-container .speech-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: #4FAB4C transparent transparent;
+}
+
+@media (max-width: 767px) {
+  /* Secondary phase specific adjustments */
+  .secondary-giraffes-container {
+    gap: 45px; /* Consistent gap between giraffes */
+    justify-content: center;
+    padding: 0 10px;
+  }
+  
+  /* Position all bubbles consistently */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    padding: 8px 10px;
+    max-width: 80px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    padding: 8px 10px;
+    max-width: 80px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    padding: 8px 10px;
+    max-width: 80px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    padding: 8px 10px;
+    max-width: 80px;
+  }
+}
+
+/* Specific styling for success speech bubbles */
+.secondary-giraffes-container .speech-bubble.fade-in[style*="display: block"] {
+  z-index: 20;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.fade-in:not(.fade-out) {
+  top: -25px;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.fade-in:not(.fade-out) {
+  top: -50px;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.fade-in:not(.fade-out) {
+  top: -40px;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.fade-in:not(.fade-out) {
+  top: -60px;
+}
+
+/* Target success speech bubbles specifically */
+.secondary-giraffes-container .speech-bubble.fade-in:not(.fade-out) {
+  font-size: 16px;
+  padding: 10px 12px;
+  max-width: 110px;
+  background: #4FAB4C;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+}
+
+/* Adjust positioning for each giraffe's success speech */
+.secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.fade-in:not(.fade-out) {
+  top: -25px;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.fade-in:not(.fade-out) {
+  top: -55px;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.fade-in:not(.fade-out) {
+  top: -45px;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.fade-in:not(.fade-out) {
+  top: -70px;
+}
+
+/* Mobile adjustments for success speech bubbles */
+@media (max-width: 767px) {
+  /* Mobile adjustments for success speech bubbles */
+  .secondary-giraffes-container .speech-bubble.fade-in:not(.fade-out) {
+    font-size: 14px;
+    padding: 8px 10px;
+    max-width: 90px;
+    min-width: 70px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.fade-in:not(.fade-out) {
+    top: -20px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.fade-in:not(.fade-out) {
+    top: -45px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.fade-in:not(.fade-out) {
+    top: -20px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.fade-in:not(.fade-out) {
+    top: -50px;
+  }
+}
+
+.secondary-phase .secondary-giraffes-container .secondary-giraffe .speech-bubble {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.secondary-phase .showSuccessSpeech .secondary-giraffe:nth-child(1) .speech-bubble {
+  top: -25px !important;
+}
+
+.secondary-phase .showSuccessSpeech .secondary-giraffe:nth-child(2) .speech-bubble {
+  top: -55px !important;
+}
+
+.secondary-phase .showSuccessSpeech .secondary-giraffe:nth-child(3) .speech-bubble {
+  top: -45px !important;
+}
+
+.secondary-phase .showSuccessSpeech .secondary-giraffe:nth-child(4) .speech-bubble {
+  top: -70px !important;
+}
+
+/* Success speech bubble styling */
+.secondary-phase .secondary-giraffes-container .speech-bubble {
+  /* Base styles remain */
+}
+
+/* Target bubbles when success speech is shown */
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
+  top: -20px;
+}
+
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
+  top: -40px;
+}
+
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+  top: -30px;
+}
+
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
+  top: -50px;
+}
+
+/* Override when show success speech is active */
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.fade-in:not(.fade-out) {
+  top: -25px;
+  background-color: #3A8737;
+  font-weight: 600;
+}
+
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.fade-in:not(.fade-out) {
+  top: -55px;
+  background-color: #3A8737;
+  font-weight: 600;
+}
+
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.fade-in:not(.fade-out) {
+  top: -45px;
+  background-color: #3A8737;
+  font-weight: 600;
+}
+
+.secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.fade-in:not(.fade-out) {
+  top: -70px;
+  background-color: #3A8737;
+  font-weight: 600;
+}
+
+/* Success speech specific styling - applies when showSuccessSpeech is true */
+.secondary-giraffes-container .speech-bubble.success-speech {
+  background-color: #3A8737 !important;
+  font-weight: 400;
+
+  z-index: 25;
+ 
+}
+
+/* Fixed positions for each giraffe's success speech bubble */
+.secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.success-speech {
+  top: -15px !important;
+  left: 20px;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.success-speech {
+  top: -75px !important;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.success-speech {
+  top: -45px !important;
+}
+
+.secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.success-speech {
+  top: -70px !important;
+}
+
+/* Adjust arrow color for success speech */
+.secondary-giraffes-container .speech-bubble.success-speech:after {
+  border-color: #3A8737 transparent transparent !important;
+}
+
+@media (max-width: 767px) {
+  /* Mobile adjustments for success speech bubbles */
+  .secondary-giraffes-container .speech-bubble.success-speech {
+    font-size: 14px;
+    padding: 8px 10px;
+    max-width: 90px;
+    min-width: 70px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.success-speech {
+    top: -20px !important;
+    margin-left: 10px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.success-speech {
+    top: -85px !important;
+    margin-left: -10px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.success-speech {
+    top: -90px !important;
+    margin-left: 10px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.success-speech {
+    top: -80px !important;
+    margin-left: -10px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Improve tertiary phase bubble positioning and size */
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
+    top: -55px;
+    left: 40%;
+    min-width: 90px;
+    font-size: 15px;
+    padding: 10px 12px;
+    background: #4FAB4C;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
+    top: -85px;
+    left: 60%;
+    min-width: 90px;
+    font-size: 15px;
+    padding: 10px 12px;
+    background: #4FAB4C;
+  }
+  
+  /* Make sure bubbles don't overlap with giraffes */
+  .tertiary-giraffe .speech-bubble {
+    max-width: 100px;
+    font-size: 15px;
+    padding: 10px 12px;
+    z-index: 25;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Add speech bubble arrow for tertiary phase bubbles */
+.tertiary-giraffe .speech-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: #4FAB4C transparent transparent;
+}
+
+/* Add specific styles for when error feedback is shown */
+.tertiary-giraffe .speech-bubble.error-bubble-in {
+  background: #DC3545;
+  color: white;
+  font-weight: 600;
+  min-width: 100px;
+}
+
+.tertiary-giraffe .speech-bubble.error-bubble-in:after {
+  border-color: #DC3545 transparent transparent;
+}
+
+@media (min-width: 1024px) {
+  /* Desktop adjustments for tertiary phase */
+  .tertiary-giraffe .speech-bubble {
+    font-size: 18px;
+    min-width: 110px;
+    max-width: 140px;
+    padding: 12px 16px;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
+    top: -45px;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
+    top: -85px;
+  }
+}
+
+/* Specific classes for giraffe images */
+.tallest-giraffe-image {
+  height: 200px !important;
+  width: 65px !important;
+  clip-path: none !important;
+  object-fit: contain !important;
+  object-position: bottom !important;
+  margin-bottom: 0 !important;
+}
+
+.medium-giraffe-image {
+  height: 170px !important;
+  width: 65px !important;
+  clip-path: none !important;
+  object-fit: contain !important;
+  object-position: bottom !important;
+}
+
+.shortest-giraffe-image {
+  height: 140px !important;
+  width: 65px !important;
+  clip-path: none !important;
+  object-fit: contain !important;
+  object-position: bottom !important;
+}
+
+/* Fix for ensuring all giraffes stick to the grass */
+.giraffe-fixed-bottom {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  position: relative !important;
+  bottom: 0 !important;
+  margin-bottom: 0 !important; /* Remove margin to stick precisely to grass line */
+  object-position: bottom !important;
+  vertical-align: bottom !important;
 }
 </style>

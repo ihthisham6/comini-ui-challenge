@@ -12,7 +12,7 @@
       <!-- Rive animation container -->
       <div class="rive-container">
         <RivePlayer 
-          src="src/assets/rive/giraffes.riv"
+          src="/rive/giraffes.riv"
           :width="350"
           :height="250"
         />

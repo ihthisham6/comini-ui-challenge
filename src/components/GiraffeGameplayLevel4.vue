@@ -209,11 +209,9 @@
             <!-- Town A -->
             <div class="giraffe-town-section">
               <div class="giraffe-population">
-                <div class="giraffe-group">
-                  <img :src="getGiraffeImage(2)" class="giraffe-img tallest-giraffe" style="left: 10px;" />
-                  <img :src="getGiraffeImage(2)" class="giraffe-img tallest-giraffe" style="left: 55px;" />
-                  <img :src="getGiraffeImage(1)" class="giraffe-img shortest-giraffe" style="left: 100px;" />
-                </div>
+                <img :src="getGiraffeImage(2)" class="giraffe-img" />
+                <img :src="getGiraffeImage(2)" class="giraffe-img" />
+                <img :src="getGiraffeImage(1)" class="giraffe-img" />
               </div>
               <div class="population-value">3600</div>
             </div>
@@ -221,11 +219,9 @@
             <!-- New Town -->
             <div class="giraffe-town-section">
               <div class="giraffe-population">
-                <div class="giraffe-group">
-                  <img :src="getGiraffeImage(1)" class="giraffe-img shortest-giraffe" style="left: 10px;" />
-                  <img :src="getGiraffeImage(2)" class="giraffe-img tallest-giraffe" style="left: 55px;" />
-                  <img :src="getGiraffeImage(2)" class="giraffe-img tallest-giraffe" style="left: 100px;" />
-                </div>
+                <img :src="getGiraffeImage(1)" class="giraffe-img" />
+                <img :src="getGiraffeImage(2)" class="giraffe-img" />
+                <img :src="getGiraffeImage(2)" class="giraffe-img" />
               </div>
               <div class="population-value">{{ hasSelectedAnswer ? (selectedPopulationAnswer === 3900 ? '3900' : (selectedPopulationAnswer === 5000 ? '5100' : '3500')) : '?' }}</div>
             </div>
@@ -233,11 +229,9 @@
             <!-- Town D -->
             <div class="giraffe-town-section">
               <div class="giraffe-population">
-                <div class="giraffe-group">
-                  <img :src="getGiraffeImage(1)" class="giraffe-img shortest-giraffe" style="left: 10px;" />
-                  <img :src="getGiraffeImage(2)" class="giraffe-img tallest-giraffe" style="left: 55px;" />
-                  <img :src="getGiraffeImage(2)" class="giraffe-img tallest-giraffe" style="left: 100px;" />
-                </div>
+                <img :src="getGiraffeImage(1)" class="giraffe-img" />
+                <img :src="getGiraffeImage(2)" class="giraffe-img" />
+                <img :src="getGiraffeImage(2)" class="giraffe-img" />
               </div>
               <div class="population-value">4100</div>
             </div>
@@ -328,8 +322,8 @@
             :class="{ 'slide-in': showTertiaryGiraffes }"
             :style="{ animationDelay: '0ms' }"
           >
-            <!-- Speech Bubble -->
-            <div v-if="showSpeechBubbles" class="speech-bubble fade-in">
+            <!-- Speech Bubble - changed class here -->
+            <div v-if="showSpeechBubbles" class="tertiary-speech-bubble fade-in">
               {{ tertiaryGiraffeTowns[0].speechText }}
             </div>
             
@@ -353,8 +347,8 @@
             :class="{ 'slide-in': showTertiaryGiraffes }"
             :style="{ animationDelay: '300ms' }"
           >
-            <!-- Speech Bubble -->
-            <div v-if="showSpeechBubbles" class="speech-bubble fade-in">
+            <!-- Speech Bubble - changed class here -->
+            <div v-if="showSpeechBubbles" class="tertiary-speech-bubble fade-in">
               {{ tertiaryGiraffeTowns[1].speechText }}
             </div>
             
@@ -798,8 +792,14 @@ export default defineComponent({
 
     // Continue after positive feedback
     const handleContinueFromFeedback = () => {
+      // Hide all Phase 2 elements first
       showPositiveFeedback.value = false;
-      // Show tertiary objective screen
+      showSecondaryGameplay.value = false;
+      showSecondaryGiraffes.value = false;
+      showSecondaryGrass.value = false;
+      showSpeechBubbles.value = false;
+      
+      // Then show tertiary objective screen
       showTertiaryObjective.value = true;
       
       // Start tertiary gameplay sequence after 2 seconds
@@ -931,6 +931,15 @@ export default defineComponent({
 
     // Tertiary gameplay sequence
     const startTertiaryGameplaySequence = () => {
+      // Completely hide all Phase 2 elements
+      showSecondaryGameplay.value = false;
+      showSecondaryGiraffes.value = false;
+      showSecondaryGrass.value = false;
+      showPopulationQuestion.value = false;
+      showPositiveFeedback.value = false;
+      showNegativeFeedback.value = false;
+      
+      // Then show Phase 3 content
       showTertiaryGameplay.value = true;
       
       // After 1.5s delay, fade out objective text and show grass
@@ -1234,7 +1243,7 @@ export default defineComponent({
 
 .objective-text {
   font-family: 'Gabarito', sans-serif;
-  font-size: 20px;
+  font-size: 30px;
   color: #6BADD7;
   text-align: center;
   transition: transform 0.5s ease;
@@ -1299,14 +1308,16 @@ export default defineComponent({
   opacity: 0.8;
 }
 
+/* Instruction text - make it larger */
 .instruction-text {
   color: #6BADD7;
   font-family: 'Gabarito', sans-serif;
-  font-size: 20px;
+  font-size: 24px; /* Increased from 20px to 24px */
   text-align: center;
   margin: 20px 0 20px 0;
   padding: 0 20px;
   transition: transform 0.5s ease;
+  font-weight: 600; /* Added for better visibility */
 }
 
 .instruction-text.move-up {
@@ -1319,15 +1330,16 @@ export default defineComponent({
   flex-direction: column;
   position: relative;
   padding-top: 0;
+  padding-bottom: 180px; /* Space at bottom to prevent overlap */
 }
 
-/* Grass Area */
+/* Grass Area - reduce height to leave room for buttons */
 .grass-area {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60%;
+  height: 50%; /* Reduced from 60% to 50% */
   z-index: 1;
   opacity: 0;
 }
@@ -1361,17 +1373,18 @@ export default defineComponent({
 /* Giraffe Towns */
 .giraffe-towns-container {
   position: absolute;
-  top: 50px; /* Moved down from 15px to 50px */
+  top: 70px; /* Slightly higher to avoid overlap with buttons */
   left: 0;
   right: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1fr; 
-  row-gap: 10px;
-  column-gap: 10px;
-  padding: 0 10px;
+  row-gap: 15px;
+  column-gap: 20px;
+  padding: 0 15px;
   z-index: 5;
-  height: 70%; /* Reduced from 75% to 70% to fit in view */
+  height: 50%; /* Reduced from 65% to 50% to leave space for buttons */
+  margin-top: 0; /* Remove additional margin */
 }
 
 .giraffe-town {
@@ -1394,7 +1407,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  height: 140px;
+  height: 180px; /* Increased from 140px */
   width: 100%;
   margin-bottom: -10px;
   z-index: 2;
@@ -1403,69 +1416,80 @@ export default defineComponent({
 
 .giraffe-group {
   position: relative;
+  width: 180px; /* Increased from 160px */
+  height: 180px; /* Increased from 160px */
   display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+  justify-content: space-between; /* Even spacing between giraffes */
+  align-items: flex-end;
+  margin: 0 auto; /* Center the giraffe group */
 }
 
 .giraffe-img {
-  position: absolute;
-  bottom: 0;
-  width: 40px;
-  height: 120px;
-  object-fit: contain;
-  object-position: bottom;
+  position: relative !important;
+  bottom: 0 !important;
+  height: 160px; /* Increased from 140px to make giraffes bigger */
+  width: 50px; /* Increased from 45px for proportional scaling */
+  object-fit: contain !important;
+  object-position: bottom !important;
+  margin: 0 7px !important;
 }
 
 .clipped-giraffe {
-  left: calc(50% + 30px); /* More separation */
+  left: auto !important;
   z-index: 1;
-  height: 110px;
+  height: 150px !important; /* Increased from 130px */
 }
 
 .tallest-giraffe {
-  left: 50%;
-  transform: translateX(-50%);
+  left: auto !important;
   z-index: 3;
+  height: 170px !important; /* Increased from 150px */
 }
 
 .shortest-giraffe {
-  left: calc(50% - 30px); /* More separation */
+  left: auto !important;
   z-index: 2;
-  height: 100px;
+  height: 140px !important; /* Increased from 120px */
 }
 
+/* Make the population platform wider to accommodate bigger giraffes */
 .population-platform {
-  width: 104px;
-  height: 7px;
+  width: 220px; /* Increased from 200px */
+  height: 10px;
   background: #4FAB4C;
   margin-bottom: 2px;
+  border-radius: 5px;
 }
 
 .population-label {
   color: #2D7A2A;
   font-family: 'Gabarito', sans-serif;
-  font-size: 16px;
+  font-size: 20px; /* Increased from 18px */
   font-weight: bold;
-  margin-top: 0;
+  margin-top: 8px;
   text-align: center;
   z-index: 6;
+  width: 100%;
 }
 
 /* Answer Options */
 .answer-options-container {
-  position: absolute;
-  bottom: 16px;
-  left: 0;
-  right: 0;
+  padding-bottom: 30px; /* Increased padding */
+  margin-bottom: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 0 16px;
-  z-index: 10;
-  opacity: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+ 
+  backdrop-filter: blur(5px); /* Add blur effect for modern browsers */
+  -webkit-backdrop-filter: blur(5px); /* For Safari */
+  
+  padding-top: 20px;
 }
 
 .answer-options-container.fade-in {
@@ -1487,52 +1511,73 @@ export default defineComponent({
   justify-content: center;
 }
 
+/* Fix for option positioning */
 .option-button {
-  width: 60px;
-  height: 50px;
+  width: 75px; /* Increased from 65px */
+  height: 65px; /* Increased from 55px */
   background: #8FD14F;
   color: #FFFFFF;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px; /* Increased from 8px */
   font-family: 'Gabarito', sans-serif;
-  font-size: 24px;
+  font-size: 28px; /* Increased from 24px */
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: grab;
   transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
   user-select: none;
+  margin-bottom: 8px; /* Increased from 5px */
 }
 
 .option-button:active {
   cursor: grabbing;
 }
 
+/* Additional media query to fix check button on smaller screens */
+@media (max-height: 700px) {
+  .check-button {
+    margin-bottom: 70px !important; /* Even more margin on very small screens */
+    transform: scale(1.05); /* Slightly larger for better visibility */
+  }
+  
+  .answer-options-container {
+    padding-bottom: 80px; /* More padding on very small screens */
+  }
+}
+
 .check-button {
   width: 100%;
-  max-width: 320px;
-  height: 50px;
+  max-width: 350px; /* Increased from 320px */
+  height: 60px; /* Increased from 50px */
   background: #FFFFFF;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px; /* Increased from 10px */
   font-family: 'Gabarito', sans-serif;
-  font-size: 18px;
+  font-size: 22px; /* Increased from 20px */
   color: #333333;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
+  margin-bottom: 25px; /* Increased from 20px */
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .check-button:hover {
-  background: #f8f9fa;
+  background: #f5f5f5;
+  transform: scale(1.03); /* Slightly larger hover effect */
 }
 
 /* Feedback Screens */
 .success-feedback {
-  position: absolute;
+  position: fixed; /* Changed from absolute to fixed */
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0; /* Ensure it sticks to the bottom */
   padding: 20px;
   background: #3A8737;
   border-top-left-radius: 20px;
@@ -1569,7 +1614,7 @@ export default defineComponent({
 
 .success-title {
   font-family: 'Gabarito', sans-serif;
-  font-size: 24px;
+  font-size: 28px; /* Increased from 24px */
   font-weight: bold;
   text-align: center;
   margin-bottom: 16px;
@@ -1579,7 +1624,7 @@ export default defineComponent({
 
 .success-text {
   font-family: 'Gabarito', sans-serif;
-  font-size: 18px;
+  font-size: 22px; /* Increased from 18px */
   text-align: center;
   margin-bottom: 16px;
   padding: 0 20px;
@@ -1960,36 +2005,47 @@ export default defineComponent({
 
 .giraffe-group {
   position: relative;
+  width: 160px; /* Increased from 100px to match platform width */
+  height: 160px;
   display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+  justify-content: space-between; /* Even spacing between giraffes */
+  align-items: flex-end;
+  margin: 0 auto; /* Center the giraffe group */
 }
 
 .giraffe-img {
-  position: absolute;
-  bottom: 0;
-  width: 40px;
+  position: relative !important; /* Override absolute positioning */
+  bottom: 0 !important;
   height: 120px;
-  object-fit: contain;
-  object-position: bottom;
+  width: 40px;
+  object-fit: contain !important;
+  object-position: bottom !important;
+  margin: 0 5px !important; /* Consistent margin for all giraffes */
 }
 
-/* Add spacing for distinct giraffe populations */
+.clipped-giraffe {
+  left: auto !important; /* Remove left positioning to allow flex to work */
+  z-index: 1;
+  height: 110px !important;
+  transform: translateX(0) !important; /* Remove transform to allow flex to work */
+}
+
 .tallest-giraffe {
-  left: 50%;
-  transform: translateX(-50%);
+  left: auto !important; /* Remove left positioning to allow flex to work */
   z-index: 3;
+  height: 130px !important;
+  transform: translateX(0) !important; /* Remove transform to allow flex to work */
 }
 
 .shortest-giraffe {
-  left: calc(50% - 30px); /* More separation */
+  left: auto !important; /* Remove left positioning to allow flex to work */
   z-index: 2;
+  height: 100px !important;
   height: 100px;
 }
 
 .clipped-giraffe {
-  left: calc(50% + 30px); /* More separation */
+  left: calc(50% + 35px); /* Increased separation from 30px to 35px */
   z-index: 1;
   height: 110px;
 }
@@ -1997,13 +2053,14 @@ export default defineComponent({
 /* Mobile styles for responsive layout */
 @media (max-width: 767px) {
   .giraffe-towns-container {
-    gap: 15px;
+    gap: 20px; /* Increased from 15px */
     padding: 0 10px;
     justify-content: space-around;
-  }
+}
 
   .giraffe-town {
-    min-width: 90px;
+    min-width: 100px; /* Increased from 90px */
+    margin: 0 5px; /* Add horizontal margin */
   }
 
   /* Make the population label fit on mobile */
@@ -2011,12 +2068,12 @@ export default defineComponent({
     font-size: 13px;
     padding: 4px;
     white-space: normal;
-    text-align: center;
+  text-align: center;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  
+}
+
   /* Adjust speech bubble positioning on mobile */
   .speech-bubble {
     font-size: 14px;
@@ -2024,12 +2081,23 @@ export default defineComponent({
     white-space: normal;
     max-width: 80px;
     text-align: center;
-    top: -40px;
+    top: -50px; /* Raised from -40px */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+  /* Better giraffe spacing within each town */
+  .giraffe-img.shortest-giraffe {
+    left: calc(50% - 35px); /* Increased separation */
   }
   
+  .giraffe-img.clipped-giraffe {
+    left: calc(50% + 35px); /* Increased separation */
+}
+
   /* Make sure town D doesn't overflow */
   .secondary-giraffe-container {
-    gap: 40px; /* Increased gap */
+    gap: 45px; /* Increased from 40px */
     padding: 0 15px;
     justify-content: space-around;
   }
@@ -2037,92 +2105,46 @@ export default defineComponent({
   .secondary-town-container {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 20px; /* Increased from 15px */
   }
   
   .secondary-town {
-    min-width: 80px;
-    margin: 0 10px; /* Add horizontal margin */
+    min-width: 100px; /* Increased from 80px */
+    margin: 0 10px;
+}
+
+  /* Hide title instructions when showing success modal */
+  .success-feedback.slide-in ~ .game-content .main-title,
+  .secondary-success-feedback.slide-in ~ .secondary-gameplay-screen .secondary-title,
+  .tertiary-success-feedback.slide-in ~ .tertiary-gameplay-screen .tertiary-title {
+    display: none !important;
   }
 }
 
-/* Secondary Objective Screen */
-/* We're using direct transitions instead of overlays */
-
-.secondary-objective-screen {
-  position: fixed;
-  inset: 0;
-  background: #FFFFFF;
+/* Position giraffes for the secondary gameplay phase */
+.giraffe-town-section .giraffe-group {
+  width: 160px; /* Match the width of platforms */
+  height: 160px;
   display: flex;
-  flex-direction: column;
-  z-index: 3000;
-  opacity: 0;
+  justify-content: space-between; /* Even spacing */
+  align-items: flex-end;
+  margin: 0 auto; /* Center the group */
 }
 
-.secondary-objective-screen.fade-in {
-  animation: fadeIn 0.5s ease forwards;
+.giraffe-town-section .giraffe-img {
+  position: relative !important;
+  bottom: 0 !important;
+  left: auto !important;
+  margin: 0 5px !important;
+  width: 40px;
 }
 
-.octopus-header {
-  padding: 20px;
+/* Remove inline style overrides by using !important */
+.giraffe-town-section .giraffe-img[style*="left:"] {
+  left: auto !important; /* Override inline styles completely */
 }
 
-.secondary-message {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.secondary-message p {
-  color: #0DA49F;
-  font-family: 'Gabarito', sans-serif;
-  font-size: 20px;
-  text-align: center;
-}
-
-/* Secondary Gameplay Styles */
-.secondary-gameplay-screen {
-  position: fixed;
-  inset: 0;
-  background: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  z-index: 2000;
-}
-
-.secondary-gameplay-screen .top-bar {
-  opacity: 1; /* Make sure the top bar is visible */
-}
-
-/* Full grass background to prevent any gaps */
-.full-grass-bg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: #83CA54;
-  z-index: 0;
-}
-
-/* Solid grass background that appears during feedback modals */
-.solid-grass-bg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: #83CA54;
-  z-index: 100; /* Higher z-index to appear above any gaps */
-  pointer-events: none; /* Allow clicks through */
-}
-
-.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
+/* Restore essential styling that was removed */
 .secondary-giraffe-container {
   position: relative;
   width: 100%;
@@ -2130,157 +2152,277 @@ export default defineComponent({
   flex-direction: column;
   padding-top: 80px;
   z-index: 5;
+  gap: 30px; /* Increased gap between sections */
 }
 
-/* Speech Bubbles Row */
+.giraffe-towns-row {
+  display: flex;
+  justify-content: space-around; /* More even spacing */
+  width: 100%;
+  height: 220px; /* Increased from 200px */
+  padding: 0 10px;
+}
+
+.giraffe-town-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px; /* Wider to fit larger giraffes */
+}
+
+.giraffe-town-section .giraffe-population {
+  height: 180px; /* Taller */
+}
+
+.giraffe-town-section .giraffe-group {
+  width: 180px; /* Wider */
+  height: 180px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.giraffe-town-section .giraffe-img {
+  height: 140px; /* Taller giraffes */
+  width: 45px; /* Slightly wider */
+  position: relative !important;
+  bottom: 0 !important;
+  margin: 0 5px !important;
+}
+
+/* Population values for Phase 2 */
+.population-value {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 20px; /* Larger font */
+  font-weight: bold;
+  color: #2D7A2A;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Speech bubbles for Phase 2 */
+.speech-bubble-new {
+  background: #4FAB4C;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: 'Gabarito', sans-serif;
+  position: relative;
+  margin-bottom: 20px;
+  text-align: center;
+  max-width: 120px;
+  white-space: normal;
+}
+
+.speech-bubble-new:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #4FAB4C;
+}
+
+.speech-bubble-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
 .speech-bubbles-row {
   display: flex;
   justify-content: space-around;
   width: 100%;
+}
+
+.tertiary-towns-container {
+  display: flex;
+  justify-content: center; /* Changed from space-around to center them */
+  gap: 180px; /* Increased from 50px to create more space between giraffes */
+  width: 100%;
   padding: 0 15px;
-  margin-bottom: 5px;
+  margin-top: 180px; /* Increased from 150px to push giraffes even lower */
+  z-index: 5;
 }
 
-.speech-bubble-container {
-  width: 30%;
-  display: flex;
-  justify-content: center;
-}
-
-.speech-bubble-new {
-  background: #4FAB4C;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-family: 'Gabarito', sans-serif;
-  font-size: 14px;
-  text-align: center;
-  white-space: nowrap;
-  display: inline-block;
-}
-
-/* Giraffe Towns Row */
-.giraffe-towns-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 200px;
-}
-
-.giraffe-town-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.population-value {
-  background: #83CA54;
-  color: white;
-  font-family: 'Gabarito', sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
-}
-
-/* Remove background for specific populations in tertiary gameplay */
-.tertiary-town .population-value {
-  background: transparent;
-  color: white;
-}
-
-.population-question-modal {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #4FAB4C;
-  padding: 20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+.tertiary-town {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 20;
-  padding-bottom: 30px;
+  position: relative;
+  padding-bottom: 10px;
+  transform: scale(1.2); /* Make giraffes 20% bigger */
+}
+
+/* Top bar for tertiary phase - make it larger */
+.tertiary-gameplay-screen .top-bar {
+  height: 70px; /* Increased from 60px */
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+.tertiary-gameplay-screen .top-bar .octopus-icon {
+  transform: scale(1.15); /* Make octopus icon a bit larger */
+}
+
+/* Tertiary phase giraffe scaling */
+.tertiary-town .giraffe-img {
+  height: 160px !important; /* Increased from default to make giraffes bigger */
+  width: 55px; /* Wider giraffes */
+}
+
+.tertiary-town .shortest-giraffe {
+  height: 140px !important; /* Increased from default */
+}
+
+.tertiary-town .tallest-giraffe {
+  height: 180px !important; /* Increased from default */
+}
+
+/* Make question modals larger */
+.population-question-modal, .comparison-question-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #3A8737;
+  padding: 25px 25px 50px 25px; /* Further increased padding */
+  border-radius: 20px 20px 0 0; /* Larger border radius */
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
 }
 
 .question-text {
-  color: white;
   font-family: 'Gabarito', sans-serif;
-  font-size: 18px;
+  font-size: 22px; /* Increased font size */
+  margin-bottom: 25px; /* Increased margin */
   text-align: center;
-  margin-bottom: 24px;
+  color: #ffffff;
+  font-weight: 600; /* Make it bolder */
+  width: 90%; /* Ensure good width on all devices */
 }
 
-.answer-options {
+/* Make success and warning modals larger */
+.success-feedback, .warning-feedback, .positive-feedback-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 25px 25px 50px 25px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15);
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 320px;
-  gap: 12px;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3000;
 }
 
-.population-option {
-  flex: 1;
-  padding: 15px 0;
-  background: #FFFFFF;
-  border-radius: 16px;
-  border: none;
+.success-title, .positive-feedback-modal .success-title {
   font-family: 'Gabarito', sans-serif;
-  font-size: 18px;
-  color: #4FAB4C;
+  font-size: 36px; /* Increased from 32px */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  color: white;
+}
+
+.success-text, .warning-text {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 24px; /* Increased from 22px */
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  color: white;
+}
+
+/* Make option buttons larger */
+.population-option, .comparison-option {
+  width: 110px; /* Increased width */
+  height: 55px; /* Increased height */
+  background: #ffffff;
+  border: none;
+  border-radius: 12px; /* Rounder corners */
+  color: #3A8737;
+  font-family: 'Gabarito', sans-serif;
+  font-size: 20px; /* Increased font size */
+  font-weight: bold;
   cursor: pointer;
-  min-width: 80px;
-  font-weight: 500;
+  transition: all 0.2s;
+  margin: 5px; /* Added margin between buttons */
 }
 
-/* Animation for sliding in from bottom */
-.slide-in-bottom {
-  animation: slideInFromBottom 0.5s ease forwards;
+/* Continue and try again buttons */
+.continue-button, .try-again-button {
+  width: 220px; /* Wider */
+  height: 55px; /* Taller */
+  border-radius: 10px;
+  font-family: 'Gabarito', sans-serif;
+  font-size: 20px; /* Larger font */
+  font-weight: 600; /* Bolder */
+  cursor: pointer;
+  background: #FFFFFF;
+  border: none;
+  color: #3A8737;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  margin-top: 10px;
 }
 
-/* Secondary grass area */
+/* Fix Phase 2 grass visibility */
 .secondary-grass-area {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60%;
+  height: 55%; /* Increased height to ensure visibility */
   z-index: 1;
-  opacity: 0;
-  background: #83CA54; /* Add background to entire area */
-}
-
-.secondary-grass-area.fade-in {
-  animation: fadeIn 0.5s ease forwards;
-}
-
-/* Top and bottom parts of grass for visual effect, both same color */
+  opacity: 1 !important; /* Force visibility */
+  background-color: #83CA54; /* Add backup background color */
+  }
+  
+.grass-top, .grass-bottom {
+  display: block;
+  width: 100%;
+  background: #83CA54;
+  }
+  
 .grass-top {
-  width: 100%;
   height: 50%;
-  background: #83CA54;
-  position: absolute;
   top: 0;
-  left: 0;
-  z-index: 1;
+  }
+  
+.grass-bottom {
+  height: 50%;
+  bottom: 0;
 }
 
-.grass-bottom {
-  width: 100%;
-  height: 50%;
-  background: #83CA54;
-  position: absolute;
+.full-grass-bg {
+  position: fixed; /* Changed from absolute to fixed to match the modal positioning */
   bottom: 0;
   left: 0;
+  right: 0;
+  height: 65%; /* Adjusted from 70% to 65% for better proportion */
+  background-color: #83CA54;
   z-index: 1;
+  opacity: 1 !important;
 }
 
-/* Styles for positive feedback modal - made consistent with phase 1 */
+/* Positive Feedback Modal */
 .positive-feedback-modal {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
@@ -2296,154 +2438,135 @@ export default defineComponent({
   transform: translateY(100%);
 }
 
-.positive-feedback-modal.slide-in-bottom {
+/* Positive Feedback Slide-in Animation */
+.positive-feedback-modal.slide-in {
   animation: slideInFromBottom 0.5s ease forwards;
 }
 
-.feedback-title {
+/* Make "Awesome!" text larger in positive feedback */
+.positive-feedback-modal .success-title {
   font-family: 'Gabarito', sans-serif;
-  font-size: 24px;
+  font-size: 32px; /* Increased from 28px for more emphasis */
   font-weight: bold;
-  margin-bottom: 10px;
-  color: white;
-}
-
-.feedback-text {
-  font-family: 'Gabarito', sans-serif;
-  font-size: 18px;
+  text-align: center;
   margin-bottom: 16px;
   padding: 0 20px;
   color: white;
-  text-align: center;
 }
 
-.continue-button, .try-again-button {
-  width: 200px;
-  height: 50px;
+/* Clean up tertiary phase (Phase 3) layout and styling */
+.tertiary-gameplay-screen {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Remove background from population values */
+.population-value {
+  position: relative;
+  top: 90px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2D7A2A;
+  z-index: 5;
+  background: transparent;
+  padding: 5px 10px;
   border-radius: 8px;
-  font-family: 'Gabarito', sans-serif;
-  font-size: 18px;
-  cursor: pointer;
-  background: #FFFFFF;
-  border: none;
-  color: #333333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles for negative feedback modal - made consistent with phase 1 */
-.negative-feedback-modal {
+/* Options styling for green background */
+.answer-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.population-option:hover {
+  transform: scale(1.05);
+  background: #f0f0f0;
+}
+
+/* Improve giraffe population styling in Phase 2 */
+.giraffe-town-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 200px;
+  width: 180px;
+  margin: 0 10px;
+}
+  
+.giraffe-town-section .giraffe-img {
+  position: absolute !important;
+  bottom: 0 !important;
+  width: 45px;
+  height: 140px;
+  object-fit: contain;
+}
+  
+.giraffe-town-section .giraffe-img:nth-child(1) {
+  left: 10px !important;
+  z-index: 2;
+}
+  
+.giraffe-town-section .giraffe-img:nth-child(2) {
+  left: 55px !important;
+  z-index: 3;
+}
+  
+.giraffe-town-section .giraffe-img:nth-child(3) {
+  left: 100px !important;
+  z-index: 1;
+}
+
+/* Fix Phase 3 grass to start lower */
+.tertiary-grass-area {
   position: absolute;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  padding: 20px;
-  background: #F44336;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 3000;
-  opacity: 0;
-  transform: translateY(100%);
+  height: 60%; /* Reduced from default to start lower */
+  z-index: 1;
+  background-color: #83CA54; /* Ensure consistent background color */
 }
 
-.negative-feedback-modal.slide-in-bottom {
-  animation: slideInFromBottom 0.5s ease forwards;
-}
-
-/* Tertiary Objective Screen */
-.tertiary-objective-screen {
-  position: fixed;
-  inset: 0;
-  background: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  z-index: 3000;
-  opacity: 0;
-}
-
-.tertiary-objective-screen.fade-in {
-  animation: fadeIn 0.5s ease forwards;
-}
-
-.top-bar-tertiary {
-  height: 60px;
-  padding: 0 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #FFFFFF;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.tertiary-message {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-}
-
-.tertiary-message p {
-  color: #6BADD7; /* Light blue color for the message */
-  font-family: 'Gabarito', sans-serif;
-  font-size: 24px;
-  text-align: center;
-}
-
-/* Tertiary Gameplay Screen Styles */
-.tertiary-gameplay-screen {
-  position: fixed;
-  inset: 0;
-  background: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  z-index: 2000;
-}
-
-.tertiary-towns-container {
-  display: flex;
-  justify-content: space-around;
+.tertiary-grass-area .grass-bg {
   width: 100%;
-  padding: 0 15px;
-  margin-top: 120px; /* Push down to avoid overlapping with top bar */
-  z-index: 5;
-}
-
-.tertiary-town {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  opacity: 0;
-  transform: translateY(20px);
-  position: relative;
-  width: 45%;
-  padding-bottom: 0;
-}
-
-.tertiary-town.slide-in {
-  animation: slideIn 0.5s ease forwards;
-}
-
-.tertiary-town .speech-bubble {
+  height: 100%;
+  background: #83CA54;
   position: absolute;
-  top: -55px !important; /* Position bubble closer to giraffes, changed from -40px */
-  left: 50%;
+  bottom: 0;
+  left: 0;
+}
+
+/* Add new tertiary-speech-bubble class to the style section */
+.tertiary-speech-bubble {
+  position: absolute;
+  top: -100px;
+  left: 60%;
   transform: translateX(-50%);
-  z-index: 10;
   background: #4FAB4C;
   color: white;
-  padding: 8px 16px;
-  border-radius: 12px;
+  padding: 10px 15px;
+  border-radius: 10px;
   font-size: 16px;
   font-family: 'Gabarito', sans-serif;
-  font-weight: 500;
-  text-align: center;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  max-width: 120px;
 }
 
-/* Restore the speech bubble arrow */
-.tertiary-town .speech-bubble:after {
+.tertiary-speech-bubble.fade-in {
+  opacity: 1;
+}
+
+.tertiary-speech-bubble:after {
   content: '';
   position: absolute;
   bottom: -8px;
@@ -2452,207 +2575,5 @@ export default defineComponent({
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-top: 8px solid #4FAB4C;
-}
-
-/* Make giraffes consistent on desktop */
-@media (min-width: 768px) {
-  .tertiary-town .giraffe-population {
-    height: 180px;
-  }
-  
-  .tertiary-town .giraffe-group {
-    width: 170px;
-    height: 180px;
-  }
-  
-  .tertiary-town .giraffe-img {
-    height: 140px;
-    width: 50px;
-  }
-  
-  .tertiary-town .tallest-giraffe {
-    height: 160px;
-    width: 60px;
-  }
-  
-  .tertiary-town .shortest-giraffe {
-    height: 120px;
-    width: 50px;
-  }
-}
-
-.tertiary-grass-area {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  z-index: 1;
-  opacity: 0;
-  background: #83CA54;
-}
-
-.tertiary-grass-area.fade-in {
-  animation: fadeIn 0.5s ease forwards;
-}
-
-/* Comparison Question Modal Styles */
-.comparison-question-modal {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #4FAB4C;
-  padding: 20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 20;
-  padding-bottom: 30px;
-}
-
-.comparison-options {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 320px;
-  gap: 12px;
-}
-
-.comparison-option {
-  flex: 1;
-  padding: 20px 0;
-  background: #FFFFFF;
-  border-radius: 16px;
-  border: none;
-  font-family: 'Gabarito', sans-serif;
-  font-size: 24px;
-  color: #4FAB4C;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-/* Add this CSS at the end of the style section */
-@media (max-width: 480px) {
-  .question-modal {
-    width: 85%;
-    max-width: 300px;
-    padding: 16px;
-  }
-  
-  .options-container {
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .option-button {
-    width: 45px;
-    height: 45px;
-    font-size: 18px;
-  }
-  
-  .target-containers {
-    gap: 15px;
-  }
-  
-  .target-container {
-    width: 70px;
-    height: 70px;
-  }
-  
-  .option-buttons {
-    gap: 10px;
-    padding: 0 10px;
-  }
-  
-  .number-groups {
-    gap: 15px;
-  }
-  
-  .giraffe-image {
-    width: 45px;
-    height: 130px;
-  }
-  
-  .speech-bubble {
-    max-width: 110px;
-    font-size: 14px;
-    padding: 8px;
-  }
-}
-
-/* Fix for success feedback speech bubble positioning */
-.success-feedback.slide-in ~ .game-content .speech-bubble {
-  top: -180px !important;
-  position: fixed !important;
-  z-index: 2000 !important;
-}
-
-/* Fix for ensuring giraffe images display at proper heights */
-.giraffe-img {
-  object-fit: contain !important;
-  object-position: bottom !important;
-  position: absolute !important;
-  bottom: 0 !important;
-}
-
-/* Ensure touch targets are large enough on mobile */
-.option-button {
-  touch-action: none !important;
-}
-
-/* Prevent z-index issues when interacting with warning messages */
-.warning-feedback, .success-feedback {
-  z-index: 2000 !important;
-}
-
-/* Center octopus icon in the diamond badge unlock screen */
-.badge-unlock-screen .octopus-icon {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Fix Font Awesome visibility */
-.close-button svg,
-.emoji-button svg {
-  width: 20px !important;
-  height: 20px !important;
-  display: block !important;
-  opacity: 1 !important;
-  color: #333333 !important;
-  visibility: visible !important;
-}
-
-/* Fix emoji display in feedback screen */
-.emoji-screen .emoji-button {
-  font-size: 24px;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-}
-
-/* Remove title in success modal */
-.success-feedback .success-title {
-  display: none;
-}
-
-/* Fix speech bubble positioning in Phase 2 */
-.speech-bubble-new {
-  max-width: 100px;
-  font-size: 14px;
-  white-space: normal;
-}
-
-.speech-bubbles-row {
-  margin-bottom: 15px;
-  gap: 40px; /* Add more horizontal separation */
-  justify-content: center;
 }
 </style> 

@@ -239,7 +239,7 @@
             {{ giraffe.height }}
           </div>
           <div class="giraffe-wrapper">
-            <img src="../assets/icons/Giraffe2.png" 
+            <img src="../assets/icons/Giraffe3.png" 
                  :alt="`Giraffe ${giraffe.label}`"
                  class="giraffe-image" />
           </div>
@@ -493,10 +493,10 @@ export default defineComponent({
 
     // Update tertiaryGiraffes data
     const tertiaryGiraffes = ref([
-      { height: 10, label: 'A', successText: "I'm the shortest!", scale: 0.7, image: 'Giraffe1.png' },
+      { height: 10, label: 'A', successText: "I'm the shortest!", scale: 0.7, image: 'Giraffe3.png' },
       { height: 25, label: 'B', successText: "I'm taller than A!", scale: 0.85, image: 'Giraffe3.png' },
       { height: 27, label: 'C', successText: "I'm almost the tallest!", scale: 0.9, image: 'Giraffe3.png' },
-      { height: 40, label: 'D', successText: "I'm the tallest!", scale: 1, image: 'Giraffe2.png' }
+      { height: 40, label: 'D', successText: "I'm the tallest!", scale: 1, image: 'Giraffe3.png' }
     ]);
 
     const successGiraffes = [
@@ -1947,7 +1947,7 @@ export default defineComponent({
   font-size: 20px;
   font-weight: bold;
   position: absolute;
-  bottom: 0;
+  bottom: -0.8px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 6;
@@ -2698,41 +2698,134 @@ export default defineComponent({
   
   /* Fix for first phase */
   .giraffe-slot:nth-child(1) .speech-bubble {
-    top: -60px !important;
+    top: -50px !important;
+    left: 40% !important;
   }
   
   .giraffe-slot:nth-child(3) .speech-bubble {
-    top: -70px !important;
+    top: -70px !important; /* Moved higher to avoid overlapping with giraffe */
+    left: 50% !important;
   }
   
   .giraffe-slot:nth-child(2) .speech-bubble {
-    top: -90px !important;
+    top: -70px !important;
+    left: 50% !important;
+  }
+  
+  /* Adjust spacing for phase 1 giraffes */
+  .giraffes-area {
+    gap: 50px; /* Increase spacing between giraffes */
+    justify-content: center;
   }
   
   /* Adjust secondary phase giraffes container */
   .secondary-giraffes-container {
-    gap: 30px;
+    gap: 45px; /* Increased gap from 30px */
+    padding: 0 10px;
+    justify-content: center;
   }
   
   /* Prevent speech bubbles from overlapping in Phase 2 */
   .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
-    top: -35px !important;
-    left: 40%;
+    top: -25px !important;
+    left: 45% !important;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
-    top: -65px !important;
-    left: 60%;
+    top: -75px !important;
+    left: 45% !important;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
-    top: -35px !important;
-    left: 40%;
+    top: -85px !important;
+    left: 45% !important;
   }
   
   .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
-    top: -65px !important;
-    left: 60%;
+    top: -75px !important;
+    left: 45% !important;
+  }
+  
+  /* When success modal shows, hide title instruction */
+  .success-feedback.slide-in ~ .game-content .game-title,
+  .secondary-success-feedback.slide-in ~ .secondary-gameplay .secondary-title {
+    display: none !important;
+  }
+  
+  /* Align Phase 1 giraffes directly above button labels */
+  .giraffes-area {
+    gap: 50px; /* Even spacing for phase 1 giraffes */
+    justify-content: center;
+    bottom: 244px; /* Keep consistent position relative to grass */
+    left: 0;
+    right: 0;
+    width: 100%; 
+    padding: 0;
+    margin: 0 auto;
+  }
+  
+  /* Ensure number slots align with giraffes above */
+  .number-slots {
+    gap: 50px; /* Match the same gap as giraffes */
+    justify-content: center;
+    padding: 20px 0; /* Adjust padding to reduce vertical space */
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Make sure giraffe slots and number slots are aligned with same width */
+  .giraffe-slot,
+  .number-slot {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Adjust secondary phase giraffes container to position at grass tip */
+  .secondary-giraffes-container {
+    gap: 45px; /* Maintain spacing between giraffes */
+    padding: 0 10px;
+    justify-content: center;
+    position: absolute;
+    bottom: 224px !important; /* Position exactly at grass tip */
+    align-items: flex-end !important; /* Ensure all giraffes align to bottom */
+    min-height: 160px; /* Ensure enough vertical space */
+    width: 100%;
+    max-width: 100vw;
+    overflow: visible !important;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 0;
+  }
+  
+  /* Position giraffes at the grass tip */
+  .secondary-giraffe {
+    width: 40px !important;
+    position: relative;
+    margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  /* Force second giraffe to be at dark grass tip */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) {
+    align-self: flex-end !important;
+    vertical-align: bottom !important;
+    margin-top: auto !important;
+    margin-bottom: -38px !important; /* Push down further to touch grass tip */
+  }
+  
+  .secondary-giraffe .giraffe-image {
+    width: 40px !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+    vertical-align: bottom !important;
+    margin-bottom: 0 !important;
   }
 }
 
@@ -2742,6 +2835,177 @@ export default defineComponent({
     gap: 40px; /* Increased gap between giraffes */
     padding: 0 15px;
     justify-content: space-around;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Make sure success modal doesn't disrupt grass tip positioning */
+  .secondary-success-feedback.slide-in ~ .secondary-phase .secondary-giraffes-container {
+    bottom: 224px !important; /* Keep exact position at grass tip */
+    position: absolute !important;
+    z-index: 5 !important;
+  }
+
+  .secondary-success-feedback.slide-in ~ .secondary-phase .secondary-giraffe,
+  .secondary-success-feedback.slide-in ~ .secondary-phase .giraffe-image {
+    margin-bottom: 0 !important;
+    bottom: 0 !important;
+  }
+  
+  /* Maintain second giraffe positioning with success modal */
+  .secondary-success-feedback.slide-in ~ .secondary-phase .secondary-giraffe:nth-child(2) {
+    margin-bottom: -38px !important; /* Same as normal state */
+  }
+}
+
+@media (max-width: 767px) {
+  /* Success modal speech bubbles - ensure they're properly positioned */
+  .secondary-success-feedback.slide-in ~ .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
+    top: 0px !important;
+    left: 50% !important;
+    background: #4FAB4C !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-success-feedback.slide-in ~ .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
+    top: -30px !important;
+    left: 50% !important;
+    background: #4FAB4C !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.success-speech {
+    top: -30px !important; /* Medium-low position */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.success-speech {
+    top: -20px !important; /* Medium-high position */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.success-speech {
+    top: -30px !important; /* Highest bubble */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Success speech styles - when showSuccessSpeech is true */
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe .speech-bubble.success-speech {
+    background: #4FAB4C !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+  }
+
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble.success-speech {
+    top: -25px !important; /* Lowest bubble */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble.success-speech {
+    top: -60px !important; /* Medium-low position */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble.success-speech {
+    top: -65px !important; /* Medium-high position */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  
+  .secondary-phase .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble.success-speech {
+    top: -70px !important; /* Highest bubble */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Phase 3 (tertiary phase) specific mobile styles */
+  .tertiary-phase .tertiary-giraffes-container {
+    position: absolute;
+    bottom: 197px !important; /* Position exactly at the dark grass tip */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end !important;
+    gap: 40px;
+    padding: 0 10px;
+    z-index: 5;
+    overflow: visible !important;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  .tertiary-phase .giraffe-wrapper {
+    width: 45px !important;
+    height: 130px !important; /* Consistent height for wrapper */
+    overflow: visible !important;
+    position: relative;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Make all giraffes the same height using more specific selectors */
+  .tertiary-phase .tertiary-giraffe .giraffe-wrapper .giraffe-image {
+    width: 45px !important;
+    height: 120px !important;
+    object-fit: contain !important;
+    object-position: bottom !important;
+    position: absolute;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0;
+    clip-path: inset(0 0 15% 0) !important;
+    margin-bottom: -15px !important;
+  }
+  
+  /* Ensure specific styling for first giraffe (previously had different height) */
+  .tertiary-phase .tertiary-giraffe:nth-child(1) .giraffe-wrapper .giraffe-image {
+    height: 120px !important;
+    clip-path: inset(0 0 15% 0) !important;
+  }
+  
+  /* Ensure specific styling for last giraffe (previously had different height) */
+  .tertiary-phase .tertiary-giraffe:nth-child(4) .giraffe-wrapper .giraffe-image {
+    height: 120px !important;
+    clip-path: inset(0 0 15% 0) !important;
+  }
+  
+  .tertiary-phase .tertiary-bubble {
+    position: absolute;
+    top: -35px; /* Position higher up for better spacing */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  
+  /* Update label positioning for giraffes */
+  .tertiary-phase .tertiary-giraffe::after {
+    content: attr(data-label);
+    color: #2D7A2A;
+    font-family: 'Gabarito', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    position: absolute;
+    bottom: -10px !important; /* Position below the giraffes */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    z-index: 6;
   }
 }
 </style> 

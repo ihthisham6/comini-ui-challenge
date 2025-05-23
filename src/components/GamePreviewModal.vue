@@ -10,7 +10,7 @@
         </div>
         <div class="preview-container">
           <RivePlayer
-            src="src/assets/rive/giraffes.riv"
+            src="/rive/giraffes.riv"
             :width="312"
             :height="200"
           />
