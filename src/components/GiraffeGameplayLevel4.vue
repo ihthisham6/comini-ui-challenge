@@ -1474,7 +1474,7 @@ export default defineComponent({
 
 /* Answer Options */
 .answer-options-container {
-  padding-bottom: 30px; /* Increased padding */
+  padding-bottom: 10px; /* Increased padding */
   margin-bottom: 0;
   width: 100%;
   display: flex;
@@ -1485,9 +1485,6 @@ export default defineComponent({
   left: 0;
   right: 0;
   z-index: 100;
- 
-  
-  
   padding-top: 20px;
 }
 
@@ -1549,18 +1546,18 @@ export default defineComponent({
 
 .check-button {
   width: 100%;
-  max-width: 350px; /* Increased from 320px */
-  height: 60px; /* Increased from 50px */
+  max-width: 320px; /* Increased from 320px */
+  height: 50px; /* Increased from 50px */
   background: #FFFFFF;
   border: none;
   border-radius: 12px; /* Increased from 10px */
   font-family: 'Gabarito', sans-serif;
-  font-size: 22px; /* Increased from 20px */
+  font-size: 20px; /* Increased from 20px */
   color: #333333;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
-  margin-bottom: 25px; /* Increased from 20px */
+  margin-bottom: 20px; /* Increased from 20px */
   position: relative;
   z-index: 1000;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
