@@ -1486,8 +1486,7 @@ export default defineComponent({
   right: 0;
   z-index: 100;
  
-  backdrop-filter: blur(5px); /* Add blur effect for modern browsers */
-  -webkit-backdrop-filter: blur(5px); /* For Safari */
+  
   
   padding-top: 20px;
 }
