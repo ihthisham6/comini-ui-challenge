@@ -1151,18 +1151,7 @@ export default defineComponent({
 }
 
 .arrow-symbol {
-  color: #FFFFFF;
-  background: #3A8737;
-  width: 19.99px;
-  height: 10.01px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  margin-top: 4px;
-  z-index: 3;
-  position: relative;
+  display: none;
 }
 
 .check-button {
@@ -1434,6 +1423,39 @@ export default defineComponent({
 
   .instruction-text {
     transform: translateX(2px);
+  }
+
+  /* When success modal shows, adjust bubble position to be closer to giraffe */
+  .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
+    top: -180px !important;
+  }
+  
+  /* Position speech bubbles properly */
+  .giraffe-slot .speech-bubble {
+    top: -60px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Fix bubbles for different device sizes */
+@media (max-width: 767px) {
+  .giraffe-slot .speech-bubble {
+    top: -80px !important; /* Move speech bubbles higher on mobile */
+  }
+  
+  .giraffe-slot:nth-child(1) .speech-bubble {
+    top: -65px !important; /* Adjust for shortest giraffe */
+  }
+  
+  .giraffe-slot:nth-child(3) .speech-bubble {
+    top: -95px !important; /* Adjust for tallest giraffe */
+  }
+
+  /* Fix for success modal bubble positions */
+  .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
+    top: -120px !important;
   }
 }
 
@@ -2152,7 +2174,8 @@ export default defineComponent({
 .gold-badge-unlock .octopus-icon {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .gold-badge-unlock-text {
@@ -2236,6 +2259,58 @@ export default defineComponent({
     top: -30px;
     width: auto;
   }
+
+  /* Prevent speech bubbles from overlapping each other in secondary phase */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
+    top: -35px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
+    top: -55px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+    top: -35px;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
+    top: -55px;
+  }
+  
+  /* Fix bubbles for tertiary phase */
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(1) .speech-bubble {
+    top: -35px;
+  }
+  
+  .tertiary-giraffes-container .tertiary-giraffe:nth-child(2) .speech-bubble {
+    top: -55px;
+  }
+
+  /* Make sure bubbles don't overlap with giraffes */
+  .speech-bubble {
+    max-width: 90px;
+    font-size: 12px;
+    padding: 6px;
+    z-index: 10;
+  }
+  
+  /* Additional specific adjustments for Phase 2 */
+  .secondary-giraffes-container {
+    gap: 30px; /* Increase gap between giraffes */
+  }
+  
+  /* Prevent speech bubbles from overlapping more effectively */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble,
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+    top: -40px;
+    left: 45%;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble,
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
+    top: -60px;
+    left: 55%; 
+  }
 }
 
 /* Fix for ensuring all giraffes stick to the grass */
@@ -2274,20 +2349,5 @@ export default defineComponent({
   clip-path: none !important;
   object-fit: contain !important;
   object-position: bottom !important;
-}
-
-@media (min-width: 1024px) {
-  /* When success modal shows, adjust bubble position to be closer to giraffe */
-  .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
-    top: -180px !important;
-  }
-  
-  /* Position speech bubbles properly */
-  .giraffe-slot .speech-bubble {
-    top: -60px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    white-space: nowrap !important;
-  }
 }
 </style>

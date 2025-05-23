@@ -599,7 +599,7 @@ export default defineComponent({
       
       if (dropTarget) {
         dropTarget.classList.add('touch-drop-target');
-      }
+        }
       
       touchTarget.value = newTarget;
     };
@@ -1283,7 +1283,7 @@ export default defineComponent({
 
 .speech-bubble {
   position: absolute;
-  top: -35px;
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
   background: #4FAB4C;
@@ -1293,16 +1293,14 @@ export default defineComponent({
   font-size: 16px;
   font-family: 'Gabarito', sans-serif;
   white-space: nowrap;
-  z-index: 3;
-  min-width: 25px;
-  text-align: center;
+  z-index: 4;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 .speech-bubble.success-speech {
-  min-width: auto;
-  white-space: nowrap;
+  background: #4FAB4C;
+  z-index: 10;
 }
 
 .speech-bubble.fade-in {
@@ -2682,6 +2680,59 @@ export default defineComponent({
   .secondary-giraffe .giraffe-image {
     width: 40px;
     height: 120px;
+  }
+}
+
+/* Media queries for mobile - Fix speech bubbles overlapping */
+@media (max-width: 767px) {
+  .speech-bubble {
+    font-size: 14px;
+    padding: 8px;
+    min-width: 80px;
+    max-width: 90px;
+    white-space: normal;
+    text-align: center;
+    top: -80px !important;
+    z-index: 10;
+  }
+  
+  /* Fix for first phase */
+  .giraffe-slot:nth-child(1) .speech-bubble {
+    top: -60px !important;
+  }
+  
+  .giraffe-slot:nth-child(3) .speech-bubble {
+    top: -70px !important;
+  }
+  
+  .giraffe-slot:nth-child(2) .speech-bubble {
+    top: -90px !important;
+  }
+  
+  /* Adjust secondary phase giraffes container */
+  .secondary-giraffes-container {
+    gap: 30px;
+  }
+  
+  /* Prevent speech bubbles from overlapping in Phase 2 */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
+    top: -35px !important;
+    left: 45%;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
+    top: -55px !important;
+    left: 55%;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+    top: -35px !important;
+    left: 45%;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
+    top: -55px !important;
+    left: 55%;
   }
 }
 </style> 

@@ -93,7 +93,6 @@
                  @touchstart="handleTouchStart($event, index)"
                  @touchmove.prevent="handleTouchMove($event)"
                  @touchend="handleTouchEnd($event)">
-              <div class="drag-handle"></div>
               {{ position.number }}
             </div>
           </div>
@@ -1504,14 +1503,7 @@ export default defineComponent({
 
 /* Mobile drag handle visual cue */
 .drag-handle {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 25px;
-  height: 4px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 2px;
+  display: none;
 }
 
 /* Touch drop target highlight */
@@ -2260,7 +2252,9 @@ export default defineComponent({
 .bronze-badge-unlock .octopus-icon {
   position: absolute;
   top: 20px;
-  right: 20px;
+  /* Change from right alignment to center */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .bronze-badge-unlock-text {
@@ -2426,6 +2420,66 @@ export default defineComponent({
     z-index: 2000 !important;
     position: fixed !important;
     bottom: 0 !important;
+  }
+}
+
+/* Additional speech bubble positioning for mobile */
+@media (max-width: 767px) {
+  .speech-bubble {
+    font-size: 14px;
+    padding: 8px;
+    min-width: 80px;
+    max-width: 90px;
+    white-space: normal;
+    text-align: center;
+    top: -80px !important;
+    z-index: 10;
+  }
+  
+  /* Fix for shortest giraffe */
+  .giraffe-slot:nth-child(1) .speech-bubble {
+    top: -60px !important;
+  }
+  
+  /* Fix for medium giraffe */
+  .giraffe-slot:nth-child(3) .speech-bubble {
+    top: -70px !important;
+  }
+  
+  /* Fix for tallest giraffe */
+  .giraffe-slot:nth-child(2) .speech-bubble {
+    top: -90px !important;
+  }
+  
+  /* Adjust speech bubbles in Phase 2 */
+  .secondary-giraffes-container {
+    gap: 30px;
+  }
+  
+  /* Prevent speech bubbles from overlapping in secondary phase */
+  .secondary-giraffes-container .secondary-giraffe:nth-child(1) .speech-bubble {
+    top: -35px !important;
+    left: 45%;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(2) .speech-bubble {
+    top: -55px !important;
+    left: 55%;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+    top: -35px !important;
+    left: 45%;
+  }
+  
+  .secondary-giraffes-container .secondary-giraffe:nth-child(4) .speech-bubble {
+    top: -55px !important;
+    left: 55%;
+  }
+  
+  /* When success modal shows, adjust bubble positions */
+  .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
+    top: -120px !important;
   }
 }
 </style>

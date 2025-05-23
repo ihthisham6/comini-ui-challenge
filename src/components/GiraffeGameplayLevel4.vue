@@ -1903,22 +1903,20 @@ export default defineComponent({
 
 /* Add these styles for speech bubbles */
 .speech-bubble {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #4FAB4C;
   color: white;
   padding: 8px 12px;
-  border-radius: 12px;
+  border-radius: 8px;
+  font-size: 16px;
   font-family: 'Gabarito', sans-serif;
-  font-size: 14px;
-  position: absolute;
-  top: -25px; /* Moved from -40px to -25px to be closer to giraffes */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
   white-space: nowrap;
+  z-index: 10;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  min-width: 100px;
-  text-align: center;
+  transition: opacity 0.5s ease;
 }
 
 .speech-bubble.fade-in {
@@ -1934,6 +1932,113 @@ export default defineComponent({
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-top: 8px solid #4FAB4C;
+}
+
+/* Make the speech bubble disappear when success modal is shown */
+.success-feedback.slide-in ~ .game-content .speech-bubble {
+  opacity: 0 !important;
+  z-index: 0 !important;
+}
+
+/* Fix for giraffe populations to make them distinct */
+.giraffe-population {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 140px;
+  width: 100%;
+  margin-bottom: -10px;
+  z-index: 2;
+  transform-origin: bottom center;
+}
+
+.giraffe-group {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.giraffe-img {
+  position: absolute;
+  bottom: 0;
+  width: 40px;
+  height: 120px;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+/* Add spacing for distinct giraffe populations */
+.tallest-giraffe {
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.shortest-giraffe {
+  left: calc(50% - 25px);
+  z-index: 2;
+  height: 100px;
+}
+
+.clipped-giraffe {
+  left: calc(50% + 25px);
+  z-index: 1;
+  height: 110px;
+}
+
+/* Mobile styles for responsive layout */
+@media (max-width: 767px) {
+  .giraffe-towns-container {
+    gap: 15px;
+    padding: 0 10px;
+    justify-content: space-around;
+  }
+
+  .giraffe-town {
+    min-width: 90px;
+  }
+
+  /* Make the population label fit on mobile */
+  .population-label {
+    font-size: 13px;
+    padding: 4px;
+    white-space: normal;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Adjust speech bubble positioning on mobile */
+  .speech-bubble {
+    font-size: 14px;
+    padding: 6px 8px;
+    white-space: normal;
+    max-width: 80px;
+    text-align: center;
+    top: -40px;
+  }
+  
+  /* Make sure town D doesn't overflow */
+  .secondary-giraffe-container {
+    gap: 10px;
+    padding: 0 10px;
+  }
+  
+  .secondary-town-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .secondary-town {
+    min-width: 80px;
+    margin-bottom: 20px;
+  }
 }
 
 /* Secondary Objective Screen */
@@ -2497,5 +2602,13 @@ export default defineComponent({
 /* Prevent z-index issues when interacting with warning messages */
 .warning-feedback, .success-feedback {
   z-index: 2000 !important;
+}
+
+/* Center octopus icon in the diamond badge unlock screen */
+.badge-unlock-screen .octopus-icon {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style> 
