@@ -322,8 +322,8 @@
             :class="{ 'slide-in': showTertiaryGiraffes }"
             :style="{ animationDelay: '0ms' }"
           >
-            <!-- Speech Bubble - changed class here -->
-            <div v-if="showSpeechBubbles" class="tertiary-speech-bubble fade-in">
+            <!-- Speech Bubble -->
+            <div v-if="showSpeechBubbles" class="speech-bubble fade-in">
               {{ tertiaryGiraffeTowns[0].speechText }}
             </div>
             
@@ -347,8 +347,8 @@
             :class="{ 'slide-in': showTertiaryGiraffes }"
             :style="{ animationDelay: '300ms' }"
           >
-            <!-- Speech Bubble - changed class here -->
-            <div v-if="showSpeechBubbles" class="tertiary-speech-bubble fade-in">
+            <!-- Speech Bubble -->
+            <div v-if="showSpeechBubbles" class="speech-bubble fade-in">
               {{ tertiaryGiraffeTowns[1].speechText }}
             </div>
             
@@ -1243,7 +1243,7 @@ export default defineComponent({
 
 .objective-text {
   font-family: 'Gabarito', sans-serif;
-  font-size: 30px;
+  font-size: 20px;
   color: #6BADD7;
   text-align: center;
   transition: transform 0.5s ease;
@@ -1427,46 +1427,46 @@ export default defineComponent({
 .giraffe-img {
   position: relative !important;
   bottom: 0 !important;
-  height: 160px; /* Increased from 140px to make giraffes bigger */
-  width: 50px; /* Increased from 45px for proportional scaling */
+  height: 140px; /* Increased from 120px */
+  width: 45px; /* Slightly wider */
   object-fit: contain !important;
   object-position: bottom !important;
-  margin: 0 7px !important;
+  margin: 0 7px !important; /* Increased margin for spacing */
 }
 
 .clipped-giraffe {
   left: auto !important;
   z-index: 1;
-  height: 150px !important; /* Increased from 130px */
+  height: 130px !important; /* Increased from 110px */
 }
 
 .tallest-giraffe {
   left: auto !important;
   z-index: 3;
-  height: 170px !important; /* Increased from 150px */
+  height: 150px !important; /* Increased from 130px */
 }
 
 .shortest-giraffe {
   left: auto !important;
   z-index: 2;
-  height: 140px !important; /* Increased from 120px */
+  height: 120px !important; /* Increased from 100px */
 }
 
-/* Make the population platform wider to accommodate bigger giraffes */
+/* Make the population platform wider */
 .population-platform {
-  width: 220px; /* Increased from 200px */
-  height: 10px;
+  width: 200px; /* Increased from 160px */
+  height: 10px; /* Increased from 7px */
   background: #4FAB4C;
   margin-bottom: 2px;
-  border-radius: 5px;
+  border-radius: 5px; /* Add rounded corners */
 }
 
 .population-label {
   color: #2D7A2A;
   font-family: 'Gabarito', sans-serif;
-  font-size: 20px; /* Increased from 18px */
+  font-size: 18px; /* Increased from 16px */
   font-weight: bold;
-  margin-top: 8px;
+  margin-top: 8px; /* Increased from 5px */
   text-align: center;
   z-index: 6;
   width: 100%;
@@ -1513,14 +1513,14 @@ export default defineComponent({
 
 /* Fix for option positioning */
 .option-button {
-  width: 75px; /* Increased from 65px */
-  height: 65px; /* Increased from 55px */
+  width: 65px; /* Increased from 65px */
+  height: 55px; /* Increased from 55px */
   background: #8FD14F;
   color: #FFFFFF;
   border: none;
-  border-radius: 10px; /* Increased from 8px */
+  border-radius: 8px; /* Increased from 8px */
   font-family: 'Gabarito', sans-serif;
-  font-size: 28px; /* Increased from 24px */
+  font-size: 24px; /* Increased from 24px */
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -1529,7 +1529,7 @@ export default defineComponent({
   transition: all 0.2s;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
   user-select: none;
-  margin-bottom: 8px; /* Increased from 5px */
+  margin-bottom: 5px; /* Increased from 5px */
 }
 
 .option-button:active {
@@ -1540,7 +1540,7 @@ export default defineComponent({
 @media (max-height: 700px) {
   .check-button {
     margin-bottom: 70px !important; /* Even more margin on very small screens */
-    transform: scale(1.05); /* Slightly larger for better visibility */
+    transform: scale(1); /* Slightly larger for better visibility */
   }
   
   .answer-options-container {
@@ -2068,10 +2068,6 @@ export default defineComponent({
     font-size: 13px;
     padding: 4px;
     white-space: normal;
-  text-align: center;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
   /* Adjust speech bubble positioning on mobile */
@@ -2152,15 +2148,17 @@ export default defineComponent({
   flex-direction: column;
   padding-top: 80px;
   z-index: 5;
-  gap: 30px; /* Increased gap between sections */
+  gap: 30px;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .giraffe-towns-row {
   display: flex;
-  justify-content: space-around; /* More even spacing */
+  justify-content: space-around;
   width: 100%;
-  height: 220px; /* Increased from 200px */
+  height: 220px;
   padding: 0 10px;
+  max-width: 100%; /* Ensure container doesn't overflow */
 }
 
 .giraffe-town-section {
@@ -2193,231 +2191,78 @@ export default defineComponent({
 /* Population values for Phase 2 */
 .population-value {
   font-family: 'Gabarito', sans-serif;
-  font-size: 20px; /* Larger font */
+  font-size: 20px;
   font-weight: bold;
   color: #2D7A2A;
-  margin-top: 10px;
+  margin-top: 30px;
   text-align: center;
-}
-
-/* Speech bubbles for Phase 2 */
-.speech-bubble-new {
-  background: #4FAB4C;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-family: 'Gabarito', sans-serif;
   position: relative;
-  margin-bottom: 20px;
-  text-align: center;
-  max-width: 120px;
-  white-space: normal;
-}
-
-.speech-bubble-new:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #4FAB4C;
-}
-
-.speech-bubble-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
+  top: 10px; /* Reset the top value that was pushing it down */
+  z-index: 5;
+  background: transparent;
+  padding: 5px 10px;
+  border-radius: 8px;
 }
 
 .speech-bubbles-row {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  margin-bottom: 5px; /* Reduced from 15px to bring bubbles closer */
 }
 
-.tertiary-towns-container {
+.speech-bubble-container {
   display: flex;
-  justify-content: center; /* Changed from space-around to center them */
-  gap: 180px; /* Increased from 50px to create more space between giraffes */
-  width: 100%;
-  padding: 0 15px;
-  margin-top: 180px; /* Increased from 150px to push giraffes even lower */
-  z-index: 5;
+  justify-content: center;
+  margin-bottom: 5px; /* Reduced from 15px */
 }
 
-.tertiary-town {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  padding-bottom: 10px;
-  transform: scale(1.2); /* Make giraffes 20% bigger */
-}
-
-/* Top bar for tertiary phase - make it larger */
-.tertiary-gameplay-screen .top-bar {
-  height: 70px; /* Increased from 60px */
-  padding: 0 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #FFFFFF;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  z-index: 10;
-}
-
-.tertiary-gameplay-screen .top-bar .octopus-icon {
-  transform: scale(1.15); /* Make octopus icon a bit larger */
-}
-
-/* Tertiary phase giraffe scaling */
-.tertiary-town .giraffe-img {
-  height: 160px !important; /* Increased from default to make giraffes bigger */
-  width: 55px; /* Wider giraffes */
-}
-
-.tertiary-town .shortest-giraffe {
-  height: 140px !important; /* Increased from default */
-}
-
-.tertiary-town .tallest-giraffe {
-  height: 180px !important; /* Increased from default */
-}
-
-/* Make question modals larger */
-.population-question-modal, .comparison-question-modal {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #3A8737;
-  padding: 25px 25px 50px 25px; /* Further increased padding */
-  border-radius: 20px 20px 0 0; /* Larger border radius */
-  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15); /* Stronger shadow */
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: auto;
-}
-
-.question-text {
-  font-family: 'Gabarito', sans-serif;
-  font-size: 22px; /* Increased font size */
-  margin-bottom: 25px; /* Increased margin */
-  text-align: center;
-  color: #ffffff;
-  font-weight: 600; /* Make it bolder */
-  width: 90%; /* Ensure good width on all devices */
-}
-
-/* Make success and warning modals larger */
-.success-feedback, .warning-feedback, .positive-feedback-modal {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 25px 25px 50px 25px;
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 3000;
-}
-
-.success-title, .positive-feedback-modal .success-title {
-  font-family: 'Gabarito', sans-serif;
-  font-size: 36px; /* Increased from 32px */
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-  padding: 0 20px;
+.speech-bubble-new {
+  background: #4FAB4C;
   color: white;
-}
-
-.success-text, .warning-text {
-  font-family: 'Gabarito', sans-serif;
-  font-size: 24px; /* Increased from 22px */
-  text-align: center;
-  margin-bottom: 20px;
-  padding: 0 20px;
-  color: white;
-}
-
-/* Make option buttons larger */
-.population-option, .comparison-option {
-  width: 110px; /* Increased width */
-  height: 55px; /* Increased height */
-  background: #ffffff;
-  border: none;
-  border-radius: 12px; /* Rounder corners */
-  color: #3A8737;
-  font-family: 'Gabarito', sans-serif;
-  font-size: 20px; /* Increased font size */
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin: 5px; /* Added margin between buttons */
-}
-
-/* Continue and try again buttons */
-.continue-button, .try-again-button {
-  width: 220px; /* Wider */
-  height: 55px; /* Taller */
+  padding: 8px 12px;
   border-radius: 10px;
+  font-size: 16px;
   font-family: 'Gabarito', sans-serif;
-  font-size: 20px; /* Larger font */
-  font-weight: 600; /* Bolder */
-  cursor: pointer;
-  background: #FFFFFF;
-  border: none;
-  color: #3A8737;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s;
-  margin-top: 10px;
+  position: relative;
+  margin-bottom: 10px; /* Reduced from 20px */
+  text-align: center;
+  max-width: 120px;
+  white-space: normal;
 }
 
-/* Fix Phase 2 grass visibility */
-.secondary-grass-area {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 55%; /* Increased height to ensure visibility */
-  z-index: 1;
-  opacity: 1 !important; /* Force visibility */
-  background-color: #83CA54; /* Add backup background color */
+@media (max-width: 767px) {
+  .giraffe-town-section {
+    width: 110px;
+    margin: 0 2px;
+    position: relative; /* Ensure relative positioning */
+    padding-bottom: 30px; /* Add space for the population value */
   }
-  
-.grass-top, .grass-bottom {
-  display: block;
-  width: 100%;
-  background: #83CA54;
-  }
-  
-.grass-top {
-  height: 50%;
-  top: 0;
-  }
-  
-.grass-bottom {
-  height: 50%;
-  bottom: 0;
-}
 
-.full-grass-bg {
-  position: fixed; /* Changed from absolute to fixed to match the modal positioning */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 65%; /* Adjusted from 70% to 65% for better proportion */
-  background-color: #83CA54;
-  z-index: 1;
-  opacity: 1 !important;
+  .population-value {
+    font-size: 16px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    margin-top: 10px;
+    padding: 2px 5px;
+  }
+
+  .speech-bubbles-row {
+    margin-bottom: 0;
+  }
+
+  .speech-bubble-container {
+    margin-bottom: 0;
+  }
+
+  .speech-bubble-new {
+    font-size: 14px;
+    padding: 6px 10px;
+    margin-bottom: 5px;
+  }
 }
 
 /* Positive Feedback Modal */
@@ -2543,37 +2388,605 @@ export default defineComponent({
   left: 0;
 }
 
-/* Add new tertiary-speech-bubble class to the style section */
-.tertiary-speech-bubble {
-  position: absolute;
-  top: -100px;
-  left: 60%;
-  transform: translateX(-50%);
-  background: #4FAB4C;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 16px;
+/* Make question modals smaller */
+.population-question-modal, .comparison-question-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #3A8737;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+}
+
+.question-text {
   font-family: 'Gabarito', sans-serif;
-  white-space: nowrap;
-  z-index: 10;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  max-width: 120px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 500;
+  width: 100%;
 }
 
-.tertiary-speech-bubble.fade-in {
-  opacity: 1;
+/* Make success and warning modals smaller */
+.success-feedback, .warning-feedback, .positive-feedback-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3000;
 }
 
-.tertiary-speech-bubble:after {
-  content: '';
+.success-title, .positive-feedback-modal .success-title {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 12px;
+  padding: 0 20px;
+  color: white;
+}
+
+.success-text, .warning-text {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 0 20px;
+  color: white;
+}
+
+/* Make option buttons smaller */
+.population-option, .comparison-option {
+  width: 90px;
+  height: 45px;
+  background: #ffffff;
+  border: none;
+  border-radius: 10px;
+  color: #3A8737;
+  font-family: 'Gabarito', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 4px;
+}
+
+/* Continue and try again buttons */
+.continue-button, .try-again-button {
+  width: 200px;
+  height: 45px;
+  border-radius: 8px;
+  font-family: 'Gabarito', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  background: #FFFFFF;
+  border: none;
+  color: #3A8737;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+/* Adjust giraffe populations for Phase 2 */
+.giraffe-town-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 180px;
+  width: 160px;
+  margin: 0 8px;
+}
+
+.giraffe-town-section .giraffe-population {
+  height: 160px;
+}
+
+.giraffe-town-section .giraffe-group {
+  width: 160px;
+  height: 160px;
+}
+
+.giraffe-town-section .giraffe-img {
+  height: 120px;
+  width: 40px;
+}
+
+/* Population values for Phase 2 */
+.population-value {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2D7A2A;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Adjust Phase 3 giraffe sizes */
+.tertiary-towns-container {
+  gap: 150px;
+  margin-top: 150px;
+}
+
+.tertiary-town {
+  transform: scale(1);
+}
+
+.tertiary-town .giraffe-img {
+  height: 140px !important;
+  width: 45px;
+}
+
+.tertiary-town .shortest-giraffe {
+  height: 120px !important;
+}
+
+.tertiary-town .tallest-giraffe {
+  height: 160px !important;
+}
+
+@media (max-width: 767px) {
+  .giraffe-town-section {
+    height: 160px;
+    width: 140px;
+  }
+
+  .giraffe-town-section .giraffe-population {
+    height: 140px;
+  }
+
+  .giraffe-town-section .giraffe-group {
+    width: 140px;
+    height: 140px;
+  }
+
+  .giraffe-town-section .giraffe-img {
+    height: 110px;
+    width: 35px;
+  }
+
+  .population-value {
+    font-size: 16px;
+  }
+
+  .tertiary-towns-container {
+    gap: 120px;
+    margin-top: 120px;
+  }
+
+  .tertiary-town .giraffe-img {
+    height: 120px !important;
+    width: 40px;
+  }
+
+  .tertiary-town .shortest-giraffe {
+    height: 100px !important;
+  }
+
+  .tertiary-town .tallest-giraffe {
+    height: 140px !important;
+  }
+}
+
+/* Mobile adjustments for Phase 2 */
+@media (max-width: 767px) {
+  .giraffe-towns-row {
+    padding: 0 5px;
+    gap: 5px;
+  }
+
+  .giraffe-town-section {
+    width: 110px; /* Reduce width on mobile */
+    margin: 0 2px; /* Reduce margins */
+  }
+
+  .giraffe-town-section .giraffe-group {
+    width: 110px; /* Match container width */
+    transform: scale(0.9); /* Slightly scale down giraffes */
+  }
+
+  .giraffe-town-section .giraffe-img {
+    width: 35px; /* Make giraffes slightly narrower */
+  }
+
+  .giraffe-town-section .giraffe-img:nth-child(1) {
+    left: 5px !important;
+  }
+
+  .giraffe-town-section .giraffe-img:nth-child(2) {
+    left: 40px !important;
+  }
+
+  .giraffe-town-section .giraffe-img:nth-child(3) {
+    left: 75px !important;
+  }
+
+  .population-value {
+    font-size: 14px; /* Smaller font size for population values */
+    margin-top: 5px;
+  }
+
+  .speech-bubbles-row {
+    padding: 0 5px;
+  }
+
+  .speech-bubble-new {
+    font-size: 14px;
+    padding: 8px 12px;
+    max-width: 100px;
+  }
+}
+
+/* Secondary gameplay styles */
+.giraffe-town-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 180px;
+  width: 160px;
+  margin: 0 8px;
+}
+
+/* Make the selector more specific and add !important to prevent overrides */
+.secondary-giraffe-container .giraffe-town-section .population-value {
+  position: absolute !important;
+  bottom: -25px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  font-family: 'Gabarito', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2D7A2A;
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  z-index: 5;
+}
+
+@media (max-width: 767px) {
+  .giraffe-town-section {
+    width: 110px;
+    margin: 0 2px;
+    position: relative;
+    height: 200px !important; /* Increase height to accommodate lower population value */
+  }
+
+  /* Make selector even more specific */
+  .secondary-gameplay-screen .secondary-giraffe-container .giraffe-town-section .population-value {
+    font-size: 16px;
+    bottom: -75px !important;
+    margin-top: 20px;
+    padding: 2px 5px;
+    position: absolute !important;
+  }
+
+  .speech-bubbles-row {
+    top: 15px;
+  }
+
+  .speech-bubble-new {
+    font-size: 14px;
+    padding: 6px 10px;
+    margin-bottom: 5px;
+  }
+}
+
+/* Restore other necessary styles */
+.tertiary-towns-container {
+  display: flex;
+  justify-content: center;
+  gap: 180px;
+  width: 100%;
+  padding: 0 15px;
+  margin-top: 180px;
+  z-index: 5;
+}
+
+.tertiary-town {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-bottom: 10px;
+  transform: scale(1.2);
+}
+
+/* Question modals */
+.population-question-modal, .comparison-question-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #3A8737;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+}
+
+/* Success and warning modals */
+.success-feedback, .warning-feedback, .positive-feedback-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3000;
+}
+
+/* Grass area */
+.secondary-grass-area {
   position: absolute;
-  bottom: -8px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  z-index: 1;
+  opacity: 1 !important;
+  background-color: #83CA54;
+}
+
+.full-grass-bg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65%;
+  background-color: #83CA54;
+  z-index: 1;
+  opacity: 1 !important;
+}
+
+/* Remove the general population-value style that's causing conflicts */
+/* Population values specific to Phase 2 */
+.secondary-gameplay-screen .giraffe-town-section .population-value {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #2D7A2A;
+  text-align: center;
+  position: absolute;
+  bottom: -200px;
   left: 50%;
   transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #4FAB4C;
+  width: 100%;
+  z-index: 5;
+  background: transparent;
+  padding: 5px 10px;
 }
+
+/* Mobile styles for Phase 2 */
+@media (max-width: 767px) {
+  .giraffe-town-section {
+    width: 110px;
+    margin: 0 2px;
+    position: relative;
+    height: 200px !important;
+  }
+
+  .secondary-gameplay-screen .giraffe-town-section .population-value {
+    font-size: 16px;
+    position: absolute !important;
+    bottom: -185px ;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100%;
+    padding: 2px 5px;
+  }
+
+  .speech-bubbles-row {
+    top: 15px;
+  }
+
+  .speech-bubble-new {
+    font-size: 14px;
+    padding: 6px 10px;
+    margin-bottom: 5px;
+  }
+}
+
+/* Phase 3 population values */
+.tertiary-gameplay-screen .population-value {
+  position: relative;
+  top: 60px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2D7A2A;
+  z-index: 5;
+  background: transparent;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+/* Secondary gameplay styles */
+.secondary-gameplay-screen .giraffe-towns-row .giraffe-town-section {
+  position: relative;
+  height: 200px;
+}
+
+.secondary-gameplay-screen .giraffe-towns-row .giraffe-town-section .population-value {
+  position: absolute;
+  bottom: -95px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Gabarito', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2D7A2A;
+  width: 100%;
+  text-align: center;
+  z-index: 5;
+}
+
+@media (max-width: 767px) {
+  .secondary-gameplay-screen .giraffe-towns-row .giraffe-town-section {
+    width: 110px;
+    margin: 0 2px;
+    height: 200px;
+  }
+
+  .secondary-gameplay-screen .giraffe-towns-row .giraffe-town-section .population-value {
+    position: absolute !important;
+    bottom: -250px !important; /* Adjusted from -185px to push it further lower */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 16px !important;
+    width: 100% !important;
+    padding: 2px 5px !important;
+  }
+}
+
+/* Phase 3 population values - keep these separate */
+.tertiary-gameplay-screen .population-value {
+  position: relative;
+  top: 90px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2D7A2A;
+  z-index: 5;
+  background: transparent;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+/* Secondary gameplay styles - Phase 2 */
+.secondary-gameplay-screen .giraffe-towns-row {
+  position: relative;
+  padding-bottom: 100px; /* Make space for population values */
+}
+
+.secondary-gameplay-screen .giraffe-town-section {
+  position: relative;
+  width: 110px;
+  margin: 0 2px;
+}
+
+.secondary-gameplay-screen .giraffe-town-section .giraffe-population {
+  height: 110px;
+  margin-bottom: 0;
+}
+
+/* Override all other population value styles for phase 2 */
+.secondary-gameplay-screen .giraffe-town-section .population-value {
+  position: absolute !important;
+  bottom: -155px !important;
+  left: 20% !important;
+  transform: translateX(-50%) !important;
+  font-family: 'Gabarito', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  color: #2D7A2A !important;
+  width: 100% !important;
+  text-align: center !important;
+  margin: 15px!important;
+  padding: 5px !important;
+  z-index: 5 !important;
+}
+
+@media (max-width: 767px) {
+  .secondary-gameplay-screen .giraffe-towns-row {
+    padding-bottom: 180px; /* More space for population values on mobile */
+  }
+
+  .secondary-gameplay-screen .giraffe-town-section {
+    width: 110px;
+    margin: 0 2px;
+  }
+
+  .secondary-gameplay-screen .giraffe-town-section .population-value {
+    bottom: 45px !important; /* Push values even lower on mobile */
+  }
+}
+
+/* Keep phase 3 styles separate */
+.tertiary-gameplay-screen .population-value {
+  position: relative;
+  top: 90px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2D7A2A;
+  z-index: 5;
+  background: transparent;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+/* Mobile adjustments for Phase 3 */
+@media (max-width: 767px) {
+  .tertiary-towns-container {
+    gap: 100px; /* Adjusted gap for smaller elements */
+    margin-top: 198px; 
+/* Increased from 100px to push towns lower */
+  }
+
+  .tertiary-town {
+    transform: scale(1.0); /* Slightly reduce overall town scale */
+    padding-bottom: 0 !important; /* Ensure no extra space below population label */
+  }
+
+  .tertiary-town .giraffe-population { /* Control height for giraffe positioning */
+    height: 125px !important; /* Tallest giraffe is 120px, give a little room */
+    margin-bottom: 0 !important; /* Remove any margin affecting label spacing */
+  }
+
+  .tertiary-town .giraffe-img {
+    height: 100px !important; /* Reduced height */
+    width: 35px !important;   /* Reduced width */
+  }
+
+  .tertiary-town .shortest-giraffe {
+    height: 80px !important;  /* Reduced height */
+  }
+
+  .tertiary-town .tallest-giraffe {
+    height: 120px !important; /* Reduced height */
+  }
+
+  .tertiary-gameplay-screen .population-value {
+    font-size: 18px !important; /* Reduced font size */
+    top: 20px !important;       /* Adjusted from 70px to move label lower */
+  }
+}
+
+/* Adjust horizontal spacing of giraffes within a town for phase 3 mobile */
+.tertiary-town .giraffe-group .giraffe-img:nth-child(1) {
+  left: 15px !important; 
+}
+.tertiary-town .giraffe-group .giraffe-img:nth-child(2) {
+  left: -5px !important; /* Brings it closer to the first giraffe */
+}
+.tertiary-town .giraffe-group .giraffe-img:nth-child(3) {
+  left: -20px !important; /* Brings it closer to the second giraffe */
+}
+
+.tertiary-gameplay-screen .population-value {
+  font-size: 18px !important; /* Reduced font size */
+  top: 20px !important;       /* Adjusted from 70px to move label lower */
+}
+
 </style> 
