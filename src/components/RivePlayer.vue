@@ -14,9 +14,9 @@ const canvas = ref<HTMLCanvasElement | null>(null)
 onMounted(() => {
   if (canvas.value) {
     const rive = new Rive({
-      src: props.src.startsWith('/') ? props.src : `/${props.src}`, // Ensure leading slash
+      src: props.src,
       canvas: canvas.value,
-      autoplay: true,
+      autoplay: true
     })
 
     // Optional: Cleanup on unmount
@@ -38,7 +38,7 @@ onMounted(() => {
 .riv-canvas {
   width: 100%;
   height: auto;
-  background-color: #f4f4f4;
+  background-color: transparent;
   border-radius: 8px;
 }
 </style>

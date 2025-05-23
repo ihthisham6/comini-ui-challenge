@@ -2481,5 +2481,10 @@ export default defineComponent({
   .success-feedback.slide-in ~ .game-content .tallest-giraffe .speech-bubble {
     top: -120px !important;
   }
+
+  /* Phase 2 success modal - 3rd giraffe speech bubble position fix */
+  .success-feedback.slide-in ~ .game-content .secondary-giraffes-container .secondary-giraffe:nth-child(3) .speech-bubble {
+    top: -90px !important;
+  }
 }
 </style>
