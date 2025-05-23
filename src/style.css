@@ -155,23 +155,23 @@ body.touch-dragging {
 @media (max-width: 480px) {
   /* Modal fixes for all levels */
   .question-modal {
-    width: 85% !important;
-    max-width: 300px;
+    width: 90% !important;
+    max-width: 280px !important;
     padding: 16px !important;
-    bottom: 16px !important;
+    bottom: 10px !important;
   }
   
   .options-container {
-    gap: 12px !important;
+    gap: 10px !important;
     flex-wrap: wrap;
     justify-content: center;
   }
   
   .option-button {
-    min-width: 42px !important;
-    min-height: 42px !important;
-    width: 42px !important;
-    height: 42px !important;
+    min-width: 45px !important;
+    min-height: 45px !important;
+    width: 45px !important;
+    height: 45px !important;
     font-size: 18px !important;
   }
   
@@ -189,9 +189,11 @@ body.touch-dragging {
   
   /* Make feedback modals take up less height */
   .success-feedback,
-  .warning-feedback {
+  .warning-feedback,
+  .secondary-success-feedback,
+  .secondary-warning-feedback {
     height: auto !important;
-    min-height: 200px;
+    min-height: 180px !important;
     padding: 16px !important;
   }
   
@@ -199,8 +201,23 @@ body.touch-dragging {
   .continue-button,
   .try-again-button {
     width: 100% !important;
-    max-width: 280px !important;
-    margin-top: 10px !important;
+    max-width: 260px !important;
+    margin-top: 8px !important;
+    height: 42px !important;
+  }
+
+  /* Adjust text sizes in modals */
+  .success-title,
+  .warning-title {
+    font-size: 22px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .success-text,
+  .warning-text,
+  .question-text {
+    font-size: 16px !important;
+    margin-bottom: 12px !important;
   }
 }
 

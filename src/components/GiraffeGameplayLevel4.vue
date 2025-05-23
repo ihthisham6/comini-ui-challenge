@@ -1312,12 +1312,12 @@ export default defineComponent({
 .instruction-text {
   color: #6BADD7;
   font-family: 'Gabarito', sans-serif;
-  font-size: 24px; /* Increased from 20px to 24px */
+  font-size: 20px; /* Increased from 20px to 24px */
   text-align: center;
   margin: 20px 0 20px 0;
   padding: 0 20px;
   transition: transform 0.5s ease;
-  font-weight: 600; /* Added for better visibility */
+  font-weight: 400; /* Added for better visibility */
 }
 
 .instruction-text.move-up {
@@ -2987,6 +2987,46 @@ export default defineComponent({
 .tertiary-gameplay-screen .population-value {
   font-size: 18px !important; /* Reduced font size */
   top: 20px !important;       /* Adjusted from 70px to move label lower */
+}
+
+@media (max-width: 767px) {
+  .game-title {
+    font-weight: 400; /* Make title lighter on mobile */
+    font-size: 18px;
+    margin-top: 60px;
+  }
+
+  .population-question-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #3A8737;
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transform: translateY(0);
+    margin-top: auto;
+  }
+
+  .population-question-modal.slide-in-bottom {
+    animation: slideInFromBottom 0.3s ease forwards;
+  }
+
+  .answer-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .population-option {
+    width: 80px;
+    height: 40px;
+    font-size: 14px;
+  }
 }
 
 </style> 
