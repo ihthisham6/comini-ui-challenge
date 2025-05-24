@@ -1098,7 +1098,7 @@ export default defineComponent({
   .giraffes-area {
     height: auto !important; 
     min-height: 350px !important;
-    bottom: 224px !important; /* Position right above grass line */
+    bottom: 244px !important; /* Sit on top of the dark grass strip */
     overflow: visible !important;
     gap: 100px !important;
     padding-top: 0 !important;
@@ -1197,6 +1197,23 @@ export default defineComponent({
     margin-bottom: 0 !important;
     vertical-align: bottom !important;
     clip-path: none !important;
+  }
+
+  /* Reposition answer section (number options) below giraffes */
+  .answer-section {
+    position: absolute !important;
+    bottom: 20px !important; /* Adjust as needed, below giraffes */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important; /* Or specific width */
+    z-index: 10 !important; /* Ensure it's above other elements if necessary */
+    /* Making sure it doesn't overlap with the giraffes */
+    /* It was originally overlapping or too high */
+  }
+
+  .number-slots {
+    justify-content: center !important; /* Center the number buttons */
+    margin-top: 10px; /* Add some space above the number slots */
   }
 }
 
@@ -1393,7 +1410,7 @@ export default defineComponent({
   }
 
   .options-container {
-    gap: 45px;
+    gap: 65px;
   }
 
   .option-button {
@@ -2457,7 +2474,7 @@ export default defineComponent({
   
   /* Align Phase 1 giraffes directly above button labels */
   .giraffes-area {
-    gap: 50px; /* Even spacing for phase 1 giraffes */
+    gap: 40px; /* Even spacing for phase 1 giraffes */
     justify-content: center;
     bottom: 244px; /* Keep consistent position relative to grass */
     left: 0;
@@ -2469,7 +2486,7 @@ export default defineComponent({
   
   /* Ensure number slots align with giraffes above */
   .number-slots {
-    gap: 50px; /* Match the same gap as giraffes */
+    gap: 80px; /* Match the same gap as giraffes */
     justify-content: center;
     padding: 20px 0; /* Adjust padding to reduce vertical space */
     left: 0;
@@ -2481,7 +2498,7 @@ export default defineComponent({
   /* Make sure giraffe slots and number slots are aligned with same width */
   .giraffe-slot,
   .number-slot {
-    width: 50px;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -13,7 +13,10 @@ import {
   faUser,
   faBookmark,
   faCheck,
-  faCircleCheck
+  faCircleCheck,
+  faFaceSadTear,
+  faFaceMeh,
+  faFaceSmile
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import type { App } from 'vue'
@@ -33,7 +36,10 @@ library.add(
   faUser,
   faBookmark,
   faCheck,
-  faCircleCheck
+  faCircleCheck,
+  faFaceSadTear,
+  faFaceMeh,
+  faFaceSmile
 )
 
 export default {
