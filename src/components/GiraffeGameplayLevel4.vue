@@ -1949,8 +1949,8 @@ export default defineComponent({
 /* Add these styles for speech bubbles */
 .speech-bubble {
   position: absolute;
-  top: -60px;
-  left: 50%;
+  top: -70px;
+  left: 70%;
   transform: translateX(-50%);
   background: #4FAB4C;
   color: white;
@@ -2193,7 +2193,7 @@ export default defineComponent({
   margin-top: 30px;
   text-align: center;
   position: relative;
-  top: 10px; /* Reset the top value that was pushing it down */
+  top:-05px; /* Reset the top value that was pushing it down */
   z-index: 5;
   background: transparent;
   padding: 5px 10px;
@@ -2242,7 +2242,7 @@ export default defineComponent({
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    margin-top: 10px;
+    margin-top: -10px;
     padding: 2px 5px;
   }
 
@@ -2890,8 +2890,8 @@ export default defineComponent({
 /* Override all other population value styles for phase 2 */
 .secondary-gameplay-screen .giraffe-town-section .population-value {
   position: absolute !important;
-  bottom: -155px !important;
-  left: 20% !important;
+  bottom: -205px !important;
+  left: 20% !important; /* General rule, will be overridden for larger screens */
   transform: translateX(-50%) !important;
   font-family: 'Gabarito', sans-serif !important;
   font-size: 16px !important;
@@ -2899,24 +2899,91 @@ export default defineComponent({
   color: #2D7A2A !important;
   width: 100% !important;
   text-align: center !important;
-  margin: 15px!important;
-  padding: 5px !important;
+  margin: 18px !important; /* Corrected potential typo space */
+  padding: 40px !important;
   z-index: 5 !important;
 }
 
-@media (max-width: 767px) {
+/* Laptop/Desktop specific styles for Phase 2 */
+@media (min-width: 768px) {
   .secondary-gameplay-screen .giraffe-towns-row {
-    padding-bottom: 180px; /* More space for population values on mobile */
-  }
-
-  .secondary-gameplay-screen .giraffe-town-section {
-    width: 110px;
-    margin: 0 2px;
+    padding-bottom: 170px !important; /* Ensure enough space for very low labels */
   }
 
   .secondary-gameplay-screen .giraffe-town-section .population-value {
-    bottom: 45px !important; /* Push values even lower on mobile */
+    position: absolute !important;
+    bottom: -170px !important; /* Positioned lower */
+    left: 40% !important; /* Centered */
+    transform: translateX(-50%) !important; /* Centered */
+    font-size: 18px !important; /* Slightly larger font for laptop */
+    margin: 30px !important; 
+    padding: 18px !important;
+    z-index: 6 !important; /* Ensure it's above other elements if needed */
   }
+
+  .secondary-gameplay-screen .speech-bubble-container {
+    position: relative !important; /* Anchor for the absolute positioned bubble */
+    flex: 1; /* Helps in distributing space if containers are flex children */
+  }
+
+  .secondary-gameplay-screen .speech-bubble-container .speech-bubble-new {
+    position: absolute !important;
+    top: -75px !important; /* Position above the container, adjust as needed */
+    left: 55% !important;
+    transform: translateX(-50%) !important; /* Center the bubble */
+    width: auto !important;
+    max-width: 130px !important;
+    
+    background: #4FAB4C !important;
+    color: white !important;
+    padding: 10px 15px !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
+    font-family: 'Gabarito', sans-serif !important;
+    text-align: center !important;
+    white-space: normal !important;
+    z-index: 25 !important; /* High z-index to be on top */
+    opacity: 1 !important; /* Fully visible */
+  }
+}
+
+/* Mobile specific styles for Phase 2 - User states these are perfect */
+@media (max-width: 767px) {
+  .secondary-gameplay-screen .giraffe-towns-row {
+    padding-bottom: 180px !important; /* More space for population values on mobile, using !important to ensure override */
+  }
+
+  .secondary-gameplay-screen .giraffe-town-section .population-value {
+    bottom: 65px !important; /* Push values even lower on mobile, using !important */
+    /* Ensuring other properties like left, transform, font-size are from general rule or mobile specific if added */
+  }
+  
+  /* If speech bubbles need specific mobile adjustments and are not covered by general .speech-bubble-new: */
+  .secondary-gameplay-screen .speech-bubble-container .speech-bubble-new {
+    /* Assuming general .speech-bubble-new with position:relative works for mobile as per "perfect on smaller" */
+    /* If not, specific mobile styles for bubble would go here. Currently, it will inherit from general .speech-bubble-new */
+    /* Forcing visibility just in case for mobile as well if general rule is too weak */
+    opacity: 1 !important;
+    z-index: 20 !important; /* Ensure it's visible on mobile if there were issues */
+  }
+}
+
+/* General speech bubble style (ensure this doesn't override phase 2 for laptop) */
+.speech-bubble {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4FAB4C;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: 'Gabarito', sans-serif;
+  text-align: center;
+  max-width: 120px;
+  white-space: normal;
+  z-index: 10;
 }
 
 /* Keep phase 3 styles separate */
