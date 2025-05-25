@@ -2072,7 +2072,7 @@ export default defineComponent({
     padding: 6px 8px;
     white-space: normal;
     max-width: 80px;
-    text-align: center;
+  text-align: center;
     top: -50px; /* Raised from -40px */
     left: 50%;
     transform: translateX(-50%);
@@ -2228,20 +2228,20 @@ export default defineComponent({
 }
 
 @media (max-width: 767px) {
-  .giraffe-town-section {
+.giraffe-town-section {
     width: 110px;
     margin: 0 2px;
     position: relative; /* Ensure relative positioning */
     padding-bottom: 30px; /* Add space for the population value */
-  }
+}
 
-  .population-value {
+.population-value {
     font-size: 16px;
     position: absolute;
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+  width: 100%;
     margin-top: -10px;
     padding: 2px 5px;
   }
@@ -2786,7 +2786,7 @@ export default defineComponent({
   }
 
   .secondary-gameplay-screen .giraffe-town-section .population-value {
-    font-size: 16px;
+  font-size: 16px;
     position: absolute !important;
     bottom: -185px ;
     left: 50% !important;

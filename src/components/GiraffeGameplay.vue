@@ -1202,13 +1202,21 @@ export default defineComponent({
   /* Reposition answer section (number options) below giraffes */
   .answer-section {
     position: absolute !important;
-    bottom: 20px !important; /* Adjust as needed, below giraffes */
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 90% !important; /* Or specific width */
+    /* bottom: 20px !important; */ /* Original: Problematic for full bottom */
+    /* left: 50% !important; */ /* Original: Problematic for full width */
+    /* transform: translateX(-50%) !important; */ /* Original: Problematic for full width */
+    /* width: 90% !important; */ /* Original: Problematic for full width */
+    
+    /* Fixes for full width and bottom */
+    width: 100% !important;
+    left: 0 !important;
+    transform: none !important; 
+    bottom: 0 !important;
+
     z-index: 10 !important; /* Ensure it's above other elements if necessary */
     /* Making sure it doesn't overlap with the giraffes */
     /* It was originally overlapping or too high */
+    /* Height will be inherited from base (244px) which is correct */
   }
 
   .number-slots {
