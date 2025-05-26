@@ -151,6 +151,8 @@ export default defineComponent({
   align-items: center;
   box-sizing: border-box;
   position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
 }
 
 .content-wrapper {
@@ -492,5 +494,24 @@ export default defineComponent({
   max-width: 80%;
   max-height: 80%;
   object-fit: contain;
+}
+
+/* Adjust modal overlay to allow background scrolling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none; /* Allow interaction with the background */
+}
+
+.modal-content {
+  pointer-events: auto; /* Ensure modal content is interactive */
 }
 </style>
