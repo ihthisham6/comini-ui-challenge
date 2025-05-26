@@ -116,32 +116,35 @@ export default defineComponent({
 </script>
 
 <style>
-/* Remove all global style overrides */
+/* Global style overrides */
 :global(body) {
   margin: 0;
   padding: 0;
   background-color: #E4E4E4;
-  position: static;
-  height: auto;
-  overflow: visible;
+  position: relative;
+  min-height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100%;
 }
 
 :global(html) {
-  height: auto;
-  overflow: visible;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100%;
 }
 
 :global(#app),
 :global(#app-container),
 :global(.main-content) {
-  height: auto;
-  overflow: visible;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100%;
 }
 
 /* Container styles */
 .game-container {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   background: #FFFFFF;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -152,7 +155,9 @@ export default defineComponent({
   box-sizing: border-box;
   position: relative;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
 }
 
 .content-wrapper {
@@ -162,6 +167,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   padding-bottom: 120px;
+  overflow-x: hidden;
 }
 
 /* Title styling */
@@ -355,12 +361,15 @@ export default defineComponent({
 /* Media queries for responsive design */
 @media (min-width: 768px) {
   .game-container {
-    padding: 40px;
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .page-title {
     font-size: 28px;
     margin-left: 80px;
+    width: calc(100% - 80px);
   }
 
   .rive-container {
@@ -410,11 +419,14 @@ export default defineComponent({
   .game-container {
     padding: 20px;
     min-height: 100%;
+    width: 100%;
+    max-width: 100%;
   }
 
   .content-wrapper {
     padding: 0 20px 140px;
     margin-bottom: 40px;
+    width: 100%;
   }
 
   .page-title {
