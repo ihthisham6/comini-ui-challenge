@@ -13,8 +13,8 @@
       <div class="rive-container">
         <RivePlayer 
           src="/rive/giraffes.riv"
-          :width="350"
-          :height="250"
+          :width="riveProps.width"
+          :height="riveProps.height"
         />
       </div>
 
@@ -77,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted, computed } from 'vue';
 import RivePlayer from './RivePlayer.vue';
 import GamePreviewModal from './GamePreviewModal.vue';
 import OctopusIcon from './OctopusIcon.vue';
@@ -91,6 +91,31 @@ export default defineComponent({
   },
   setup() {
     const showPreviewModal = ref(false);
+    const windowWidth = ref(window.innerWidth);
+
+    // Dynamically calculate dimensions based on screen size
+    const riveProps = computed(() => {
+      if (windowWidth.value >= 1920) {
+        // Nest Hub size
+        return { width: 320, height: 200 };
+      } else if (windowWidth.value >= 1440) {
+        return { width: 450, height: 280 };
+      } else if (windowWidth.value >= 1024) {
+        return { width: 650, height: 500 };
+      } else if (windowWidth.value >= 768) {
+        return { width: 600, height: 480 };
+      } else {
+        // Mobile default
+        return { width: 340, height: 350 };
+      }
+    });
+
+    // Listen for window resize
+    onMounted(() => {
+      window.addEventListener('resize', () => {
+        windowWidth.value = window.innerWidth;
+      });
+    });
 
     const openPreviewModal = () => {
       showPreviewModal.value = true;
@@ -109,37 +134,15 @@ export default defineComponent({
       showPreviewModal,
       openPreviewModal,
       closePreviewModal,
-      startGame
+      startGame,
+      riveProps,
+      windowWidth
     };
   }
 });
 </script>
 
-<style>
-/* Global style overrides */
-:global(body) {
-  margin: 0;
-  padding: 0;
-  background-color: #E4E4E4;
-  position: relative;
-  min-height: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  width: 100%;
-}
-
-:global(html) {
-  height: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  width: 100%;
-}
-
-:global(#app),
-:global(#app-container),
-:global(.main-content) {
-  height: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  width: 100%;
-}
+<style scoped>
 
 /* Container styles */
 .game-container {
@@ -156,13 +159,13 @@ export default defineComponent({
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
   margin: 0;
+  scroll-behavior: smooth;
 }
 
 .content-wrapper {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -207,19 +210,23 @@ export default defineComponent({
 
 /* Rive container styling */
 .rive-container {
-  width: min(312px, 90%);
-  height: 342px;
-  margin-top: 93px;
+  width: min(340px, 100%);
+  height: 400px;
+  margin-top: 40px;
   border-radius: 10px;
   overflow: hidden;
   background: #FFFFFF;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Action buttons styling */
 .action-buttons {
-  width: min(312px, 90%);
+  width: min(340px, 95%);
   height: 38px;
-  margin-top: 20px;
+  margin-top: 16px;
   display: flex;
   gap: 10px;
   align-items: center;
@@ -227,7 +234,8 @@ export default defineComponent({
 }
 
 .play-button {
-  width: 108px;
+  flex: 1;
+  max-width: 108px;
   height: 38px;
   border: 1px solid #E4E4E4;
   border-radius: 10px;
@@ -236,12 +244,19 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.play-button:hover {
+  background-color: #F8F9FA;
+  transform: translateY(-1px);
 }
 
 .assign-button {
-  width: 128px;
+  flex: 1;
+  max-width: 128px;
   height: 38px;
   border: 1px solid #25A49F;
   border-radius: 10px;
@@ -250,8 +265,14 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.assign-button:hover {
+  background-color: #3BA8A4;
+  transform: translateY(-1px);
 }
 
 .save-button {
@@ -265,6 +286,12 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: #F8F9FA;
+  transform: translateY(-1px);
 }
 
 .button-icon {
@@ -288,7 +315,7 @@ export default defineComponent({
 /* Description section styling */
 .description-section {
   width: min(312px, 90%);
-  margin-top: 20px;
+  margin-top: 12px; /* Reduced from 20px to 12px for mobile */
 }
 
 .section-title {
@@ -349,8 +376,8 @@ export default defineComponent({
   color: #999999;
 }
 
-.user-nav-icon {
-  color: #74C0FC !important;
+.nav-icon.user-nav-icon {
+  color: #74C0FC;
 }
 
 .avatar-container {
@@ -362,8 +389,6 @@ export default defineComponent({
 @media (min-width: 768px) {
   .game-container {
     padding: 40px 20px;
-    width: 100%;
-    max-width: 100%;
   }
 
   .page-title {
@@ -373,29 +398,42 @@ export default defineComponent({
   }
 
   .rive-container {
-    width: min(400px, 90%);
-    height: 400px;
+    width: min(600px, 90%);
+    height: 480px;
   }
 
   .action-buttons {
-    width: min(400px, 90%);
+    width: min(600px, 90%);
+    margin-top: 20px;
+    height: 45px;
   }
 
   .play-button {
-    width: 120px;
+    max-width: 130px;
+    height: 45px;
   }
 
   .assign-button {
-    width: 140px;
+    max-width: 150px;
+    height: 45px;
   }
 
   .save-button {
-    width: 60px;
+    width: 65px;
+    height: 45px;
+  }
+
+  .button-text {
+    font-size: 15px;
+  }
+
+  .button-icon {
+    font-size: 16px;
   }
 
   .description-section,
   .topics-section {
-    width: min(400px, 90%);
+    width: min(500px, 90%);
   }
 
   .section-title {
@@ -417,60 +455,88 @@ export default defineComponent({
 
 @media (min-width: 1024px) {
   .game-container {
-    padding: 20px;
-    min-height: 100%;
-    width: 100%;
-    max-width: 100%;
+    padding: 40px;
   }
 
   .content-wrapper {
-    padding: 0 20px 140px;
-    margin-bottom: 40px;
-    width: 100%;
+    padding: 0 40px 160px;
+    margin-bottom: 50px;
   }
 
   .page-title {
-    font-size: 32px;
-    margin: 20px 0 40px;
+    font-size: 42px;
+    margin: 40px 0 60px;
     text-align: center;
     align-self: center;
   }
 
   .rive-container {
-    width: min(350px, 90%);
-    height: 250px;
+    width: min(700px, 80%);
+    height: 500px;
     margin: 0;
   }
 
   .action-buttons {
-    width: min(350px, 90%);
-    height: 44px;
-    margin-top: 20px;
+    width: min(600px, 80%);
+    height: 60px;
+    margin-top: 24px;
+    margin-bottom: 60px;
+  }
+
+  .play-button {
+    max-width: 160px;
+    height: 60px;
+  }
+
+  .assign-button {
+    max-width: 180px;
+    height: 60px;
+  }
+
+  .save-button {
+    width: 80px;
+    height: 60px;
+  }
+
+  .button-text {
+    font-size: 18px;
+  }
+
+  .button-icon {
+    font-size: 18px;
   }
 
   .description-section {
-    width: min(350px, 90%);
-    margin-top: 20px;
+    width: min(650px, 80%);
+    margin-top: 40px;
   }
 
   .topics-section {
-    width: min(350px, 90%);
-    margin-top: 20px;
+    width: min(650px, 80%);
+    margin-top: 30px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .description-text {
+    font-size: 18px;
+    line-height: 1.6;
   }
 
   .bottom-navbar {
-    position: fixed;
     width: min(800px, calc(100% - 120px));
     height: 80px;
-    bottom: 20px;
-    z-index: 100;
+    bottom: 30px;
   }
 }
 
 @media (min-width: 1440px) {
   .content-wrapper {
-    padding: 0 20px 160px;
-    margin-bottom: 60px;
+    padding: 0 20px 180px; /* Increase bottom padding for extra large screens */
+    margin-bottom: 80px; /* Increase bottom margin */
   }
 
   .rive-container {
@@ -481,13 +547,36 @@ export default defineComponent({
   .action-buttons {
     width: min(450px, 90%);
     height: 50px;
-    margin-top: 24px;
+    margin-top: 16px; /* Consistent small gap between animation and buttons */
+    margin-bottom: 40px; /* Add bottom margin to action buttons */
   }
 
   .description-section,
   .topics-section {
     width: min(450px, 90%);
-    margin-top: 24px;
+    margin-top: 40px;
+  }
+}
+
+/* For very large screens like Nest Hub */
+@media (min-width: 1920px) {
+  .rive-container {
+    width: min(320px, 50%);
+    height: 200px;
+    margin-top: 30px;
+  }
+
+  .action-buttons {
+    width: min(320px, 50%);
+    height: 50px;
+    margin-top: 16px;
+    margin-bottom: 20px;
+  }
+
+  .description-section,
+  .topics-section {
+    width: min(350px, 60%);
+    margin-top: 20px;
   }
 }
 
@@ -508,22 +597,5 @@ export default defineComponent({
   object-fit: contain;
 }
 
-/* Adjust modal overlay to allow background scrolling */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  pointer-events: none; /* Allow interaction with the background */
-}
-
-.modal-content {
-  pointer-events: auto; /* Ensure modal content is interactive */
-}
+/* Remove problematic modal overlay styles - let individual modal components handle their own overlay */
 </style>
